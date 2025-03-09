@@ -7,7 +7,6 @@ import { SidebarProvider } from "@/components/sidebar-provider";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isDashboard = pathname?.startsWith('/dashboard');
 
   return (
     <ThemeProvider

@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
-import { ChartContainer, ChartTooltip, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 import { cn } from "@/lib/utils"
 import { BodySM, BodyXS } from "@/components/ui/typography"
 
@@ -12,7 +11,6 @@ interface RevenueChartProps extends React.HTMLAttributes<HTMLDivElement> {
     current: number
     previous: number
   }[]
-  config?: any
   showLegend?: boolean
   height?: number | string
 }
@@ -44,24 +42,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function RevenueChart({ 
   data, 
-  config,
   className,
   showLegend = true,
   height = "100%",
   ...props 
 }: RevenueChartProps) {
-  // Define chart configuration that matches the expected ChartConfig type
-  const chartConfig = {
-    current: {
-      label: "Mois Actuel",
-      color: "var(--chart-1)"
-    },
-    previous: {
-      label: "Mois Précédent",
-      color: "var(--chart-2)"
-    }
-  };
-
   // Format the data to include Euro symbol
   const formatYAxis = (value: number) => {
     if (value >= 1000) {

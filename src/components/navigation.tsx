@@ -125,7 +125,6 @@ export function ProjectsNavigation({
   ...props
 }: ProjectsNavigationProps & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const { isMobile } = useSidebar()
-  const uiSidebar = useUISidebar()
 
   return (
     <SidebarGroup className={className} {...props}>

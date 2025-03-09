@@ -2,7 +2,6 @@ import { Suspense } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { 
-  Bell, 
   FileText, 
   Users, 
   ArrowUpRight, 
@@ -11,15 +10,12 @@ import {
   Clock, 
   AlertCircle, 
   CheckCircle2, 
-  BarChart4, 
   DollarSign, 
   Calendar, 
   ChevronRight, 
   Download,
   ExternalLink,
   Eye,
-  Plus,
-  CreditCard,
   UserPlus,
   BarChart3
 } from "lucide-react"
@@ -28,18 +24,13 @@ import { revenueData, recentInvoices, recentNotifications } from "@/lib/dashboar
 import { Skeleton } from "@/components/ui/skeleton"
 import { Badge as UIBadge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { 
-  Typography, 
   Stat, 
   BodyMD, 
   BodySM, 
   BodyXS, 
   HeadingMD,
   HeadingLG,
-  HeadingXL,
-  ResponsiveHeadingMD,
-  TruncatedText
 } from "@/components/ui/typography"
 import {
   Table,

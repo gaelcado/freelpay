@@ -116,7 +116,7 @@ export default function FeedbackPage() {
             <CardHeader>
               <CardTitle>Recent Improvements</CardTitle>
               <CardDescription>
-                Changes we've made based on user feedback
+                Changes we&apos;ve made based on user feedback
               </CardDescription>
             </CardHeader>
             <CardContent>
