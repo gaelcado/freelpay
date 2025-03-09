@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "@/app/client-layout";
-import { ClerkProvider } from '@clerk/nextjs';
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -20,12 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="fr" suppressHydrationWarning className="h-full">
-        <body className={`${outfit.variable} antialiased min-h-full h-full`}>
-          <ClientLayout>{children}</ClientLayout>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="fr" suppressHydrationWarning className="h-full">
+      <body className={`${outfit.variable} antialiased min-h-full h-full`}>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
   );
 }
