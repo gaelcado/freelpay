@@ -1,14 +1,14 @@
 @import "tailwindcss";
-
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
+/* Map shadcn tokens to your custom properties */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-outfit);
+  --font-mono: var(--font-outfit);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,9 +39,9 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 1.5rem);
-  --radius-md: calc(var(--radius) - 1rem);
-  --radius-lg: var(--radius);
+  --radius-sm: calc(var(--radius) - 0.5rem);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-lg: calc(var(--radius) + 0.25rem);
   --radius-xl: calc(var(--radius) + 0.5rem);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -65,75 +65,149 @@
   }
 }
 
+/* 
+ * CLEAN COLOR SYSTEM - ShadCN COMPONENT GUIDE
+ * 
+ * COLOR USAGE GUIDELINES:
+ * 
+ * - Background: Base canvas for all content
+ *   Used in: Page backgrounds, app shell
+ * 
+ * - Card: Container backgrounds, slightly contrasted from background
+ *   Used in: Card, Sheet, Dialog components
+ * 
+ * - Primary: Main action color for important interactive elements
+ *   Used in: Primary buttons, active navigation items, checkboxes, radio buttons
+ * 
+ * - Secondary: Supporting action color for less prominent interactions
+ *   Used in: Secondary buttons, tabs, toggles
+ * 
+ * - Accent: Highlight color for emphasis and visual interest
+ *   Used in: Badges, highlights, active states, focus indicators
+ * 
+ * - Muted: Subtle background for less important UI elements
+ *   Used in: Disabled buttons, badges, secondary backgrounds
+ * 
+ * - Destructive: Warning/error color for dangerous actions
+ *   Used in: Delete buttons, error messages, validation errors
+ * 
+ * - Border: Subtle dividers and outlines (semi-transparent in both modes)
+ *   Used in: Dividers, input fields, cards, dropdowns
+ * 
+ * - Ring: Focus indicators and interactive element highlights
+ *   Used in: Focus states, selected items
+ */
+
+/* Light Theme - Clean & Minimal */
 :root {
-  --background: oklch(100% 0 0);
-  --foreground: oklch(0% 0 0);
-  --card: oklch(95% 0.008 61.42);
-  --card-foreground: oklch(0% 0 0);
-  --popover: oklch(95% 0.008 61.42);
-  --popover-foreground: oklch(0% 0 0);
-  --primary: oklch(23.27% 0.025 284.3);
-  --primary-foreground: oklch(98% 0.003 247.858);
-  --secondary: oklch(23.27% 0.025 284.3);
-  --secondary-foreground: oklch(98% 0.003 247.858);
-  --muted: oklch(90% 0.008 61.42);
-  --muted-foreground: oklch(20% 0 0);
-  --accent: oklch(58.04% 0.2302 260.44);
-  --accent-foreground: oklch(98% 0.003 247.858);
-  --destructive: oklch(75.1% 0.181 22.37);
-  --destructive-foreground: oklch(35.1% 0.181 22.37);
-  --border: oklch(90% 0.008 61.42);
-  --input: oklch(90% 0.008 61.42);
-  --ring: oklch(80% 0.008 61.42);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 1.5rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Core backgrounds */
+  --background: #FAFAFA; /* clean white background */
+  --card: #FFFFFF;
+  --popover: #FFFFFF;
+  
+  /* Text colors */
+  --foreground: #18181B; /* near black for high contrast */
+  --card-foreground: #18181B;
+  --popover-foreground: #18181B;
+  
+  /* Primary actions */
+  --primary: #2563EB; /* refined blue */
+  --primary-foreground: #FFFFFF;
+  
+  /* Secondary actions */
+  --secondary: #F4F4F5; /* very light gray */
+  --secondary-foreground: #18181B;
+  
+  /* Accent - keeping your existing accent */
+  --accent: #116EFE; /* preserved accent color */
+  --accent-foreground: #FFFFFF;
+  
+  /* Destructive actions */
+  --destructive: #EF4444; /* bright red */
+  --destructive-foreground: #FFFFFF;
+  
+  /* Utility colors */
+  --muted: #F4F4F5; /* very light gray */
+  --muted-foreground: #71717A; /* medium gray */
+  --border: rgba(228, 228, 231, 0.7); /* semi-transparent light gray */
+  --input: #E4E4E7; /* light gray */
+  --ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  
+  /* Chart colors - more harmonious palette */
+  --chart-1: #2563EB; /* primary blue */
+  --chart-2: #0EA5E9; /* sky blue */
+  --chart-3: #10B981; /* emerald */
+  --chart-4: #8B5CF6; /* violet */
+  --chart-5: #F59E0B; /* amber */
+  
+  /* Border radius */
+  --radius: 0.75rem; /* slightly reduced for cleaner look */
+  
+  /* Sidebar colors */
+  --sidebar: #F8F8F8; /* slightly off-white */
+  --sidebar-foreground: #18181B;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #116EFE; /* preserved accent */
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(228, 228, 231, 0.7); /* semi-transparent */
+  --sidebar-ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
 }
 
+/* Dark Theme - Refined Contrast */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.18 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(58.04% 0.2302 260.44);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.22 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(58.04% 0.2302 260.44);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(58.04% 0.2302 260.44 / 0.3);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.18 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(58.04% 0.2302 260.44);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.22 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(58.04% 0.2302 260.44 / 0.3);
+  /* Core backgrounds */
+  --background: #18181B; /* deep dark background */
+  --card: #18181B; /* slightly lighter than background */
+  --popover: #18181B;
+  
+  /* Text colors */
+  --foreground: #FAFAFA; /* near white for high contrast */
+  --card-foreground: #FAFAFA;
+  --popover-foreground: #FAFAFA;
+  
+  /* Primary actions */
+  --primary: #3B82F6; /* bright blue */
+  --primary-foreground: #FFFFFF;
+  
+  /* Secondary actions */
+  --secondary: #27272A; /* dark gray */
+  --secondary-foreground: #FAFAFA;
+  
+  /* Accent - keeping your existing accent */
+  --accent: #116EFE; /* preserved accent color */
+  --accent-foreground: #FFFFFF;
+  
+  /* Destructive actions */
+  --destructive: #EF4444; /* bright red */
+  --destructive-foreground: #FFFFFF;
+  
+  /* Utility colors */
+  --muted: #27272A; /* dark gray */
+  --muted-foreground: #A1A1AA; /* light gray */
+  --border: rgba(63, 63, 70, 0.5); /* semi-transparent border (lighter than card) */
+  --input: #3F3F46; /* medium gray */
+  --ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  
+  /* Chart colors - improved for dark mode */
+  --chart-1: #3B82F6; /* blue */
+  --chart-2: #0EA5E9; /* sky blue */
+  --chart-3: #10B981; /* emerald */
+  --chart-4: #A78BFA; /* purple */
+  --chart-5: #F59E0B; /* amber */
+  
+  /* Border radius - same as light */
+  --radius: 0.75rem;
+  
+  /* Sidebar colors */
+  --sidebar: #18181B; /* same as background */
+  --sidebar-foreground: #FAFAFA;
+  --sidebar-primary: #3B82F6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #116EFE; /* preserved accent */
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(63, 63, 70, 0.5); /* semi-transparent */
+  --sidebar-ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
 }
 
 @layer base {
@@ -144,3 +218,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 
+ * ShadCN COMPONENT COLOR USAGE
+ * 
+ * Button:
+ * - Primary: Use for main CTA buttons
+ * - Secondary: Use for secondary actions
+ * - Destructive: Use for delete/cancel actions
+ * - Ghost: Use for subtle actions in busy interfaces
+ * 
+ * Card:
+ * - Uses card/card-foreground for container
+ * - For nested cards, consider using muted as background
+ * 
+ * Dialog/Sheet:
+ * - Uses card/card-foreground for container
+ * - Use border for dividers within
+ * 
+ * Form elements:
+ * - Input borders use border color (semi-transparent)
+ * - Focus states use ring color
+ * - Validation errors use destructive
+ * 
+ * Navigation:
+ * - Active items use primary or accent
+ * - Hover states use muted
+ * 
+ * Badges:
+ * - Default: Use secondary/secondary-foreground
+ * - Success: Use custom green or chart-4
+ * - Warning: Use chart-5 (amber)
+ * - Danger: Use destructive
+ * 
+ * Alerts:
+ * - Info: Use primary
+ * - Warning: Use chart-5 (amber)
+ * - Error: Use destructive
+ * - Success: Use custom green or chart-4
+ */

@@ -2,20 +2,18 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
+  Home,
+  FileText,
+  CreditCard,
+  Users,
+  FileCheck,
+  Wallet,
   Settings2,
-  SquareTerminal,
+  LifeBuoy,
+  Command,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -30,124 +28,77 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "John Doe",
+    email: "john@freelpay.com",
+    avatar: "/avatars/user.jpg",
   },
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Tableau de bord",
+      url: "/dashboard",
+      icon: Home,
       isActive: true,
+    },
+    {
+      title: "Factures",
+      url: "/dashboard/invoices",
+      icon: FileText,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Mes factures",
+          url: "/dashboard/invoices",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Créer une facture",
+          url: "/dashboard/invoices/create",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Financements",
+      url: "/dashboard/financing",
+      icon: CreditCard,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Demandes en cours",
+          url: "/dashboard/financing",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Nouvelle demande",
+          url: "/dashboard/financing/new",
         },
         {
-          title: "Quantum",
-          url: "#",
+          title: "Simulation",
+          url: "/dashboard/financing/simulation",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      title: "Clients",
+      url: "/dashboard/clients",
+      icon: Users,
     },
     {
-      title: "Settings",
-      url: "#",
+      title: "Documents",
+      url: "/dashboard/documents",
+      icon: FileCheck,
+    },
+    {
+      title: "Paiements",
+      url: "/dashboard/payments",
+      icon: Wallet,
+    },
+    {
+      title: "Paramètres",
+      url: "/dashboard/settings",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
     },
   ],
   navSecondary: [
     {
       title: "Support",
-      url: "#",
+      url: "/dashboard/support",
       icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 }
@@ -159,13 +110,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+              <a href="/dashboard">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-semibold">FreelPay</span>
+                  <span className="truncate text-xs">Financez vos factures</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -174,7 +125,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
@@ -183,3 +133,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+

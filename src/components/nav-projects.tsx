@@ -3,8 +3,8 @@
 import {
   Folder,
   MoreHorizontal,
-  Share,
-  Trash2,
+  ExternalLink,
+  Info,
   type LucideIcon,
 } from "lucide-react"
 
@@ -38,7 +38,7 @@ export function NavProjects({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>Intégrations API</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -52,7 +52,7 @@ export function NavProjects({
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover>
                   <MoreHorizontal />
-                  <span className="sr-only">More</span>
+                  <span className="sr-only">Plus</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -62,25 +62,27 @@ export function NavProjects({
               >
                 <DropdownMenuItem>
                   <Folder className="text-muted-foreground" />
-                  <span>View Project</span>
+                  <span>Voir l'intégration</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Share className="text-muted-foreground" />
-                  <span>Share Project</span>
+                  <ExternalLink className="text-muted-foreground" />
+                  <span>Documentation API</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Trash2 className="text-muted-foreground" />
-                  <span>Delete Project</span>
+                  <Info className="text-muted-foreground" />
+                  <span>Statut de l'API</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
-          <SidebarMenuButton>
-            <MoreHorizontal />
-            <span>More</span>
+          <SidebarMenuButton asChild>
+            <a href="/dashboard/integrations">
+              <MoreHorizontal />
+              <span>Toutes les intégrations</span>
+            </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

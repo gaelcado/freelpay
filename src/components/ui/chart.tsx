@@ -2,11 +2,32 @@
 
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
-
 import { cn } from "@/lib/utils"
+import { BodySM, BodyXS } from "@/components/ui/typography"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: "", dark: ".dark" } as const
+// Define the theme colors
+const THEMES = {
+  blue: {
+    light: "hsl(var(--chart-1))",
+    dark: "hsl(var(--chart-1))",
+  },
+  green: {
+    light: "hsl(var(--chart-2))",
+    dark: "hsl(var(--chart-2))",
+  },
+  violet: {
+    light: "hsl(var(--chart-3))",
+    dark: "hsl(var(--chart-3))",
+  },
+  yellow: {
+    light: "hsl(var(--chart-4))",
+    dark: "hsl(var(--chart-4))",
+  },
+  red: {
+    light: "hsl(var(--chart-5))",
+    dark: "hsl(var(--chart-5))",
+  },
+}
 
 export type ChartConfig = {
   [k in string]: {
@@ -70,41 +91,34 @@ function ChartContainer({
 }
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color
-  )
+  const styles = Object.entries(config).map(([key, value]) => {
+    const color = value.color
+      ? value.color
+      : value.theme
+      ? Object.entries(value.theme)
+          .map(([themeKey, themeValue]) => {
+            const theme = THEMES[themeKey as keyof typeof THEMES]
+            return theme
+              ? `[data-theme="${themeKey}"] & { --${id}-${key}: ${themeValue}; }`
+              : ""
+          })
+          .join("\n")
+      : ""
 
-  if (!colorConfig.length) {
-    return null
-  }
-
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
+    return `
+      [data-chart="${id}"] {
+        --${id}-${key}: ${
+      value.color ? value.color : `var(--${Object.keys(THEMES)[0]})`
+    };
+      }
+      ${color}
+    `
   })
-  .join("\n")}
-}
-`
-          )
-          .join("\n"),
-      }}
-    />
-  )
+
+  return <style dangerouslySetInnerHTML={{ __html: styles.join("\n") }} />
 }
 
-const ChartTooltip = RechartsPrimitive.Tooltip
-
-function ChartTooltipContent({
+function ChartTooltip({
   active,
   payload,
   className,
@@ -128,118 +142,61 @@ function ChartTooltipContent({
   }) {
   const { config } = useChart()
 
-  const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload?.length) {
-      return null
-    }
-
-    const [item] = payload
-    const key = `${labelKey || item?.dataKey || item?.name || "value"}`
-    const itemConfig = getPayloadConfigFromPayload(config, item, key)
-    const value =
-      !labelKey && typeof label === "string"
-        ? config[label as keyof typeof config]?.label || label
-        : itemConfig?.label
-
-    if (labelFormatter) {
-      return (
-        <div className={cn("font-medium", labelClassName)}>
-          {labelFormatter(value, payload)}
-        </div>
-      )
-    }
-
-    if (!value) {
-      return null
-    }
-
-    return <div className={cn("font-medium", labelClassName)}>{value}</div>
-  }, [
-    label,
-    labelFormatter,
-    payload,
-    hideLabel,
-    labelClassName,
-    config,
-    labelKey,
-  ])
-
   if (!active || !payload?.length) {
     return null
   }
 
-  const nestLabel = payload.length === 1 && indicator !== "dot"
-
   return (
     <div
       className={cn(
-        "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
+        "rounded-lg border bg-background px-3 py-2 shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
         className
       )}
     >
-      {!nestLabel ? tooltipLabel : null}
-      <div className="grid gap-1.5">
-        {payload.map((item, index) => {
-          const key = `${nameKey || item.name || item.dataKey || "value"}`
-          const itemConfig = getPayloadConfigFromPayload(config, item, key)
-          const indicatorColor = color || item.payload.fill || item.color
+      {!hideLabel && (
+        <div
+          className={cn(
+            "mb-1 text-xs font-medium text-muted-foreground",
+            labelClassName
+          )}
+        >
+          {labelFormatter ? labelFormatter(label, payload) : label}
+        </div>
+      )}
+      <div className="flex flex-col gap-0.5">
+        {payload.map((item: any, index: number) => {
+          const payloadKey = nameKey || "name"
+          const dataKey = labelKey || "value"
+          const payloadConfig = getPayloadConfigFromPayload(
+            config,
+            item,
+            payloadKey
+          )
+          const formattedValue = formatter
+            ? formatter(item[dataKey], item.name, item, index, payload)
+            : item[dataKey]
+          const colorKey = color || item.dataKey
+          const colorValue = payloadConfig?.color
+            ? payloadConfig.color
+            : `var(--${colorKey})`
 
           return (
-            <div
-              key={item.dataKey}
-              className={cn(
-                "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
-                indicator === "dot" && "items-center"
+            <div key={index} className="flex items-center gap-1">
+              {!hideIndicator && (
+                <div
+                  className={cn("h-1.5 w-1.5 rounded-full", {
+                    "border-2 border-dashed": indicator === "dashed",
+                    "h-px w-2": indicator === "line",
+                  })}
+                  style={{
+                    background: colorValue,
+                    borderColor: colorValue,
+                  }}
+                />
               )}
-            >
-              {formatter && item?.value !== undefined && item.name ? (
-                formatter(item.value, item.name, item, index, item.payload)
-              ) : (
-                <>
-                  {itemConfig?.icon ? (
-                    <itemConfig.icon />
-                  ) : (
-                    !hideIndicator && (
-                      <div
-                        className={cn(
-                          "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
-                          {
-                            "h-2.5 w-2.5": indicator === "dot",
-                            "w-1": indicator === "line",
-                            "w-0 border-[1.5px] border-dashed bg-transparent":
-                              indicator === "dashed",
-                            "my-0.5": nestLabel && indicator === "dashed",
-                          }
-                        )}
-                        style={
-                          {
-                            "--color-bg": indicatorColor,
-                            "--color-border": indicatorColor,
-                          } as React.CSSProperties
-                        }
-                      />
-                    )
-                  )}
-                  <div
-                    className={cn(
-                      "flex flex-1 justify-between leading-none",
-                      nestLabel ? "items-end" : "items-center"
-                    )}
-                  >
-                    <div className="grid gap-1.5">
-                      {nestLabel ? tooltipLabel : null}
-                      <span className="text-muted-foreground">
-                        {itemConfig?.label || item.name}
-                      </span>
-                    </div>
-                    {item.value && (
-                      <span className="text-foreground font-mono font-medium tabular-nums">
-                        {item.value.toLocaleString()}
-                      </span>
-                    )}
-                  </div>
-                </>
-              )}
+              <span className="text-xs font-medium">
+                {item[payloadKey]}: {formattedValue}
+              </span>
             </div>
           )
         })}
@@ -248,7 +205,21 @@ function ChartTooltipContent({
   )
 }
 
-const ChartLegend = RechartsPrimitive.Legend
+function ChartLegend({
+  className,
+  children,
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap items-center justify-center gap-4 text-xs",
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
 
 function ChartLegendContent({
   className,
@@ -263,91 +234,69 @@ function ChartLegendContent({
   }) {
   const { config } = useChart()
 
-  if (!payload?.length) {
-    return null
+  if (payload) {
+    return (
+      <>
+        {payload.map((item: any, index: number) => {
+          const payloadKey = nameKey || "value"
+          const payloadConfig = getPayloadConfigFromPayload(
+            config,
+            item,
+            payloadKey
+          )
+          const colorKey = item.dataKey
+          const colorValue = payloadConfig?.color
+            ? payloadConfig.color
+            : `var(--${colorKey})`
+
+          return (
+            <div
+              key={index}
+              className={cn(
+                "flex items-center gap-1 text-xs font-medium",
+                className
+              )}
+            >
+              {!hideIcon && (
+                <div
+                  className="h-2 w-2 rounded-full"
+                  style={{ background: colorValue }}
+                />
+              )}
+              <span>{item[payloadKey]}</span>
+            </div>
+          )
+        })}
+      </>
+    )
   }
 
-  return (
-    <div
-      className={cn(
-        "flex items-center justify-center gap-4",
-        verticalAlign === "top" ? "pb-3" : "pt-3",
-        className
-      )}
-    >
-      {payload.map((item) => {
-        const key = `${nameKey || item.dataKey || "value"}`
-        const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
-        return (
-          <div
-            key={item.value}
-            className={cn(
-              "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
-            )}
-          >
-            {itemConfig?.icon && !hideIcon ? (
-              <itemConfig.icon />
-            ) : (
-              <div
-                className="h-2 w-2 shrink-0 rounded-[2px]"
-                style={{
-                  backgroundColor: item.color,
-                }}
-              />
-            )}
-            {itemConfig?.label}
-          </div>
-        )
-      })}
-    </div>
-  )
+  return null
 }
 
-// Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,
   key: string
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined
+  if (!payload || typeof payload !== "object" || !key) {
+    return null
   }
 
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined
+  const payloadKey = key as keyof typeof payload
+  const payloadValue = payload[payloadKey]
 
-  let configLabelKey: string = key
-
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
-    configLabelKey = payload[key as keyof typeof payload] as string
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
-  ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string
+  if (!payloadValue || typeof payloadValue !== "string") {
+    return null
   }
 
-  return configLabelKey in config
-    ? config[configLabelKey]
-    : config[key as keyof typeof config]
+  return config[payloadValue]
 }
 
 export {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  ChartStyle,
+  useChart,
 }

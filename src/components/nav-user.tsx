@@ -6,7 +6,9 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
-  Sparkles,
+  User,
+  Settings,
+  Building,
 } from "lucide-react"
 
 import {
@@ -52,17 +54,19 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {user.name.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -71,10 +75,12 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {user.name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-semibold">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
@@ -82,29 +88,37 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+                <BadgeCheck />
+                Vérification KYC
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+                <User />
+                Mon profil
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Building />
+                Mon entreprise
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />
-                Billing
+                Facturation
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings />
+                Paramètres
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogOut />
-              Log out
+              Déconnexion
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
