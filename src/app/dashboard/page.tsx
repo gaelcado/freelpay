@@ -100,17 +100,15 @@ function QuickActionCard({ title, icon: Icon, variant, onClick }: {
   }
 
   return (
-    <Card 
-      className={`${variantClasses[variant]} cursor-pointer transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md`}
+    <button
       onClick={onClick}
+      className={`flex items-center gap-3 p-2 sm:p-3 lg:p-4 rounded-xl border ${variantClasses[variant]} transition-colors`}
     >
-      <CardContent className="p-4 flex items-center gap-4">
-        <div className={`w-10 h-10 rounded-full ${variantClasses[variant]} flex items-center justify-center`}>
-          <Icon className={`h-5 w-5 ${iconClasses[variant]}`} />
-        </div>
-        <BodySM className="font-medium">{title}</BodySM>
-      </CardContent>
-    </Card>
+      <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${variantClasses[variant]}`}>
+        <Icon className={`h-4 w-4 ${iconClasses[variant]}`} />
+      </div>
+      <span className="text-xs sm:text-sm font-medium">{title}</span>
+    </button>
   )
 }
 
@@ -134,29 +132,31 @@ function LoadingCard() {
 // Status badge component for consistent styling
 function StatusBadge({ status }: { status: 'pending' | 'paid' | 'overdue' }) {
   const variants = {
-    pending: "bg-amber-100 text-amber-800 dark:bg-amber-500/30 dark:text-amber-300",
-    paid: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/30 dark:text-emerald-300",
-    overdue: "bg-red-100 text-red-800 dark:bg-red-500/30 dark:text-red-300"
+    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400",
+    paid: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400",
+    overdue: "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400"
   }
   
   const labels = {
-    pending: "En attente",
-    paid: "Payé",
-    overdue: "En retard"
+    pending: "En Attente",
+    paid: "Payée",
+    overdue: "En Retard"
   }
   
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[status]}`}>
-      {labels[status]}
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${variants[status]}`}>
+      <span className={`w-1.5 h-1.5 rounded-full mr-1 ${status === 'pending' ? 'bg-amber-500' : status === 'paid' ? 'bg-emerald-500' : 'bg-red-500'}`}></span>
+      <span className="hidden xs:inline">{labels[status]}</span>
+      <span className="xs:hidden">{status === 'pending' ? 'EA' : status === 'paid' ? 'P' : 'ER'}</span>
     </span>
   )
 }
 
 export default function Page() {
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-4 md:gap-8">
       {/* Hero Section with Welcome and Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Welcome and Stats */}
         <div className="lg:col-span-2">
           <Card variant="glass" elevation="medium" className="overflow-hidden">
@@ -168,7 +168,7 @@ export default function Page() {
               <BodyMD className="text-muted-foreground">Voici un aperçu de votre financement de factures</BodyMD>
             </CardHeader>
             <CardContent spacing="default" className="pb-6">
-              <div className="grid grid-cols-2 gap-4 mt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                 <div className="flex flex-col">
                   <BodySM className="text-muted-foreground">Total Financé</BodySM>
                   <div className="flex items-baseline gap-2">
@@ -189,7 +189,7 @@ export default function Page() {
               </div>
             </CardContent>
             <CardFooter spacing="default" withSeparator className="pt-4">
-              <div className="flex justify-between w-full">
+              <div className="flex flex-col sm:flex-row justify-between w-full gap-2 sm:gap-0">
                 <Button variant="ghost" size="sm" className="gap-1">
                   <Calendar className="h-4 w-4" />
                   Voir Calendrier
@@ -212,7 +212,7 @@ export default function Page() {
         {/* Quick Actions */}
         <div className="flex flex-col gap-4">
           <BodySM className="font-medium text-white ml-1">ACTIONS RAPIDES</BodySM>
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-1 gap-3">
             <QuickActionCard 
               title="Nouvelle Facture" 
               icon={FileText} 
@@ -278,15 +278,15 @@ export default function Page() {
         <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
           <Suspense fallback={<LoadingCard />}>
             <Card variant="glass" elevation="medium" className="col-span-1 lg:col-span-2">
-              <CardHeader spacing="default" className="flex flex-row items-center justify-between space-y-0">
+              <CardHeader spacing="default" className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
                 <div>
                   <CardTitle size="md">Tendance des Revenus</CardTitle>
                   <CardDescription>Comparaison mensuelle des financements</CardDescription>
                 </div>
                 <Button variant="outline" size="sm" className="h-8">Voir Rapport</Button>
               </CardHeader>
-              <CardContent spacing="default" className="h-[300px] relative">
-                <RevenueChart data={revenueData} height={280} />
+              <CardContent spacing="default" className="h-[250px] md:h-[300px] relative">
+                <RevenueChart data={revenueData} height={250} />
               </CardContent>
             </Card>
           </Suspense>
@@ -335,7 +335,7 @@ export default function Page() {
         <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
           {/* Recent Invoices */}
           <Card variant="glass" elevation="medium" className="col-span-1 lg:col-span-2">
-            <CardHeader spacing="default" className="flex flex-row items-center justify-between">
+            <CardHeader spacing="default" className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
               <div>
                 <CardTitle size="md">Factures Récentes</CardTitle>
                 <CardDescription>Votre activité récente de facturation</CardDescription>
@@ -345,12 +345,12 @@ export default function Page() {
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </CardHeader>
-            <CardContent spacing="default">
+            <CardContent spacing="default" className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Facture</TableHead>
-                    <TableHead>Client</TableHead>
+                    <TableHead className="hidden sm:table-cell">Client</TableHead>
                     <TableHead>Montant</TableHead>
                     <TableHead>Statut</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
@@ -360,7 +360,7 @@ export default function Page() {
                   {recentInvoices.map((invoice) => (
                     <TableRow key={invoice.id} className="hover:bg-accent/5">
                       <TableCell className="font-medium">#{invoice.id}</TableCell>
-                      <TableCell>{invoice.client}</TableCell>
+                      <TableCell className="hidden sm:table-cell">{invoice.client}</TableCell>
                       <TableCell>{invoice.amount.toLocaleString()} €</TableCell>
                       <TableCell>
                         <StatusBadge status={invoice.status} />
@@ -426,7 +426,7 @@ export default function Page() {
 
         {/* Upcoming Payments */}
         <Card variant="glass" elevation="medium">
-          <CardHeader spacing="default" className="flex flex-row items-center justify-between">
+          <CardHeader spacing="default" className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
             <div>
               <CardTitle size="md">Paiements à Venir</CardTitle>
               <CardDescription>30 prochains jours</CardDescription>
@@ -436,64 +436,63 @@ export default function Page() {
               Voir Calendrier
             </Button>
           </CardHeader>
-          <CardContent spacing="default">
+          <CardContent spacing="default" className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Montant</TableHead>
                   <TableHead>Échéance</TableHead>
+                  <TableHead className="hidden sm:table-cell">Client</TableHead>
+                  <TableHead className="hidden md:table-cell">Facture</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow className="hover:bg-accent/5">
+                  <TableCell className="font-medium">4 500 €</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/30 flex items-center justify-center">
-                        <DollarSign className="h-3 w-3 text-emerald-600 dark:text-emerald-300" />
-                      </div>
-                      <span className="font-medium">5 200 €</span>
+                    <div className="flex flex-col">
+                      <span>15 Mars 2023</span>
+                      <span className="text-xs text-muted-foreground">Dans 5 jours</span>
                     </div>
                   </TableCell>
-                  <TableCell>Échéance dans 7 jours</TableCell>
+                  <TableCell className="hidden sm:table-cell">Acme Inc.</TableCell>
+                  <TableCell className="hidden md:table-cell">#INV-2023-005</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="h-8 gap-1">
-                      Détails
-                      <ExternalLink className="h-3 w-3" />
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <ExternalLink className="h-4 w-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-accent/5">
+                  <TableCell className="font-medium">2 800 €</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-500/30 flex items-center justify-center">
-                        <DollarSign className="h-3 w-3 text-amber-600 dark:text-amber-300" />
-                      </div>
-                      <span className="font-medium">3 800 €</span>
+                    <div className="flex flex-col">
+                      <span>22 Mars 2023</span>
+                      <span className="text-xs text-muted-foreground">Dans 12 jours</span>
                     </div>
                   </TableCell>
-                  <TableCell>Échéance dans 14 jours</TableCell>
+                  <TableCell className="hidden sm:table-cell">Globex Corp</TableCell>
+                  <TableCell className="hidden md:table-cell">#INV-2023-008</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="h-8 gap-1">
-                      Détails
-                      <ExternalLink className="h-3 w-3" />
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <ExternalLink className="h-4 w-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-accent/5">
+                  <TableCell className="font-medium">3 200 €</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-500/30 flex items-center justify-center">
-                        <DollarSign className="h-3 w-3 text-blue-600 dark:text-blue-300" />
-                      </div>
-                      <span className="font-medium">7 500 €</span>
+                    <div className="flex flex-col">
+                      <span>28 Mars 2023</span>
+                      <span className="text-xs text-muted-foreground">Dans 18 jours</span>
                     </div>
                   </TableCell>
-                  <TableCell>Échéance dans 21 jours</TableCell>
+                  <TableCell className="hidden sm:table-cell">Initech</TableCell>
+                  <TableCell className="hidden md:table-cell">#INV-2023-010</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="h-8 gap-1">
-                      Détails
-                      <ExternalLink className="h-3 w-3" />
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <ExternalLink className="h-4 w-4" />
                     </Button>
                   </TableCell>
                 </TableRow>

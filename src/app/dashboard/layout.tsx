@@ -55,12 +55,12 @@ export default function DashboardLayout({
             fill 
             priority
             quality={100}
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover opacity-100 dark:opacity-100"
           />
         </div>
         
-        <header className="flex justify-between w-full h-16 shrink-0 items-center gap-2 px-4 sticky top-0 z-10">
+        <header className="flex justify-between w-full h-14 md:h-16 shrink-0 items-center gap-2 px-3 md:px-4 sticky top-0 z-10">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -71,7 +71,7 @@ export default function DashboardLayout({
                     Freelpay
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator />
+                <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
                   <BreadcrumbPage>{getPageName()}</BreadcrumbPage>
                 </BreadcrumbItem>
@@ -80,7 +80,7 @@ export default function DashboardLayout({
           </div>
           <ModeToggle />
         </header>
-        <div className="flex flex-1 flex-col p-4 pt-0 overflow-x-hidden relative z-1">
+        <div className="flex flex-1 flex-col p-3 md:p-4 pt-0 overflow-x-hidden relative z-1">
           {children}
         </div>
       </SidebarInset>
