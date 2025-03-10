@@ -59,28 +59,12 @@ export default function DashboardLayout({
             backgroundImage: `url('/branding/6.png')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            // Mobile-friendly approach
             position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
+            width: '100%',
+            height: '100%',
           }}
           aria-label="Arrière-plan"
-        />
-        
-        {/* Semi-transparent overlay for better content readability */}
-        <div 
-          className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none bg-background/70"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
-          }}
-          aria-hidden="true"
         />
         
         <header className="flex justify-between w-full h-14 md:h-16 shrink-0 items-center gap-2 px-3 md:px-4 sticky top-0 z-10">
@@ -103,7 +87,7 @@ export default function DashboardLayout({
           </div>
           <ModeToggle />
         </header>
-        <div className="flex flex-1 flex-col p-3 md:p-4 pt-0 overflow-x-hidden relative z-10">
+        <div className="flex flex-1 flex-col p-3 md:p-4 pt-0 overflow-x-hidden relative z-1">
           {children}
         </div>
       </SidebarInset>
