@@ -132,9 +132,9 @@ function LoadingCard() {
 // Status badge component for consistent styling
 function StatusBadge({ status }: { status: 'pending' | 'paid' | 'overdue' }) {
   const variants = {
-    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400",
-    paid: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400",
-    overdue: "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400"
+    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/30 dark:text-amber-400",
+    paid: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/30 dark:text-emerald-400",
+    overdue: "bg-red-100 text-red-700 dark:bg-red-500/30 dark:text-red-400"
   }
   
   const labels = {
