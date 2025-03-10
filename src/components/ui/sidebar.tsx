@@ -24,6 +24,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useVibration } from "@/hooks/use-vibration"
+import { useIsIOS } from "@/hooks/use-ios"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -95,6 +97,10 @@ function SidebarProvider({
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
+    const isIOS = /iphone|ipad|ipod/.test(
+      window.navigator.userAgent.toLowerCase()
+    ) && !(window as any).MSStream
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
@@ -102,6 +108,31 @@ function SidebarProvider({
       ) {
         event.preventDefault()
         toggleSidebar()
+        
+        // Trigger vibration on iOS devices
+        if (isIOS && "vibrate" in navigator) {
+          navigator.vibrate(15)
+        } else if (isIOS) {
+          // For iOS devices, we can try to use the AudioContext API as a fallback
+          try {
+            const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+            const oscillator = audioContext.createOscillator()
+            const gainNode = audioContext.createGain()
+            
+            // Set up a silent oscillator
+            oscillator.frequency.value = 0
+            gainNode.gain.value = 0
+            
+            oscillator.connect(gainNode)
+            gainNode.connect(audioContext.destination)
+            
+            // Start and stop the oscillator to trigger a "click" on iOS
+            oscillator.start()
+            oscillator.stop(audioContext.currentTime + 0.015)
+          } catch (error) {
+            console.error("Vibration fallback failed:", error)
+          }
+        }
       }
     }
 
@@ -181,8 +212,22 @@ function Sidebar({
   }
 
   if (isMobile) {
+    const vibrate = useVibration()
+    const isIOS = useIsIOS()
+
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <Sheet 
+        open={openMobile} 
+        onOpenChange={(open) => {
+          setOpenMobile(open);
+          
+          // Trigger vibration on iOS devices
+          if (isIOS) {
+            vibrate(15);
+          }
+        }} 
+        {...props}
+      >
         <SheetContent
           data-sidebar="sidebar"
           data-slot="sidebar"
@@ -196,8 +241,8 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            <SheetTitle>Barre latérale</SheetTitle>
+            <SheetDescription>Affiche la barre latérale mobile.</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
@@ -256,6 +301,8 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
+  const vibrate = useVibration()
+  const isIOS = useIsIOS()
 
   return (
     <Button
@@ -267,26 +314,40 @@ function SidebarTrigger({
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
+        
+        // Trigger vibration on iOS devices
+        if (isIOS) {
+          vibrate(15)
+        }
       }}
       {...props}
     >
       <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
+      <span className="sr-only">Basculer la barre latérale</span>
     </Button>
   )
 }
 
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar()
+  const vibrate = useVibration()
+  const isIOS = useIsIOS()
 
   return (
     <button
       data-sidebar="rail"
       data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
+      aria-label="Basculer la barre latérale"
       tabIndex={-1}
-      onClick={toggleSidebar}
-      title="Toggle Sidebar"
+      onClick={(event) => {
+        toggleSidebar()
+        
+        // Trigger vibration on iOS devices
+        if (isIOS) {
+          vibrate(15)
+        }
+      }}
+      title="Basculer la barre latérale"
       className={cn(
         "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
         "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
