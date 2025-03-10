@@ -2,10 +2,16 @@ import * as React from "react"
 
 /**
  * Hook to detect if the current device is running iOS
- * @returns boolean indicating if the device is running iOS
+ * @returns Object with information about iOS and vibration support
  */
 export function useIsIOS() {
-  const [isIOS, setIsIOS] = React.useState<boolean>(false)
+  const [deviceInfo, setDeviceInfo] = React.useState<{
+    isIOS: boolean;
+    supportsVibration: boolean;
+  }>({
+    isIOS: false,
+    supportsVibration: false
+  })
 
   React.useEffect(() => {
     // Check if the device is running iOS
@@ -14,8 +20,14 @@ export function useIsIOS() {
       return /iphone|ipad|ipod/.test(userAgent) && !(window as any).MSStream
     }
 
-    setIsIOS(checkIsIOS())
+    // Check if vibration is supported
+    const supportsVibration = "vibrate" in navigator
+
+    setDeviceInfo({
+      isIOS: checkIsIOS(),
+      supportsVibration
+    })
   }, [])
 
-  return isIOS
+  return deviceInfo
 } 

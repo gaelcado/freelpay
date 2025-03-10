@@ -97,9 +97,7 @@ function SidebarProvider({
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
-    const isIOS = /iphone|ipad|ipod/.test(
-      window.navigator.userAgent.toLowerCase()
-    ) && !(window as any).MSStream
+    const supportsVibration = "vibrate" in navigator
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
@@ -109,29 +107,9 @@ function SidebarProvider({
         event.preventDefault()
         toggleSidebar()
         
-        // Trigger vibration on iOS devices
-        if (isIOS && "vibrate" in navigator) {
+        // Trigger vibration if supported
+        if (supportsVibration) {
           navigator.vibrate(15)
-        } else if (isIOS) {
-          // For iOS devices, we can try to use the AudioContext API as a fallback
-          try {
-            const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-            const oscillator = audioContext.createOscillator()
-            const gainNode = audioContext.createGain()
-            
-            // Set up a silent oscillator
-            oscillator.frequency.value = 0
-            gainNode.gain.value = 0
-            
-            oscillator.connect(gainNode)
-            gainNode.connect(audioContext.destination)
-            
-            // Start and stop the oscillator to trigger a "click" on iOS
-            oscillator.start()
-            oscillator.stop(audioContext.currentTime + 0.015)
-          } catch (error) {
-            console.error("Vibration fallback failed:", error)
-          }
         }
       }
     }
@@ -213,7 +191,7 @@ function Sidebar({
 
   if (isMobile) {
     const vibrate = useVibration()
-    const isIOS = useIsIOS()
+    const { isIOS, supportsVibration } = useIsIOS()
 
     return (
       <Sheet 
@@ -221,8 +199,8 @@ function Sidebar({
         onOpenChange={(open) => {
           setOpenMobile(open);
           
-          // Trigger vibration on iOS devices
-          if (isIOS) {
+          // Trigger vibration if supported
+          if (supportsVibration) {
             vibrate(15);
           }
         }} 
@@ -302,7 +280,7 @@ function SidebarTrigger({
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
   const vibrate = useVibration()
-  const isIOS = useIsIOS()
+  const { isIOS, supportsVibration } = useIsIOS()
 
   return (
     <Button
@@ -315,8 +293,8 @@ function SidebarTrigger({
         onClick?.(event)
         toggleSidebar()
         
-        // Trigger vibration on iOS devices
-        if (isIOS) {
+        // Trigger vibration if supported
+        if (supportsVibration) {
           vibrate(15)
         }
       }}
@@ -331,7 +309,7 @@ function SidebarTrigger({
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar()
   const vibrate = useVibration()
-  const isIOS = useIsIOS()
+  const { isIOS, supportsVibration } = useIsIOS()
 
   return (
     <button
@@ -342,8 +320,8 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={(event) => {
         toggleSidebar()
         
-        // Trigger vibration on iOS devices
-        if (isIOS) {
+        // Trigger vibration if supported
+        if (supportsVibration) {
           vibrate(15)
         }
       }}

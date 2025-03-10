@@ -12,28 +12,12 @@ export function useVibration() {
     // Check if vibration API is supported
     if ("vibrate" in navigator) {
       navigator.vibrate(duration)
-    } else if (isIOS) {
-      // For iOS devices, we can try to use the AudioContext API as a fallback
-      try {
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-        const oscillator = audioContext.createOscillator()
-        const gainNode = audioContext.createGain()
-        
-        // Set up a silent oscillator
-        oscillator.frequency.value = 0
-        gainNode.gain.value = 0
-        
-        oscillator.connect(gainNode)
-        gainNode.connect(audioContext.destination)
-        
-        // Start and stop the oscillator to trigger a "click" on iOS
-        oscillator.start()
-        oscillator.stop(audioContext.currentTime + duration / 1000)
-      } catch (error) {
-        console.error("Vibration fallback failed:", error)
-      }
+    } else {
+      // Pour iOS, nous ne pouvons pas déclencher de vibration dans une application web
+      // Safari iOS ne prend pas en charge l'API Vibration
+      console.log("La vibration n'est pas prise en charge sur ce navigateur")
     }
-  }, [isIOS])
+  }, [])
 
   return vibrate
 } 
