@@ -1,24 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { ModeToggle } from "@/components/theme-switch"
-import { InfoIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon, PaletteIcon, LayoutIcon, ComponentIcon, TextIcon, BoxIcon, CircleIcon } from "lucide-react"
+import { PaletteIcon, ComponentIcon, BoxIcon } from "lucide-react"
 import { TypographyShowcase } from "./typography-showcase"
 
 export default function StyleGuidePage() {
   return (
     <div className="space-y-8">
-      <Card>
+      <Card variant="default" elevation="medium">
         <CardHeader>
           <CardTitle>Design System</CardTitle>
           <p className="text-sm text-muted-foreground">Explore our design system elements and components</p>
@@ -34,10 +25,10 @@ export default function StyleGuidePage() {
             </TabsList>
 
             <TabsContent value="theme" className="mt-6 space-y-6">
-              <Card>
+              <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <PaletteIcon className="h-6 w-6" />
+                    <PaletteIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Theme Overview</CardTitle>
                   </div>
                 </CardHeader>
@@ -70,10 +61,10 @@ export default function StyleGuidePage() {
             </TabsContent>
 
             <TabsContent value="colors" className="mt-6 space-y-6">
-              <Card>
+              <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <PaletteIcon className="h-6 w-6" />
+                    <PaletteIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Color Palette</CardTitle>
                   </div>
                 </CardHeader>
@@ -136,10 +127,10 @@ export default function StyleGuidePage() {
             </TabsContent>
 
             <TabsContent value="spacing" className="mt-6 space-y-6">
-              <Card>
+              <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <BoxIcon className="h-6 w-6" />
+                    <BoxIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Spacing & Radius</CardTitle>
                   </div>
                 </CardHeader>
@@ -176,10 +167,10 @@ export default function StyleGuidePage() {
             </TabsContent>
 
             <TabsContent value="components" className="mt-6 space-y-6">
-              <Card>
+              <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <ComponentIcon className="h-6 w-6" />
+                    <ComponentIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Components</CardTitle>
                   </div>
                 </CardHeader>

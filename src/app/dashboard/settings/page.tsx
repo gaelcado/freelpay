@@ -33,7 +33,7 @@ export default function SettingsPage() {
         </TabsList>
         
         <TabsContent value="profile" className="mt-6 space-y-6">
-          <Card>
+          <Card variant="default" elevation="medium">
             <CardHeader>
               <CardTitle>Informations personnelles</CardTitle>
               <CardDescription>
@@ -63,11 +63,11 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Enregistrer les modifications</Button>
+              <Button>Sauvegarder</Button>
             </CardFooter>
           </Card>
           
-          <Card>
+          <Card variant="default" elevation="medium">
             <CardHeader>
               <CardTitle>Notifications</CardTitle>
               <CardDescription>
@@ -106,13 +106,13 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Enregistrer les préférences</Button>
+              <Button>Sauvegarder</Button>
             </CardFooter>
           </Card>
         </TabsContent>
         
         <TabsContent value="company" className="mt-6 space-y-6">
-          <Card>
+          <Card variant="default" elevation="medium">
             <CardHeader>
               <CardTitle>Informations de l'entreprise</CardTitle>
               <CardDescription>
@@ -141,11 +141,11 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Enregistrer les modifications</Button>
+              <Button>Sauvegarder</Button>
             </CardFooter>
           </Card>
           
-          <Card>
+          <Card variant="default" elevation="medium">
             <CardHeader>
               <CardTitle>Coordonnées bancaires</CardTitle>
               <CardDescription>
@@ -169,7 +169,7 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Enregistrer les coordonnées</Button>
+              <Button>Sauvegarder</Button>
             </CardFooter>
           </Card>
         </TabsContent>

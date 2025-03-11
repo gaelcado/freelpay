@@ -43,12 +43,6 @@ export const recentNotifications: Notification[] = [
     date: 'il y a 5 heures',
   },
   {
-    id: '3',
-    title: 'Financement Approuvé',
-    description: 'Votre demande de 7 500 € a été approuvée',
-    date: 'il y a 1 jour',
-  },
-  {
     id: '4',
     title: 'Client Ajouté',
     description: 'Nouveau client "Solutions Digitales" ajouté à votre portefeuille',

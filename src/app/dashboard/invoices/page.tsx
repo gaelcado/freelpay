@@ -101,7 +101,7 @@ export default function InvoicesPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <HeadingLG>Mes Factures</HeadingLG>
+          <HeadingLG>Mes Factures ({mockInvoices.length})</HeadingLG>
           <BodyMD className="text-muted-foreground">
             Gérez vos factures et suivez leur statut
           </BodyMD>
@@ -114,75 +114,73 @@ export default function InvoicesPage() {
         </Button>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Liste des factures</CardTitle>
-          <CardDescription>
-            Vous avez {mockInvoices.length} factures au total
-          </CardDescription>
-          <div className="mt-4 relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Rechercher par numéro ou client..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Numéro</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Montant</TableHead>
-                <TableHead>Date d'émission</TableHead>
-                <TableHead>Date d'échéance</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredInvoices.length > 0 ? (
-                filteredInvoices.map((invoice) => (
-                  <TableRow key={invoice.id}>
-                    <TableCell className="font-medium">
-                      <Link href={`/dashboard/invoices/${invoice.id}`} className="flex items-center hover:underline">
-                        <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
-                        {invoice.id}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{invoice.client}</TableCell>
-                    <TableCell>{formatCurrency(invoice.amount)}</TableCell>
-                    <TableCell>{formatDate(invoice.date)}</TableCell>
-                    <TableCell>{formatDate(invoice.dueDate)}</TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(invoice.status)}>
-                        {formatStatus(invoice.status)}
-                      </Badge>
+      <div className="mt-6">
+        <Card variant="default" elevation="medium">
+          <CardHeader>
+            <div className="mt-4 relative">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Rechercher par numéro ou client..."
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Numéro</TableHead>
+                  <TableHead>Client</TableHead>
+                  <TableHead>Montant</TableHead>
+                  <TableHead>Date d&apos;émission</TableHead>
+                  <TableHead>Date d&apos;échéance</TableHead>
+                  <TableHead>Statut</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredInvoices.length > 0 ? (
+                  filteredInvoices.map((invoice) => (
+                    <TableRow key={invoice.id}>
+                      <TableCell className="font-medium">
+                        <Link href={`/dashboard/invoices/${invoice.id}`} className="flex items-center hover:underline">
+                          <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+                          {invoice.id}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{invoice.client}</TableCell>
+                      <TableCell>{formatCurrency(invoice.amount)}</TableCell>
+                      <TableCell>{formatDate(invoice.date)}</TableCell>
+                      <TableCell>{formatDate(invoice.dueDate)}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(invoice.status)}>
+                          {formatStatus(invoice.status)}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                      Aucune facture trouvée
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
-                    Aucune facture trouvée
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" disabled>
-            Précédent
-          </Button>
-          <Button variant="outline" disabled>
-            Suivant
-          </Button>
-        </CardFooter>
-      </Card>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" disabled>
+              Précédent
+            </Button>
+            <Button variant="outline" disabled>
+              Suivant
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   )
 } 

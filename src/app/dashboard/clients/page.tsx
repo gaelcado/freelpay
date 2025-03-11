@@ -120,79 +120,81 @@ export default function ClientsPage() {
         </Button>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Liste des clients</CardTitle>
-          <CardDescription>
-            Vous avez {mockClients.length} clients au total
-          </CardDescription>
-          <div className="mt-4 relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Rechercher par nom, contact ou email..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nom</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Téléphone</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredClients.length > 0 ? (
-                filteredClients.map((client) => (
-                  <TableRow key={client.id}>
-                    <TableCell className="font-medium">
-                      <Link href={`/dashboard/clients/${client.id}`} className="flex items-center hover:underline">
-                        <Building className="mr-2 h-4 w-4 text-muted-foreground" />
-                        {client.name}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{client.contact}</TableCell>
-                    <TableCell>
-                      <a href={`mailto:${client.email}`} className="hover:underline">
-                        {client.email}
-                      </a>
-                    </TableCell>
-                    <TableCell>{client.phone}</TableCell>
-                    <TableCell>{getTypeLabel(client.type)}</TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(client.status)}>
-                        {formatStatus(client.status)}
-                      </Badge>
+      <div className="mt-6">
+        <Card variant="default" elevation="medium">
+          <CardHeader>
+            <CardTitle>Liste des clients</CardTitle>
+            <CardDescription>
+              Vous avez {mockClients.length} clients au total
+            </CardDescription>
+            <div className="mt-4 relative">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Rechercher par nom, contact ou email..."
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nom</TableHead>
+                  <TableHead>Contact</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Téléphone</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Statut</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredClients.length > 0 ? (
+                  filteredClients.map((client) => (
+                    <TableRow key={client.id}>
+                      <TableCell className="font-medium">
+                        <Link href={`/dashboard/clients/${client.id}`} className="flex items-center hover:underline">
+                          <Building className="mr-2 h-4 w-4 text-muted-foreground" />
+                          {client.name}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{client.contact}</TableCell>
+                      <TableCell>
+                        <a href={`mailto:${client.email}`} className="hover:underline">
+                          {client.email}
+                        </a>
+                      </TableCell>
+                      <TableCell>{client.phone}</TableCell>
+                      <TableCell>{getTypeLabel(client.type)}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(client.status)}>
+                          {formatStatus(client.status)}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                      Aucun client trouvé
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
-                    Aucun client trouvé
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" disabled>
-            Précédent
-          </Button>
-          <Button variant="outline" disabled>
-            Suivant
-          </Button>
-        </CardFooter>
-      </Card>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" disabled>
+              Précédent
+            </Button>
+            <Button variant="outline" disabled>
+              Suivant
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   )
 } 

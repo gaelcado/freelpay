@@ -19,13 +19,13 @@ interface RevenueChartProps extends React.HTMLAttributes<HTMLDivElement> {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-background/95 dark:bg-background/90 backdrop-blur-sm border border-border p-3 rounded-lg shadow-lg">
-        <BodySM className="font-medium mb-1">{label}</BodySM>
-        <div className="space-y-1">
+      <div className="bg-background/95 dark:bg-background/90 backdrop-blur-sm border border-border/30 p-2.5 rounded-lg shadow-sm">
+        <BodySM className="font-medium mb-0.5">{label}</BodySM>
+        <div className="space-y-0.5">
           {payload.map((entry: any, index: number) => (
-            <div key={`item-${index}`} className="flex items-center gap-2">
+            <div key={`item-${index}`} className="flex items-center gap-1.5">
               <div 
-                className="w-3 h-3 rounded-full" 
+                className="w-1.5 h-1.5 rounded-full" 
                 style={{ backgroundColor: entry.color }}
               />
               <BodyXS>
@@ -50,9 +50,47 @@ export function RevenueChart({
   // Format the data to include Euro symbol
   const formatYAxis = (value: number) => {
     if (value >= 1000) {
-      return `${value / 1000}k €`;
+      return `${value / 1000}k`;
     }
-    return `${value} €`;
+    return `${value}`;
+  };
+
+  // Custom tick component for X-axis to handle margin better
+  const CustomXAxisTick = ({ x, y, payload }: any) => {
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text 
+          x={0} 
+          y={0} 
+          dy={16} 
+          textAnchor="middle" 
+          fill="var(--muted-foreground)" 
+          fontSize={10}
+          opacity={0.8}
+        >
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
+
+  // Custom tick component for Y-axis to handle margin better
+  const CustomYAxisTick = ({ x, y, payload }: any) => {
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text 
+          x={0} 
+          y={0} 
+          dx={-10} 
+          textAnchor="end" 
+          fill="var(--muted-foreground)" 
+          fontSize={10}
+          opacity={0.8}
+        >
+          {formatYAxis(payload.value)}
+        </text>
+      </g>
+    );
   };
 
   return (
@@ -60,30 +98,40 @@ export function RevenueChart({
       <ResponsiveContainer width="100%" height={height}>
         <AreaChart 
           data={data} 
-          margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
+          margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
         >
           <defs>
             <linearGradient id="current" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.3}/>
+              <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.15}/>
               <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0}/>
             </linearGradient>
             <linearGradient id="previous" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="var(--chart-2)" stopOpacity={0.3}/>
+              <stop offset="5%" stopColor="var(--chart-2)" stopOpacity={0.1}/>
               <stop offset="95%" stopColor="var(--chart-2)" stopOpacity={0}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.5} />
+          <CartesianGrid 
+            strokeDasharray="5 5" 
+            stroke="var(--border)" 
+            opacity={0.1} 
+            horizontal={true}
+            vertical={false}
+          />
           <XAxis 
             dataKey="month" 
-            tick={{ fill: "var(--muted-foreground)" }}
-            axisLine={{ stroke: "var(--border)" }}
-            tickLine={{ stroke: "var(--border)" }}
+            axisLine={false}
+            tickLine={false}
+            tick={<CustomXAxisTick />}
+            dy={5}
+            padding={{ left: 10, right: 10 }}
           />
           <YAxis 
-            tick={{ fill: "var(--muted-foreground)" }}
-            axisLine={{ stroke: "var(--border)" }}
-            tickLine={{ stroke: "var(--border)" }}
-            tickFormatter={formatYAxis}
+            axisLine={false}
+            tickLine={false}
+            tick={<CustomYAxisTick />}
+            width={30}
+            domain={['auto', 'auto']}
+            padding={{ top: 10, bottom: 10 }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Area
@@ -94,28 +142,28 @@ export function RevenueChart({
             fillOpacity={1}
             fill="url(#current)"
             name="Mois Actuel"
-            activeDot={{ r: 6, strokeWidth: 0 }}
+            activeDot={{ r: 5, strokeWidth: 0 }}
           />
           <Area
             type="monotone"
             dataKey="previous"
             stroke="var(--chart-2)"
-            strokeWidth={2}
+            strokeWidth={1.5}
             fillOpacity={1}
             fill="url(#previous)"
             name="Mois Précédent"
-            activeDot={{ r: 6, strokeWidth: 0 }}
+            activeDot={{ r: 4, strokeWidth: 0 }}
           />
           {showLegend && (
             <Legend 
               verticalAlign="top" 
-              height={36}
+              height={30}
               content={(props) => (
-                <div className="flex justify-center items-center gap-6 mt-2">
+                <div className="flex justify-center items-center gap-4 mt-1">
                   {props.payload?.map((entry, index) => (
-                    <div key={`legend-${index}`} className="flex items-center gap-2">
+                    <div key={`legend-${index}`} className="flex items-center gap-1.5">
                       <div 
-                        className="w-3 h-3 rounded-full" 
+                        className="w-1.5 h-1.5 rounded-full" 
                         style={{ backgroundColor: entry.color }}
                       />
                       <BodyXS className="text-muted-foreground">

@@ -45,10 +45,10 @@ export function TypographyShowcase() {
       </TabsList>
 
       <TabsContent value="standard" className="mt-6 space-y-6">
-        <Card>
+        <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <TextIcon className="h-6 w-6" />
+              <TextIcon className="h-5 w-5 text-primary" />
               <CardTitle>Standard Typography</CardTitle>
             </div>
           </CardHeader>
@@ -129,10 +129,10 @@ export function TypographyShowcase() {
       </TabsContent>
 
       <TabsContent value="responsive" className="mt-6 space-y-6">
-        <Card>
+        <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <TextIcon className="h-6 w-6" />
+              <TextIcon className="h-5 w-5 text-primary" />
               <CardTitle>Responsive Typography</CardTitle>
             </div>
           </CardHeader>
@@ -185,10 +185,10 @@ export function TypographyShowcase() {
       </TabsContent>
 
       <TabsContent value="utilities" className="mt-6 space-y-6">
-        <Card>
+        <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <TextIcon className="h-6 w-6" />
+              <TextIcon className="h-5 w-5 text-primary" />
               <CardTitle>Typography Utilities</CardTitle>
             </div>
           </CardHeader>
@@ -242,7 +242,7 @@ export function TypographyShowcase() {
                   <div className="p-4 border rounded-md">
                     <h4 className="text-sm font-medium mb-2">Justified</h4>
                     <Typography variant="body-md" align="justify">
-                      This text is justified. Justified text aligns to both the left and right margins, creating a clean edge on both sides. It's often used in print but can be harder to read on screens.
+                      This text is justified. Justified text aligns to both the left and right margins, creating a clean edge on both sides. It&apos;s often used in print but can be harder to read on screens.
                     </Typography>
                   </div>
                 </div>
@@ -319,10 +319,10 @@ export function TypographyShowcase() {
       </TabsContent>
 
       <TabsContent value="special" className="mt-6 space-y-6">
-        <Card>
+        <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <TextIcon className="h-6 w-6" />
+              <TextIcon className="h-5 w-5 text-primary" />
               <CardTitle>Special Typography</CardTitle>
             </div>
           </CardHeader>

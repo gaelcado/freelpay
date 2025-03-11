@@ -1,13 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/sidebar-provider";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
   return (
     <ThemeProvider
       attribute="class"

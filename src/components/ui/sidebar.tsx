@@ -24,8 +24,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useVibration } from "@/hooks/use-vibration"
-import { useIsIOS } from "@/hooks/use-ios"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -97,8 +95,6 @@ function SidebarProvider({
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
-    const supportsVibration = "vibrate" in navigator
-
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
@@ -106,11 +102,6 @@ function SidebarProvider({
       ) {
         event.preventDefault()
         toggleSidebar()
-        
-        // Trigger vibration if supported
-        if (supportsVibration) {
-          navigator.vibrate(15)
-        }
       }
     }
 
@@ -190,20 +181,12 @@ function Sidebar({
   }
 
   if (isMobile) {
-    const vibrate = useVibration()
-    const { isIOS, supportsVibration } = useIsIOS()
-
     return (
       <Sheet 
         open={openMobile} 
         onOpenChange={(open) => {
           setOpenMobile(open);
-          
-          // Trigger vibration if supported
-          if (supportsVibration) {
-            vibrate(15);
-          }
-        }} 
+        }}
         {...props}
       >
         <SheetContent
@@ -279,8 +262,6 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
-  const vibrate = useVibration()
-  const { isIOS, supportsVibration } = useIsIOS()
 
   return (
     <Button
@@ -292,11 +273,6 @@ function SidebarTrigger({
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
-        
-        // Trigger vibration if supported
-        if (supportsVibration) {
-          vibrate(15)
-        }
       }}
       {...props}
     >
@@ -308,8 +284,6 @@ function SidebarTrigger({
 
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar()
-  const vibrate = useVibration()
-  const { isIOS, supportsVibration } = useIsIOS()
 
   return (
     <button
@@ -317,13 +291,8 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       data-slot="sidebar-rail"
       aria-label="Basculer la barre latérale"
       tabIndex={-1}
-      onClick={(event) => {
+      onClick={() => {
         toggleSidebar()
-        
-        // Trigger vibration if supported
-        if (supportsVibration) {
-          vibrate(15)
-        }
       }}
       title="Basculer la barre latérale"
       className={cn(

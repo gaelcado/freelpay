@@ -109,81 +109,83 @@ export default function FinancingPage() {
         </div>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Demandes de financement</CardTitle>
-          <CardDescription>
-            Vous avez {mockFinancingRequests.length} demandes de financement
-          </CardDescription>
-          <div className="mt-4 relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Rechercher par ID, facture ou client..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Facture</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Montant</TableHead>
-                <TableHead>Date de demande</TableHead>
-                <TableHead>Taux</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredRequests.length > 0 ? (
-                filteredRequests.map((request) => (
-                  <TableRow key={request.id}>
-                    <TableCell className="font-medium">
-                      <Link href={`/dashboard/financing/${request.id}`} className="flex items-center hover:underline">
-                        <CreditCard className="mr-2 h-4 w-4 text-muted-foreground" />
-                        {request.id}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/dashboard/invoices/${request.invoiceId}`} className="hover:underline">
-                        {request.invoiceId}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{request.client}</TableCell>
-                    <TableCell>{formatCurrency(request.amount)}</TableCell>
-                    <TableCell>{formatDate(request.requestDate)}</TableCell>
-                    <TableCell>{request.status === "rejected" ? "-" : `${request.rate}%`}</TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(request.status)}>
-                        {formatStatus(request.status)}
-                      </Badge>
+      <div className="mt-6">
+        <Card variant="default" elevation="medium">
+          <CardHeader>
+            <CardTitle>Demandes de financement</CardTitle>
+            <CardDescription>
+              Vous avez {mockFinancingRequests.length} demandes de financement
+            </CardDescription>
+            <div className="mt-4 relative">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Rechercher par numéro ou client..."
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Facture</TableHead>
+                  <TableHead>Client</TableHead>
+                  <TableHead>Montant</TableHead>
+                  <TableHead>Date de demande</TableHead>
+                  <TableHead>Taux</TableHead>
+                  <TableHead>Statut</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredRequests.length > 0 ? (
+                  filteredRequests.map((request) => (
+                    <TableRow key={request.id}>
+                      <TableCell className="font-medium">
+                        <Link href={`/dashboard/financing/${request.id}`} className="flex items-center hover:underline">
+                          <CreditCard className="mr-2 h-4 w-4 text-muted-foreground" />
+                          {request.id}
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <Link href={`/dashboard/invoices/${request.invoiceId}`} className="hover:underline">
+                          {request.invoiceId}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{request.client}</TableCell>
+                      <TableCell>{formatCurrency(request.amount)}</TableCell>
+                      <TableCell>{formatDate(request.requestDate)}</TableCell>
+                      <TableCell>{request.status === "rejected" ? "-" : `${request.rate}%`}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(request.status)}>
+                          {formatStatus(request.status)}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
+                      Aucune demande de financement trouvée
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
-                    Aucune demande de financement trouvée
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" disabled>
-            Précédent
-          </Button>
-          <Button variant="outline" disabled>
-            Suivant
-          </Button>
-        </CardFooter>
-      </Card>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" disabled>
+              Précédent
+            </Button>
+            <Button variant="outline" disabled>
+              Suivant
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   )
 } 

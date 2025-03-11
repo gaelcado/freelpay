@@ -1,139 +1,167 @@
 "use client"
 
-import { CheckCircle2, ChevronRight } from "lucide-react"
+import { CheckCircle, Download, ArrowRight, Clock, CreditCard, Mail } from "lucide-react"
+import { format, addDays } from "date-fns"
+import { fr } from "date-fns/locale"
+
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { 
+  Card, 
+  CardContent 
+} from "@/components/ui/card"
+import { 
+  HeadingLG,
+  HeadingMD,
+  HeadingSM,
+  BodyLG,
+  BodyMD, 
+  BodySM 
+} from "@/components/ui/typography"
 
 type CompletionStepProps = {
   formData: any
+  updateFormData?: (data: any) => void
 }
 
 export default function CompletionStep({ formData }: CompletionStepProps) {
+  // Calculate financing details
+  const invoiceAmount = parseFloat(formData.invoiceAmount || "0")
+  const discountRate = formData.financingRate || 0.03 // 3% default
+  const fees = formData.financingFees || 25 // Default fee
+  const financedAmount = invoiceAmount * (1 - discountRate) - fees
+  
+  // Format dates
+  const today = new Date()
+  const paymentDate = addDays(today, 1)
+  const formattedPaymentDate = format(paymentDate, "PPP", { locale: fr })
+  
   return (
     <div className="space-y-8">
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
-        <div className="rounded-full bg-primary/10 p-3">
-          <CheckCircle2 className="h-12 w-12 text-primary" />
+      {/* Success header */}
+      <div className="text-center space-y-4">
+        <div className="mx-auto w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center">
+          <CheckCircle className="h-8 w-8 text-emerald-600 dark:text-emerald-500" />
         </div>
-        <h3 className="text-2xl font-bold">Félicitations !</h3>
-        <p className="text-muted-foreground">
-          Votre compte Freelpay est maintenant prêt. Vous pouvez commencer à financer vos factures.
-        </p>
+        
+        <div>
+          <HeadingLG className="text-emerald-800 dark:text-emerald-500">
+            Félicitations !
+          </HeadingLG>
+          <BodyLG className="text-muted-foreground mt-1">
+            Votre demande de financement a été approuvée
+          </BodyLG>
+        </div>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Récapitulatif de votre compte</CardTitle>
-          <CardDescription>
-            Voici un résumé des informations que vous avez fournies.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <h4 className="text-sm font-medium mb-2">Informations personnelles</h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="text-muted-foreground">Nom</div>
-              <div>{formData.contactInfo?.firstName} {formData.contactInfo?.lastName}</div>
-              <div className="text-muted-foreground">Email</div>
-              <div>{formData.contactInfo?.email}</div>
-              <div className="text-muted-foreground">Téléphone</div>
-              <div>{formData.contactInfo?.phone}</div>
-              <div className="text-muted-foreground">SIRET</div>
-              <div>{formData.contactInfo?.siret}</div>
+      {/* Financing details */}
+      <Card className="border-border/50 overflow-hidden">
+        <div className="bg-muted/30 px-6 py-4 border-b border-border/30">
+          <HeadingSM>Détails du financement</HeadingSM>
+        </div>
+        
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <CreditCard className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <BodyMD className="text-muted-foreground">Montant financé</BodyMD>
+                  <HeadingMD className="text-primary">{financedAmount.toFixed(2)}€</HeadingMD>
+                </div>
+              </div>
+              
+              <Separator className="bg-border/50" />
+              
+              <div className="grid grid-cols-2 gap-y-3 text-sm">
+                <div className="text-muted-foreground">Montant facture:</div>
+                <div className="font-medium text-right">{invoiceAmount.toFixed(2)}€</div>
+                
+                <div className="text-muted-foreground">Taux d'escompte:</div>
+                <div className="font-medium text-right">{(discountRate * 100).toFixed(1)}%</div>
+                
+                <div className="text-muted-foreground">Frais de service:</div>
+                <div className="font-medium text-right">{fees.toFixed(2)}€</div>
+              </div>
             </div>
-          </div>
-          
-          <Separator />
-          
-          <div>
-            <h4 className="text-sm font-medium mb-2">Informations professionnelles</h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="text-muted-foreground">Statut juridique</div>
-              <div>{formData.legalStatus}</div>
-              <div className="text-muted-foreground">Activité principale</div>
-              <div>{formData.activity}</div>
-              <div className="text-muted-foreground">Adresse professionnelle</div>
-              <div>{formData.businessAddress}</div>
-            </div>
-          </div>
-          
-          <Separator />
-          
-          <div>
-            <h4 className="text-sm font-medium mb-2">Financement</h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="text-muted-foreground">Montant de la facture</div>
-              <div>{formData.invoiceAmount ? `${parseFloat(formData.invoiceAmount).toLocaleString('fr-FR')} €` : '-'}</div>
-              <div className="text-muted-foreground">Client</div>
-              <div>{formData.clientDetails?.name || '-'}</div>
-              <div className="text-muted-foreground">Date d'échéance</div>
-              <div>{formData.dueDate ? new Date(formData.dueDate).toLocaleDateString('fr-FR') : '-'}</div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Clock className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <BodyMD className="text-muted-foreground">Date de paiement</BodyMD>
+                  <HeadingMD>{formattedPaymentDate}</HeadingMD>
+                </div>
+              </div>
+              
+              <Separator className="bg-border/50" />
+              
+              <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/10 rounded-md">
+                <Mail className="h-5 w-5 text-blue-600 dark:text-blue-500" />
+                <BodySM>
+                  Un email de confirmation a été envoyé à <span className="font-medium">{formData.userDetails?.email || "votre adresse email"}</span>
+                </BodySM>
+              </div>
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/30 flex flex-col items-start">
-          <p className="text-sm">
-            <span className="font-medium">Note :</span> Vous pouvez modifier ces informations à tout moment dans les paramètres de votre compte.
-          </p>
-        </CardFooter>
       </Card>
       
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium">Prochaines étapes</h3>
-        
-        <div className="space-y-3">
-          <Card className="p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-primary/10 rounded-full p-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-sm font-medium">Accéder à votre tableau de bord</h4>
-                <p className="text-xs text-muted-foreground">Visualisez vos factures et suivez vos financements</p>
-              </div>
-            </div>
-            <Button size="sm" variant="ghost">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </Card>
-          
-          <Card className="p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-primary/10 rounded-full p-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-sm font-medium">Soumettre votre première facture</h4>
-                <p className="text-xs text-muted-foreground">Commencez à financer vos factures dès maintenant</p>
-              </div>
-            </div>
-            <Button size="sm" variant="ghost">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </Card>
-          
-          <Card className="p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-primary/10 rounded-full p-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-sm font-medium">Compléter votre profil</h4>
-                <p className="text-xs text-muted-foreground">Ajoutez des informations supplémentaires pour améliorer votre expérience</p>
-              </div>
-            </div>
-            <Button size="sm" variant="ghost">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </Card>
+      {/* Next steps */}
+      <Card className="border-border/50 overflow-hidden">
+        <div className="bg-muted/30 px-6 py-4 border-b border-border/30">
+          <HeadingSM>Prochaines étapes</HeadingSM>
         </div>
-      </div>
+        
+        <CardContent className="p-0">
+          <div className="divide-y divide-border/50">
+            <div className="p-6 flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-sm font-medium">1</span>
+              </div>
+              <div>
+                <BodyMD className="font-medium">Téléchargez votre contrat</BodyMD>
+                <BodySM className="text-muted-foreground mb-3">
+                  Conservez une copie de votre contrat de financement
+                </BodySM>
+                <Button variant="outline" size="sm" className="gap-1.5">
+                  <Download className="h-3.5 w-3.5" />
+                  Télécharger le contrat
+                </Button>
+              </div>
+            </div>
+            
+            <div className="p-6 flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-sm font-medium">2</span>
+              </div>
+              <div>
+                <BodyMD className="font-medium">Accédez à votre tableau de bord</BodyMD>
+                <BodySM className="text-muted-foreground mb-3">
+                  Suivez l'état de vos financements et gérez vos factures
+                </BodySM>
+                <Button className="gap-1.5 bg-primary hover:bg-primary/90">
+                  Aller au tableau de bord
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       
-      <div className="bg-muted/50 p-4 rounded-lg">
-        <p className="text-sm">
-          <span className="font-medium">Besoin d'aide ?</span> Notre équipe est disponible pour vous accompagner dans vos démarches. N'hésitez pas à nous contacter par email à <a href="mailto:support@freelpay.com" className="text-primary">support@freelpay.com</a> ou par téléphone au <span className="font-medium">01 23 45 67 89</span>.
-        </p>
+      {/* Support info */}
+      <div className="text-center space-y-2 pt-4">
+        <BodyMD className="text-muted-foreground">
+          Besoin d'aide ou de renseignements ?
+        </BodyMD>
+        <BodyMD className="font-medium">
+          Contactez notre équipe au <span className="text-primary">01 23 45 67 89</span> ou par email à <span className="text-primary">support@freelpay.com</span>
+        </BodyMD>
       </div>
     </div>
   )

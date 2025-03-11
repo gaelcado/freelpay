@@ -84,13 +84,13 @@ export default function CreateInvoicePage() {
                   <Input id="invoice-number" placeholder="INV-001" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="invoice-date">Date d'émission</Label>
-                  <Input id="invoice-date" type="date" required defaultValue={new Date().toISOString().split('T')[0]} />
+                  <Label htmlFor="invoice-date">Date d&apos;émission</Label>
+                  <Input id="invoice-date" type="date" required defaultValue={new Date().toISOString().split("T")[0]} />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="due-date">Date d'échéance</Label>
+                  <Label htmlFor="due-date">Date d&apos;échéance</Label>
                   <Input id="due-date" type="date" required />
                 </div>
                 <div className="space-y-2">

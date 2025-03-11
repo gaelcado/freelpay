@@ -1,184 +1,234 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card"
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { ThemeSwitcher } from "@/components/ThemeSwitcher"
+import { cn } from "@/lib/utils"
+import { HeadingLG, HeadingSM, BodyMD, BodySM } from "@/components/ui/typography"
+import InvoiceUploadStep from "@/components/onboarding/steps/InvoiceUploadStep"
+import VerificationStep from "@/components/onboarding/steps/VerificationStep"
+import CompletionStep from "@/components/onboarding/steps/CompletionStep"
+import SignContractStep from "@/components/onboarding/steps/SignContractStep"
 
-// Onboarding Steps
-import SimulationStep from "./steps/SimulationStep"
-import RegistrationStep from "./steps/RegistrationStep"
-import KycStep from "./steps/KycStep"
-import FinancingStep from "./steps/FinancingStep"
-import CompletionStep from "./steps/CompletionStep"
-
-// Define the steps of the onboarding flow
 const STEPS = [
-  { id: "simulation", title: "Simulation", description: "Simulez le financement d'une facture" },
-  { id: "registration", title: "Inscription", description: "Créez votre compte Freelpay" },
-  { id: "kyc", title: "Vérification KYC", description: "Vérifiez votre identité" },
-  { id: "financing", title: "Financement", description: "Configurez votre financement" },
-  { id: "completion", title: "Terminé", description: "Votre compte est prêt" }
+  {
+    id: "upload",
+    title: "Télécharger la facture",
+    component: InvoiceUploadStep,
+  },
+  {
+    id: "verify",
+    title: "Vérification",
+    component: VerificationStep,
+  },
+  {
+    id: "sign",
+    title: "Signer le contrat",
+    component: SignContractStep,
+  },
+  {
+    id: "complete",
+    title: "Confirmation",
+    component: CompletionStep,
+  },
 ]
 
 export default function OnboardingFlow() {
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [formData, setFormData] = useState({})
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState({
-    // Simulation data
-    invoiceAmount: "",
-    dueDate: "",
-    clientType: "",
-    sector: "",
-    contactInfo: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      siret: ""
-    },
-    
-    // Registration data
-    password: "",
-    legalStatus: "",
-    businessAddress: "",
-    activity: "",
-    
-    // KYC data
-    identityDocument: null,
-    selfie: null,
-    kbis: null,
-    statusProof: null,
-    bankDetails: null,
-    addressProof: null,
-    fiscalDocuments: [],
-    bankStatements: [],
-    creditCard: {
-      number: "",
-      expiry: "",
-      cvc: ""
-    },
-    bankAccount: {
-      connected: false,
-      bank: ""
-    },
-    
-    // Financing data
-    invoiceFile: null,
-    clientDetails: {
-      name: "",
-      siret: "",
-      address: ""
-    },
-    paymentTerms: "",
-    financingAmount: ""
-  })
 
-  // Calculate progress percentage
-  const progress = ((currentStep + 1) / STEPS.length) * 100
+  const CurrentStepComponent = STEPS[currentStepIndex].component
 
-  // Handle form data updates
   const updateFormData = (data: any) => {
-    setFormData(prev => ({ ...prev, ...data }))
+    setFormData((prev) => ({ ...prev, ...data }))
+    if (currentStepIndex < STEPS.length - 1) {
+      setCurrentStepIndex((prev) => prev + 1)
+    }
   }
 
-  // Navigate to next step
-  const nextStep = () => {
-    if (currentStep < STEPS.length - 1) {
-      setCurrentStep(currentStep + 1)
-      window.scrollTo(0, 0)
+  const goBack = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex((prev) => prev - 1)
     } else {
-      // Complete onboarding
       router.push("/dashboard")
     }
   }
 
-  // Navigate to previous step
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1)
-      window.scrollTo(0, 0)
-    }
-  }
-
-  // Render the current step
-  const renderStep = () => {
-    switch (currentStep) {
-      case 0:
-        return <SimulationStep formData={formData} updateFormData={updateFormData} />
-      case 1:
-        return <RegistrationStep formData={formData} updateFormData={updateFormData} />
-      case 2:
-        return <KycStep formData={formData} updateFormData={updateFormData} />
-      case 3:
-        return <FinancingStep formData={formData} updateFormData={updateFormData} />
-      case 4:
-        return <CompletionStep formData={formData} />
-      default:
-        return null
-    }
-  }
-
   return (
-    <div className="container mx-auto py-10 px-4 max-w-4xl">
-      <div className="mb-8 flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Freelpay</h1>
-          <p className="text-muted-foreground">
-            Financez vos factures en quelques clics
-          </p>
-        </div>
-        <ThemeSwitcher />
+    <div className="relative min-h-screen bg-background">
+      {/* Background image with overlay */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/branding/6.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+          quality={100}
+        />
+        <div className="absolute inset-0 bg-background/0 backdrop-blur-[2px]" />
       </div>
 
-      {/* Progress indicator */}
-      <div className="mb-8">
-        <div className="flex justify-between mb-2">
-          {STEPS.map((step, index) => (
-            <div 
-              key={step.id} 
-              className={`text-sm font-medium ${index <= currentStep ? "text-primary" : "text-muted-foreground"}`}
-            >
-              {step.title}
+      <div className="relative z-10 flex min-h-screen">
+        {/* Left sidebar - desktop only */}
+        <div className="hidden lg:block lg:w-[360px] fixed h-full bg-background/80 backdrop-blur-md border-r border-border/30">
+          <div className="flex flex-col h-full p-8">
+            <div className="mb-12">
+              <Image
+                src="/branding/logo.svg"
+                alt="Freelpay"
+                width={140}
+                height={36}
+                className="h-9 w-auto"
+              />
             </div>
-          ))}
-        </div>
-        <Progress value={progress} className="h-2" />
-      </div>
 
-      {/* Step content */}
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>{STEPS[currentStep].title}</CardTitle>
-          <CardDescription>{STEPS[currentStep].description}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {renderStep()}
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button 
-            variant="outline" 
-            onClick={prevStep}
-            disabled={currentStep === 0}
-          >
-            Précédent
-          </Button>
-          <Button 
-            onClick={nextStep}
-          >
-            {currentStep === STEPS.length - 1 ? "Terminer" : "Suivant"}
-          </Button>
-        </CardFooter>
-      </Card>
+            {/* Progress steps */}
+            <div className="space-y-6 mt-8">
+              {STEPS.map((step, index) => {
+                const isActive = index === currentStepIndex
+                const isCompleted = index < currentStepIndex
+
+                return (
+                  <div key={step.id} className="relative">
+                    {index > 0 && (
+                      <div
+                        className={cn(
+                          "absolute -top-[24px] left-[15px] w-[2px] h-[24px]",
+                          isCompleted
+                            ? "bg-primary"
+                            : "bg-muted-foreground/20"
+                        )}
+                      />
+                    )}
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={cn(
+                          "flex items-center justify-center w-8 h-8 rounded-full border-2 transition-colors",
+                          isActive &&
+                            "border-primary bg-primary text-primary-foreground",
+                          isCompleted &&
+                            "border-primary bg-primary text-primary-foreground",
+                          !isActive &&
+                            !isCompleted &&
+                            "border-muted-foreground/20 text-muted-foreground"
+                        )}
+                      >
+                        {isCompleted ? (
+                          <ArrowRight className="h-4 w-4" />
+                        ) : (
+                          <span className="text-sm">{index + 1}</span>
+                        )}
+                      </div>
+                      <BodyMD
+                        className={cn(
+                          "font-medium",
+                          isActive && "text-foreground",
+                          !isActive && "text-muted-foreground"
+                        )}
+                      >
+                        {step.title}
+                      </BodyMD>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="mt-auto pt-8 border-t border-border/30">
+              <BodySM className="text-muted-foreground">
+                Besoin d'aide ? Contactez-nous à
+              </BodySM>
+              <BodyMD className="text-primary font-medium">
+                support@freelpay.com
+              </BodyMD>
+            </div>
+          </div>
+        </div>
+
+        {/* Main content */}
+        <main className="flex-1 lg:ml-[360px]">
+          <div className="max-w-3xl mx-auto px-4 lg:px-12 py-8">
+            {/* Mobile header */}
+            <div className="flex items-center justify-between mb-8 lg:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={goBack}
+                className="shrink-0"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <Image
+                src="/branding/logo.svg"
+                alt="Freelpay"
+                width={120}
+                height={32}
+                className="h-8 w-auto"
+              />
+              <div className="w-9" /> {/* Spacer */}
+            </div>
+
+            {/* Mobile progress */}
+            <div className="flex items-center gap-2 mb-6 lg:hidden">
+              {STEPS.map((_, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "h-1 rounded-full flex-1 transition-colors",
+                    index <= currentStepIndex
+                      ? "bg-primary"
+                      : "bg-muted-foreground/20"
+                  )}
+                />
+              ))}
+            </div>
+
+            {/* Step title - mobile only */}
+            <div className="mb-6 lg:hidden">
+              <HeadingSM>{STEPS[currentStepIndex].title}</HeadingSM>
+            </div>
+
+            {/* Content card */}
+            <div className="bg-background/95 backdrop-blur-md shadow-lg rounded-xl border border-border/50 overflow-hidden">
+              {/* Desktop step header */}
+              <div className="hidden lg:flex items-center justify-between p-6 border-b border-border/30">
+                <HeadingLG>{STEPS[currentStepIndex].title}</HeadingLG>
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <span className="font-medium text-primary">Étape {currentStepIndex + 1}</span>
+                  <span className="mx-2">/</span>
+                  <span>{STEPS.length}</span>
+                </div>
+              </div>
+
+              {/* Step content */}
+              <div className="p-6 lg:p-8">
+                <CurrentStepComponent
+                  formData={formData}
+                  updateFormData={updateFormData}
+                />
+              </div>
+
+              {/* Navigation buttons - only show if component doesn't handle its own navigation */}
+              {currentStepIndex === 0 && (
+                <div className="px-6 pb-6 lg:px-8 lg:pb-8 pt-2">
+                  <Button 
+                    onClick={() => updateFormData({})} 
+                    className="w-full bg-primary hover:bg-primary/90"
+                  >
+                    Continuer
+                    <ChevronRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   )
 } 

@@ -9,10 +9,6 @@ import {
   fontWeight 
 } from "@/lib/typography";
 
-// Define more specific types for our scales
-type TypescaleKey = keyof typeof typescale;
-type ResponsiveTypographyKey = keyof typeof responsiveTypography;
-
 // Define size types for each scale
 type DisplaySize = keyof typeof typescale.display;
 type HeadingSize = keyof typeof typescale.heading;
@@ -334,9 +330,8 @@ export function TruncatedText({
   return (
     <Typography 
       variant={variant}
-      className={cn("overflow-hidden", props.className)}
+      className={cn(truncateClass)}
       {...props}
-      truncate={lines === 1 ? "singleLine" : lines === 2 ? "twoLines" : "threeLines"}
     />
   );
 } 

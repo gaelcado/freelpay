@@ -26,7 +26,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  useSidebar as useUISidebar,
 } from "@/components/ui/sidebar"
 import { useSidebar } from "@/components/sidebar-provider"
 

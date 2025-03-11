@@ -24,7 +24,7 @@ export default function LoginPage() {
       <div className="bg-muted relative hidden lg:block">
         <Image
           src="/branding/login2.png"
-          alt="Login background image"
+          alt="Image d'arrière-plan de connexion"
           fill
           priority
           className="object-cover"

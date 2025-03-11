@@ -2,7 +2,13 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  accept?: string;
+  multiple?: boolean;
+}
+
+function Input({ className, type, ...props }: InputProps) {
   return (
     <input
       type={type}

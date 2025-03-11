@@ -135,41 +135,43 @@ export default function DocumentsPage() {
         </Button>
       </div>
       
-      <Card>
+      <Card variant="default" elevation="medium">
         <CardHeader>
           <CardTitle>Liste des documents</CardTitle>
           <CardDescription>
-            Vous avez {mockDocuments.length} documents au total
+            Vous avez {filteredDocuments.length} documents au total
           </CardDescription>
-          <div className="mt-4 flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
+          
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <div className="relative flex-grow">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Rechercher par nom ou ID..."
+                placeholder="Rechercher par nom ou type..."
                 className="pl-8"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
+            
             <div className="flex gap-2">
               <Button 
-                variant={filter === "all" ? "default" : "outline"} 
-                size="sm"
+                size="sm" 
+                variant={filter === "all" ? "default" : "outline"}
                 onClick={() => setFilter("all")}
               >
                 Tous
               </Button>
               <Button 
-                variant={filter === "contract" ? "default" : "outline"} 
-                size="sm"
+                size="sm" 
+                variant={filter === "contract" ? "default" : "outline"}
                 onClick={() => setFilter("contract")}
               >
                 Contrats
               </Button>
               <Button 
-                variant={filter === "invoice" ? "default" : "outline"} 
-                size="sm"
+                size="sm" 
+                variant={filter === "invoice" ? "default" : "outline"}
                 onClick={() => setFilter("invoice")}
               >
                 Factures

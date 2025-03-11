@@ -120,8 +120,8 @@ export default function PaymentsPage() {
         </Button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Solde actuel
@@ -133,7 +133,8 @@ export default function PaymentsPage() {
             </HeadingMD>
           </CardContent>
         </Card>
-        <Card>
+        
+        <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Total des entrées
@@ -145,7 +146,8 @@ export default function PaymentsPage() {
             </HeadingMD>
           </CardContent>
         </Card>
-        <Card>
+        
+        <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Total des sorties

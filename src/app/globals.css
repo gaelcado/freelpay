@@ -45,6 +45,7 @@
   --radius-xl: calc(var(--radius) + 0.75rem);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-progress: progress 2s ease-in-out infinite;
 
   @keyframes accordion-down {
     from {
@@ -61,6 +62,25 @@
     }
     to {
       height: 0;
+    }
+  }
+  
+  @keyframes progress {
+    0% {
+      width: 0%;
+      opacity: 1;
+    }
+    50% {
+      width: 70%;
+      opacity: 0.8;
+    }
+    80% {
+      width: 90%;
+      opacity: 0.7;
+    }
+    100% {
+      width: 100%;
+      opacity: 0.6;
     }
   }
 }
@@ -101,113 +121,112 @@
 /* Light Theme - Clean & Minimal */
 :root {
   /* Core backgrounds */
-  --background: #FAFAFA; /* clean white background */
+  --background: #F4F6F8; /* slightly off-white for a modern feel */
   --card: #FFFFFF;
   --popover: #FFFFFF;
   
   /* Text colors */
-  --foreground: #18181B; /* near black for high contrast */
-  --card-foreground: #18181B;
-  --popover-foreground: #18181B;
+  --foreground: #333333; /* crisp dark text */
+  --card-foreground: #333333;
+  --popover-foreground: #333333;
   
   /* Primary actions */
-  --primary: #2563EB; /* refined blue */
+  --primary: #116EFE; /* modern cool blue */
   --primary-foreground: #FFFFFF;
   
   /* Secondary actions */
-  --secondary: #F4F4F5; /* very light gray */
-  --secondary-foreground: #18181B;
+  --secondary: #F0F2F5; /* soft light gray */
+  --secondary-foreground: #333333;
   
   /* Accent - keeping your existing accent */
   --accent: #116EFE; /* preserved accent color */
   --accent-foreground: #FFFFFF;
   
   /* Destructive actions */
-  --destructive: #EF4444; /* bright red */
+  --destructive: #EF4444; /* clear and bold red */
   --destructive-foreground: #FFFFFF;
   
   /* Utility colors */
-  --muted: #F4F4F5; /* very light gray */
-  --muted-foreground: #71717A; /* medium gray */
-  --border: rgba(228, 228, 231, 0.7); /* semi-transparent light gray */
-  --input: #E4E4E7; /* light gray */
-  --ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  --muted: #F7F9FC; /* subtle, modern off-white */
+  --muted-foreground: #777E91; /* refined medium gray */
+  --border: rgba(220, 220, 230, 0.7); /* soft semi-transparent border */
+  --input: #F1F3F5; /* light input background */
+  --ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent ring */
   
-  /* Chart colors - more harmonious palette */
-  --chart-1: #2563EB; /* primary blue */
-  --chart-2: #0EA5E9; /* sky blue */
-  --chart-3: #10B981; /* emerald */
-  --chart-4: #8B5CF6; /* violet */
-  --chart-5: #F59E0B; /* amber */
+  /* Chart colors - harmonious modern palette */
+  --chart-1: #2E5AAC; /* modern blue */
+  --chart-2: #00C1D4; /* vibrant cyan */
+  --chart-3: #00B074; /* fresh green */
+  --chart-4: #A259FF; /* contemporary purple */
+  --chart-5: #FF6868; /* modern coral */
   
   /* Border radius */
-  --radius: 1.5rem; /* slightly reduced for cleaner look */
+  --radius: 1rem; /* sleek, modern rounding */
   
   /* Sidebar colors */
-  --sidebar: #F8F8F8; /* slightly off-white */
-  --sidebar-foreground: #18181B;
-  --sidebar-primary: #2563EB;
+  --sidebar: #F7F9FC; /* light and airy sidebar */
+  --sidebar-foreground: #333333;
+  --sidebar-primary: #116EFE;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #116EFE; /* preserved accent */
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: rgba(228, 228, 231, 0.7); /* semi-transparent */
-  --sidebar-ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  --sidebar-border: rgba(220, 220, 230, 0.7);
+  --sidebar-ring: rgba(17, 110, 254, 0.5);
 }
 
-/* Dark Theme - Refined Contrast */
 .dark {
   /* Core backgrounds */
-  --background: #18181B; /* deep dark background */
-  --card: #18181B; /* slightly lighter than background */
-  --popover: #18181B;
+  --background: #18191A; /* deep, modern dark tone */
+  --card: #242526; /* subtle contrast for cards */
+  --popover: #242526;
   
   /* Text colors */
-  --foreground: #FAFAFA; /* near white for high contrast */
-  --card-foreground: #FAFAFA;
-  --popover-foreground: #FAFAFA;
+  --foreground: #E4E6EB; /* soft light text for dark mode */
+  --card-foreground: #E4E6EB;
+  --popover-foreground: #E4E6EB;
   
   /* Primary actions */
-  --primary: #3B82F6; /* bright blue */
+  --primary: #116EFE; /* bright, modern blue */
   --primary-foreground: #FFFFFF;
   
   /* Secondary actions */
-  --secondary: #27272A; /* dark gray */
-  --secondary-foreground: #FAFAFA;
+  --secondary: #2A2C30; /* deep gray for secondary elements */
+  --secondary-foreground: #E4E6EB;
   
   /* Accent - keeping your existing accent */
-  --accent: #116EFE; /* preserved accent color */
+  --accent: #116EFE;
   --accent-foreground: #FFFFFF;
   
   /* Destructive actions */
-  --destructive: #EF4444; /* bright red */
+  --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   
   /* Utility colors */
-  --muted: #27272A; /* dark gray */
-  --muted-foreground: #A1A1AA; /* light gray */
-  --border: rgba(63, 63, 70, 0.5); /* semi-transparent border (lighter than card) */
-  --input: #3F3F46; /* medium gray */
-  --ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  --muted: #2C2E33; /* refined dark muted tone */
+  --muted-foreground: #A1A1AA;
+  --border: rgba(80, 80, 90, 0.5); /* balanced semi-transparent border */
+  --input: #3B3C40; /* dark input background */
+  --ring: rgba(17, 110, 254, 0.5);
   
-  /* Chart colors - improved for dark mode */
-  --chart-1: #3B82F6; /* blue */
-  --chart-2: #0EA5E9; /* sky blue */
-  --chart-3: #10B981; /* emerald */
-  --chart-4: #A78BFA; /* purple */
-  --chart-5: #F59E0B; /* amber */
+  /* Chart colors - vibrant against dark backgrounds */
+  --chart-1: #3A8DFF;
+  --chart-2: #00C1D4;
+  --chart-3: #00B074;
+  --chart-4: #A259FF;
+  --chart-5: #FF6868;
   
-  /* Border radius - same as light */
-  --radius: 0.75rem;
+  /* Border radius */
+  --radius: 1rem;
   
   /* Sidebar colors */
-  --sidebar: #18181B; /* same as background */
-  --sidebar-foreground: #FAFAFA;
-  --sidebar-primary: #3B82F6;
+  --sidebar: #242526;
+  --sidebar-foreground: #E4E6EB;
+  --sidebar-primary: #3A8DFF;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #116EFE; /* preserved accent */
+  --sidebar-accent: #116EFE;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: rgba(63, 63, 70, 0.5); /* semi-transparent */
-  --sidebar-ring: rgba(17, 110, 254, 0.5); /* semi-transparent accent */
+  --sidebar-border: rgba(80, 80, 90, 0.5);
+  --sidebar-ring: rgba(17, 110, 254, 0.5);
 }
 
 @layer base {
@@ -216,6 +235,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 

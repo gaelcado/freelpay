@@ -18,6 +18,9 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-mono)"],
+        handwriting: ["var(--font-handwriting)"],
         outfit: ["var(--font-outfit)"],
       },
       colors: {
@@ -69,10 +72,17 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "progress": {
+          "0%": { width: "0%", opacity: "1" },
+          "50%": { width: "70%", opacity: "0.8" },
+          "80%": { width: "90%", opacity: "0.7" },
+          "100%": { width: "100%", opacity: "0.6" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "progress": "progress 2s ease-in-out infinite",
       },
     },
   },

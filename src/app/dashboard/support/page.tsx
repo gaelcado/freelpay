@@ -18,7 +18,7 @@ export default function SupportPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card variant="default" elevation="medium">
           <CardHeader>
             <CardTitle>Contact Support</CardTitle>
             <CardDescription>
@@ -54,85 +54,81 @@ export default function SupportPage() {
           </CardFooter>
         </Card>
 
-        <div className="grid gap-6 md:auto-rows-min">
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Methods</CardTitle>
-              <CardDescription>
-                Alternative ways to get in touch with our support team.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <Mail className="h-5 w-5 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Email</p>
-                  <p className="text-sm text-muted-foreground">
-                    support@freelpay.com
-                  </p>
-                </div>
+        <Card variant="default" elevation="medium">
+          <CardHeader>
+            <CardTitle>Contact Methods</CardTitle>
+            <CardDescription>
+              Alternative ways to get in touch with our support team.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <Mail className="h-5 w-5 text-primary" />
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <Phone className="h-5 w-5 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Phone</p>
-                  <p className="text-sm text-muted-foreground">
-                    +1 (555) 123-4567
-                  </p>
-                </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Email</p>
+                <p className="text-sm text-muted-foreground">
+                  support@freelpay.com
+                </p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Live Chat</p>
-                  <p className="text-sm text-muted-foreground">
-                    Available 9am-5pm EST
-                  </p>
-                </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <Phone className="h-5 w-5 text-primary" />
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" className="w-full">
-                Start Live Chat
-              </Button>
-            </CardFooter>
-          </Card>
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Phone</p>
+                <p className="text-sm text-muted-foreground">
+                  +1 (555) 123-4567
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <MessageSquare className="h-5 w-5 text-primary" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Live Chat</p>
+                <p className="text-sm text-muted-foreground">
+                  Available 9am-5pm EST
+                </p>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" className="w-full">View Support Hours</Button>
+          </CardFooter>
+        </Card>
+      </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Help Center</CardTitle>
-              <CardDescription>
-                Browse our knowledge base for answers to common questions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <LifeBuoy className="h-5 w-5 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
-                    Knowledge Base
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Find answers to frequently asked questions
-                  </p>
-                </div>
+      <div className="mt-6">
+        <Card variant="default" elevation="medium">
+          <CardHeader>
+            <CardTitle>Help Center</CardTitle>
+            <CardDescription>
+              Browse our knowledge base for answers to common questions.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <LifeBuoy className="h-5 w-5 text-primary" />
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" className="w-full">
-                Visit Help Center
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  Knowledge Base
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Find answers to frequently asked questions
+                </p>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" className="w-full">Visit Help Center</Button>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   )

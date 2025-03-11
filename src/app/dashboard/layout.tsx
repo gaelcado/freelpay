@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -19,7 +18,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/theme-switch"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 
 export default function DashboardLayout({
   children,
@@ -54,17 +53,7 @@ export default function DashboardLayout({
       >
         {/* Background image fixed to viewport */}
         <div 
-          className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none"
-          style={{
-            backgroundImage: `url('/branding/6.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            // Mobile-friendly approach
-            position: 'fixed',
-            width: '100%',
-            height: '100%',
-          }}
-          aria-label="Arrière-plan"
+          className="bg-background absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-fixed opacity-100"
         />
         
         <header className="flex justify-between w-full h-14 md:h-16 shrink-0 items-center gap-2 px-3 md:px-4 sticky top-0 z-10">

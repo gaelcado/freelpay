@@ -3,7 +3,6 @@
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
-import { BodySM, BodyXS } from "@/components/ui/typography"
 
 // Define the theme colors
 const THEMES = {
