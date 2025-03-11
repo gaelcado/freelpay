@@ -19,16 +19,16 @@ export const typescale = {
     xl: "text-3xl font-medium tracking-tight leading-[1.15] text-foreground/90", // 30px
     lg: "text-2xl font-medium tracking-tight leading-[1.2] text-foreground/90", // 24px
     md: "text-xl font-medium tracking-tight leading-[1.25] text-foreground/90",  // 20px
-    sm: "text-lg font-medium tracking-tight leading-[1.3] text-foreground/90",  // 18px
+    sm: "text-lg font-medium tracking-tight leading-[1.3] text-foreground/90",   // 18px
     xs: "text-base font-medium tracking-tight leading-[1.35] text-foreground/90", // 16px
   },
   
   // Body typography (for main content)
   body: {
-    lg: "text-lg leading-[1.65] tracking-normal text-foreground/85",  // 18px
-    md: "text-base leading-[1.6] tracking-normal text-foreground/85", // 16px
-    sm: "text-sm leading-[1.55] tracking-normal text-foreground/85",  // 14px
-    xs: "text-xs leading-[1.5] tracking-normal text-foreground/85",  // 12px
+    lg: "text-lg leading-[1.6] tracking-normal text-foreground/85",  // 18px
+    md: "text-base leading-[1.55] tracking-normal text-foreground/85", // 16px
+    sm: "text-sm leading-[1.5] tracking-normal text-foreground/85",  // 14px
+    xs: "text-xs leading-[1.45] tracking-normal text-foreground/85",  // 12px
   },
   
   // Label typography (for form labels, captions)
@@ -40,9 +40,9 @@ export const typescale = {
   
   // Monospace typography (for code, technical data)
   mono: {
-    md: "font-mono text-base leading-[1.5] tracking-tight text-foreground/90",
-    sm: "font-mono text-sm leading-[1.5] tracking-tight text-foreground/90",
-    xs: "font-mono text-xs leading-[1.4] tracking-tight text-foreground/90",
+    md: "font-mono text-sm leading-[1.5] tracking-tight text-foreground/90",
+    sm: "font-mono text-xs leading-[1.5] tracking-tight text-foreground/90",
+    xs: "font-mono text-[10px] leading-[1.4] tracking-tight text-foreground/90",
   },
   
   // Special typography variants
@@ -70,17 +70,17 @@ export function typography(scale: keyof typeof typescale, size: string, classNam
 export const responsiveTypography = {
   // Responsive headings that scale down on mobile
   responsiveHeading: {
-    xl: "text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-tight text-foreground/95",
-    lg: "text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight leading-tight text-foreground/95",
-    md: "text-lg md:text-xl lg:text-2xl font-semibold tracking-tight leading-normal text-foreground/95",
-    sm: "text-base md:text-lg lg:text-xl font-semibold tracking-tight leading-normal text-foreground/95",
+    xl: "text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight leading-tight text-foreground/95",
+    lg: "text-lg md:text-xl lg:text-2xl font-semibold tracking-tight leading-tight text-foreground/95",
+    md: "text-base md:text-lg lg:text-xl font-semibold tracking-tight leading-normal text-foreground/95",
+    sm: "text-sm md:text-base lg:text-lg font-semibold tracking-tight leading-normal text-foreground/95",
   },
   
   // Responsive body text
   responsiveBody: {
-    lg: "text-base md:text-lg leading-7 text-foreground/85",
-    md: "text-sm md:text-base leading-6 text-foreground/85",
-    sm: "text-xs md:text-sm leading-5 text-foreground/85",
+    lg: "text-sm md:text-base leading-6 text-foreground/85",
+    md: "text-xs md:text-sm leading-5 text-foreground/85",
+    sm: "text-[10px] md:text-xs leading-4 text-foreground/85",
   }
 };
 

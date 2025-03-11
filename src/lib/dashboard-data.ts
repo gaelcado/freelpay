@@ -49,3 +49,75 @@ export const recentNotifications: Notification[] = [
     date: 'il y a 2 jours',
   },
 ]
+
+export type CalendarEvent = {
+  id: string
+  title: string
+  date: Date
+  type: 'payment' | 'meeting' | 'deadline' | 'invoice'
+  client?: string
+  amount?: number
+  description?: string
+}
+
+export const calendarEvents: CalendarEvent[] = [
+  {
+    id: 'evt-001',
+    title: 'Échéance Facture #1235',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2),
+    type: 'payment',
+    client: 'Agence Créative',
+    amount: 3500,
+    description: 'Paiement attendu pour la facture #1235'
+  },
+  {
+    id: 'evt-002',
+    title: 'Réunion Client',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1),
+    type: 'meeting',
+    client: 'TechSolutions Inc.',
+    description: 'Discussion sur le nouveau projet'
+  },
+  {
+    id: 'evt-003',
+    title: 'Date Limite Projet',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 5),
+    type: 'deadline',
+    client: 'Innovations Globales',
+    description: 'Livraison finale du projet web'
+  },
+  {
+    id: 'evt-004',
+    title: 'Nouvelle Facture',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
+    type: 'invoice',
+    client: 'Partenaires Marketing',
+    amount: 4200,
+    description: 'Création d\'une nouvelle facture'
+  },
+  {
+    id: 'evt-005',
+    title: 'Échéance Facture #1232',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 3),
+    type: 'payment',
+    client: 'Partenaires Marketing',
+    amount: 5200,
+    description: 'Paiement attendu pour la facture #1232'
+  },
+  {
+    id: 'evt-006',
+    title: 'Réunion Équipe',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 4),
+    type: 'meeting',
+    description: 'Réunion hebdomadaire d\'équipe'
+  },
+  {
+    id: 'evt-007',
+    title: 'Nouvelle Facture',
+    date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 7),
+    type: 'invoice',
+    client: 'Studio Design',
+    amount: 2800,
+    description: 'Création d\'une nouvelle facture'
+  }
+]

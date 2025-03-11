@@ -87,7 +87,7 @@ const CardTitle = React.forwardRef<
       ref={ref}
       className={cn(
         sizeClasses[size],
-        "leading-none tracking-tight mb-1",
+        "leading-none tracking-tight",
         className
       )}
       {...props}
@@ -115,7 +115,7 @@ const CardContent = React.forwardRef<
   }
 >(({ className, spacing = "default", ...props }, ref) => {
   const spacingClasses = {
-    default: "px-6 py-4",
+    default: "p-3",
     compact: "p-3",
     loose: "p-6",
     none: "p-0"

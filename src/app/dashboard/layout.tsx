@@ -53,7 +53,12 @@ export default function DashboardLayout({
       >
         {/* Background image fixed to viewport */}
         <div 
-          className="bg-background absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-fixed opacity-100"
+          className="bg-transparent absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-fixed opacity-100"
+          style={{
+            backgroundImage: "url('/branding/bg-last.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
         
         <header className="flex justify-between w-full h-14 md:h-16 shrink-0 items-center gap-2 px-3 md:px-4 sticky top-0 z-10">

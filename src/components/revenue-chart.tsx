@@ -81,7 +81,7 @@ export function RevenueChart({
         <text 
           x={0} 
           y={0} 
-          dx={-10} 
+          dx={-5} 
           textAnchor="end" 
           fill="var(--muted-foreground)" 
           fontSize={10}
@@ -98,7 +98,7 @@ export function RevenueChart({
       <ResponsiveContainer width="100%" height={height}>
         <AreaChart 
           data={data} 
-          margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+          margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
         >
           <defs>
             <linearGradient id="current" x1="0" y1="0" x2="0" y2="1">
@@ -123,13 +123,13 @@ export function RevenueChart({
             tickLine={false}
             tick={<CustomXAxisTick />}
             dy={5}
-            padding={{ left: 10, right: 10 }}
+            padding={{ left: 20, right: 20 }}
           />
           <YAxis 
             axisLine={false}
             tickLine={false}
             tick={<CustomYAxisTick />}
-            width={30}
+            width={25}
             domain={['auto', 'auto']}
             padding={{ top: 10, bottom: 10 }}
           />
