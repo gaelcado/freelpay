@@ -218,9 +218,9 @@ function StatusBadge({ status }: { status: "pending" | "paid" | "overdue" }) {
 export default function Page() {
   return (
     <main role="main">
-      <div className="grid gap-5">
+      <div className="grid gap-3">
         {/* Top Row: Welcome Banner, CTA, and Key Metrics */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
           {/* Welcome Banner */}
           <div className="lg:col-span-6">
             <Card className="bg-card shadow-sm h-full">
@@ -393,26 +393,17 @@ export default function Page() {
         </div>
 
         {/* Main Dashboard Content: Chart + Upcoming Payments */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-          {/* Revenue Chart */}
-          <Card className="lg:col-span-3 bg-card shadow-sm">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Tendance des Revenus
-              </CardTitle>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
-                <ExternalLinkIcon className="h-4 w-4" />
-              </Button>
-            </CardHeader>
-            <CardContent spacing="default" className="h-[250px] md:h-[280px] px-0 pb-0 overflow-visible">
-              <Suspense fallback={<LoadingCard />}> 
-                <RevenueChart data={revenueData} showLegend />
-              </Suspense>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+
+          {/* Calendar Section */}
+          <Card className="bg-card shadow-sm lg:col-span-2">
+            <CardContent spacing="default" className="flex-grow">
+              <CalendarView events={calendarEvents} className="h-full" hideMonthControls />
             </CardContent>
           </Card>
 
           {/* Upcoming Payments */}
-          <Card className="bg-card shadow-sm">
+          <Card className="bg-card shadow-sm lg:col-span-1">
             <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
               <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
                 Paiements à Venir
@@ -459,10 +450,27 @@ export default function Page() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Revenue Chart */}
+          <Card className="lg:col-span-1 bg-card shadow-sm">
+            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
+                Tendance des Revenus
+              </CardTitle>
+              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
+                <ExternalLinkIcon className="h-4 w-4" />
+              </Button>
+            </CardHeader>
+            <CardContent spacing="default" className="h-[250px] md:h-[280px] px-0 pb-0 overflow-visible">
+              <Suspense fallback={<LoadingCard />}> 
+                <RevenueChart data={revenueData} showLegend />
+              </Suspense>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Recent Invoices + Notifications */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
           {/* Recent Invoices */}
           <Card className="lg:col-span-3 bg-card shadow-sm">
             <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
@@ -547,20 +555,6 @@ export default function Page() {
                   )
                 })}
               </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Calendar Section */}
-        <div className="grid grid-cols-1 gap-5">
-          <Card className="bg-card shadow-sm">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Calendrier des Événements
-              </CardTitle>
-            </CardHeader>
-            <CardContent spacing="default" className="flex-grow">
-              <CalendarView events={calendarEvents} className="h-full" hideMonthControls />
             </CardContent>
           </Card>
         </div>

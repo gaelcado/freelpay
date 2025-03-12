@@ -177,8 +177,8 @@
 .dark {
   /* Core backgrounds */
   --background: #18191b; /* deep, modern dark tone */
-  --card: #242526; /* subtle contrast for cards */
-  --popover: #242526;
+  --card: #18191b; /* subtle contrast for cards */
+  --popover: #18191b;
   
   /* Text colors */
   --foreground: #E4E6EB; /* soft light text for dark mode */
@@ -190,7 +190,7 @@
   --primary-foreground: #FFFFFF;
   
   /* Secondary actions */
-  --secondary: #2A2C30; /* deep gray for secondary elements */
+  --secondary: #18191b; /* deep gray for secondary elements */
   --secondary-foreground: #E4E6EB;
   
   /* Accent - keeping your existing accent */
@@ -202,7 +202,7 @@
   --destructive-foreground: #FFFFFF;
   
   /* Utility colors */
-  --muted: #2C2E33; /* refined dark muted tone */
+  --muted: #18191b; /* refined dark muted tone */
   --muted-foreground: #A1A1AA;
   --border: rgba(80, 80, 90, 0.5); /* balanced semi-transparent border */
   --input: #3B3C40; /* dark input background */
@@ -282,6 +282,6 @@
 [class*="radix-icons"] svg,
 svg[class*="Icon"],
 svg[data-radix-icon-name] {
-  stroke-width: 1.25 !important; /* Thinner stroke width with higher specificity */
+  stroke-width: 1 !important; /* Thinner stroke width with higher specificity */
   stroke: currentColor;
 }

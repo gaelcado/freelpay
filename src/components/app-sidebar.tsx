@@ -5,6 +5,7 @@ import {
   MagicWandIcon,
 } from '@radix-ui/react-icons'
 import { Icon } from "@/components/ui/icon"
+import { CtaCard } from "@/components/ui/cta-card"
 
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
@@ -114,15 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/dashboard">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <MagicWandIcon className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">FreelPay</span>
-                  <span className="truncate text-xs">Financez vos factures</span>
-                </div>
-              </a>
+            <NavUser user={data.user} />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -132,7 +125,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <div className="mt-2">
+          <CtaCard />
+        </div>
       </SidebarFooter>
     </Sidebar>
   )
