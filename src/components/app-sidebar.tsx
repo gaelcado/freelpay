@@ -2,16 +2,17 @@
 
 import * as React from "react"
 import {
-  Home,
-  FileText,
-  CreditCard,
-  Users,
-  FileCheck,
-  Wallet,
-  Settings2,
-  LifeBuoy,
-  Command,
-} from "lucide-react"
+  HomeIcon,
+  FileTextIcon,
+  CardStackIcon,
+  PersonIcon,
+  CheckboxIcon,
+  BackpackIcon,
+  GearIcon,
+  QuestionMarkCircledIcon,
+  MagicWandIcon,
+} from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
@@ -26,6 +27,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+// Import all Radix icons we need
+import * as RadixIcons from "@radix-ui/react-icons"
+
+// Define the type for our icon names
+type RadixIconName = keyof typeof RadixIcons
+
 const data = {
   user: {
     name: "John Doe",
@@ -36,13 +43,13 @@ const data = {
     {
       title: "Tableau de bord",
       url: "/dashboard",
-      icon: Home,
+      icon: "HomeIcon" as RadixIconName,
       isActive: true,
     },
     {
       title: "Factures",
       url: "/dashboard/invoices",
-      icon: FileText,
+      icon: "FileTextIcon" as RadixIconName,
       items: [
         {
           title: "Mes factures",
@@ -57,7 +64,7 @@ const data = {
     {
       title: "Financements",
       url: "/dashboard/financing",
-      icon: CreditCard,
+      icon: "CardStackIcon" as RadixIconName,
       items: [
         {
           title: "Demandes en cours",
@@ -76,29 +83,29 @@ const data = {
     {
       title: "Clients",
       url: "/dashboard/clients",
-      icon: Users,
+      icon: "PersonIcon" as RadixIconName,
     },
     {
       title: "Documents",
       url: "/dashboard/documents",
-      icon: FileCheck,
+      icon: "CheckboxIcon" as RadixIconName,
     },
     {
       title: "Paiements",
       url: "/dashboard/payments",
-      icon: Wallet,
+      icon: "BackpackIcon" as RadixIconName,
     },
     {
       title: "Paramètres",
       url: "/dashboard/settings",
-      icon: Settings2,
+      icon: "GearIcon" as RadixIconName,
     },
   ],
   navSecondary: [
     {
       title: "Support",
       url: "/dashboard/support",
-      icon: LifeBuoy,
+      icon: "QuestionMarkCircledIcon" as RadixIconName,
     },
   ],
 }
@@ -112,7 +119,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="/dashboard">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                  <MagicWandIcon className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">FreelPay</span>

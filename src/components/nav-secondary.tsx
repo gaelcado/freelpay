@@ -1,5 +1,5 @@
 import * as React from "react"
-import { type LucideIcon } from "lucide-react"
+import { Icon } from "@/components/ui/icon"
 
 import {
   SidebarGroup,
@@ -9,6 +9,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
+// Import all Radix icons we need
+import * as RadixIcons from "@radix-ui/react-icons"
+
+// Define the type for our icon names
+type RadixIconName = keyof typeof RadixIcons
+
 export function NavSecondary({
   items,
   ...props
@@ -16,7 +22,7 @@ export function NavSecondary({
   items: {
     title: string
     url: string
-    icon: LucideIcon
+    icon: RadixIconName | React.ComponentType<React.SVGProps<SVGSVGElement>>
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
@@ -27,7 +33,12 @@ export function NavSecondary({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild size="sm">
                 <a href={item.url}>
-                  <item.icon />
+                  {typeof item.icon === 'string' ? (
+                    <Icon name={item.icon as RadixIconName} />
+                  ) : (
+                    // If it's a component, render it directly
+                    React.createElement(item.icon as React.ComponentType)
+                  )}
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>

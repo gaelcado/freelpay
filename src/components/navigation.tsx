@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronRight, MoreHorizontal, type LucideIcon } from "lucide-react"
+import { ChevronRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons"
 
 import {
   Collapsible,
@@ -29,10 +29,12 @@ import {
 } from "@/components/ui/sidebar"
 import { useSidebar } from "@/components/sidebar-provider"
 
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>
+
 type NavItemBase = {
   title: string
   url: string
-  icon: LucideIcon
+  icon: IconType
 }
 
 type NavItemWithSubItems = NavItemBase & {
@@ -46,7 +48,7 @@ type NavItemWithSubItems = NavItemBase & {
 type NavItemWithActions = NavItemBase & {
   actions?: {
     title: string
-    icon: LucideIcon
+    icon: IconType
     onClick?: () => void
   }[]
 }
@@ -83,7 +85,7 @@ export function Navigation({
                   <>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuAction className="data-[state=open]:rotate-90">
-                        <ChevronRight />
+                        <ChevronRightIcon />
                         <span className="sr-only">Toggle</span>
                       </SidebarMenuAction>
                     </CollapsibleTrigger>
@@ -142,7 +144,7 @@ export function ProjectsNavigation({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuAction showOnHover>
-                      <MoreHorizontal />
+                      <DotsHorizontalIcon />
                       <span className="sr-only">More</span>
                     </SidebarMenuAction>
                   </DropdownMenuTrigger>

@@ -8,14 +8,15 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { CalendarEvent } from "@/lib/dashboard-data"
 import { 
-  Calendar as CalendarIcon, 
-  ChevronLeft, 
-  ChevronRight, 
-  Clock, 
-  DollarSign, 
-  FileText, 
-  Users 
-} from "lucide-react"
+  CalendarIcon, 
+  ChevronLeftIcon, 
+  ChevronRightIcon, 
+  ClockIcon, 
+  DashboardIcon,
+  FileTextIcon, 
+  PersonIcon
+} from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 import { 
   HeadingMD, 
   HeadingSM, 
@@ -90,13 +91,13 @@ export function CalendarView({ events, className, hideMonthControls = false }: C
   const getEventIcon = (type: CalendarEvent['type']) => {
     switch (type) {
       case 'payment':
-        return <DollarSign className="h-4 w-4 text-emerald-500" />
+        return <DashboardIcon className="h-4 w-4 text-emerald-500" />
       case 'meeting':
-        return <Users className="h-4 w-4 text-blue-500" />
+        return <PersonIcon className="h-4 w-4 text-blue-500" />
       case 'deadline':
-        return <Clock className="h-4 w-4 text-amber-500" />
+        return <ClockIcon className="h-4 w-4 text-amber-500" />
       case 'invoice':
-        return <FileText className="h-4 w-4 text-purple-500" />
+        return <FileTextIcon className="h-4 w-4 text-purple-500" />
       default:
         return <CalendarIcon className="h-4 w-4" />
     }
@@ -146,7 +147,7 @@ export function CalendarView({ events, className, hideMonthControls = false }: C
                     setDate(newDate)
                   }}
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeftIcon className="h-4 w-4" />
                 </Button>
                 <HeadingSM className="text-foreground/90">
                   {date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
@@ -161,7 +162,7 @@ export function CalendarView({ events, className, hideMonthControls = false }: C
                     setDate(newDate)
                   }}
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRightIcon className="h-4 w-4" />
                 </Button>
               </>
             )}

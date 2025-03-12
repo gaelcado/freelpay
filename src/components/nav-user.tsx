@@ -1,15 +1,15 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  User,
-  Settings,
-  Building,
-} from "lucide-react"
+  CheckIcon,
+  BellIcon,
+  ChevronDownIcon,
+  CardStackIcon,
+  ExitIcon,
+  PersonIcon,
+  GearIcon,
+  HomeIcon,
+} from "@radix-ui/react-icons"
 
 import {
   Avatar,
@@ -31,6 +31,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Icon } from "@/components/ui/icon"
 
 export function NavUser({
   user,
@@ -62,7 +63,7 @@ export function NavUser({
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronDownIcon className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -88,36 +89,36 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <BadgeCheck />
+                <Icon name="CheckIcon" />
                 Vérification KYC
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <User />
+                <Icon name="PersonIcon" />
                 Mon profil
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Building />
+                <Icon name="HomeIcon" />
                 Mon entreprise
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCard />
+                <Icon name="CardStackIcon" />
                 Facturation
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Bell />
+                <Icon name="BellIcon" />
                 Notifications
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Settings />
+                <Icon name="GearIcon" />
                 Paramètres
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
+              <Icon name="ExitIcon" />
               Déconnexion
             </DropdownMenuItem>
           </DropdownMenuContent>

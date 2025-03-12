@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { TextIcon } from "lucide-react"
+import { TextIcon } from "@radix-ui/react-icons"
 import {
   DisplayXL,
   DisplayLG,

@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { FileText, Plus, Search } from "lucide-react"
+import { FileTextIcon, PlusCircledIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 import { HeadingLG, BodyMD } from "@/components/ui/typography"
 import Link from "next/link"
 
@@ -108,7 +109,7 @@ export default function InvoicesPage() {
         </div>
         <Button asChild>
           <Link href="/dashboard/invoices/create">
-            <Plus className="mr-2 h-4 w-4" />
+            <PlusCircledIcon className="mr-2 h-4 w-4" />
             Créer une facture
           </Link>
         </Button>
@@ -118,7 +119,7 @@ export default function InvoicesPage() {
         <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="mt-4 relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <MagnifyingGlassIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Rechercher par numéro ou client..."
@@ -146,7 +147,7 @@ export default function InvoicesPage() {
                     <TableRow key={invoice.id}>
                       <TableCell className="font-medium">
                         <Link href={`/dashboard/invoices/${invoice.id}`} className="flex items-center hover:underline">
-                          <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+                          <FileTextIcon className="mr-2 h-4 w-4 text-muted-foreground" />
                           {invoice.id}
                         </Link>
                       </TableCell>

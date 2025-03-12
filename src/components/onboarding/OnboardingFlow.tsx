@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, ChevronRightIcon } from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -119,7 +120,7 @@ export default function OnboardingFlow() {
                         )}
                       >
                         {isCompleted ? (
-                          <ArrowRight className="h-4 w-4" />
+                          <ArrowRightIcon className="h-4 w-4" />
                         ) : (
                           <span className="text-sm">{index + 1}</span>
                         )}
@@ -161,7 +162,7 @@ export default function OnboardingFlow() {
                 onClick={goBack}
                 className="shrink-0"
               >
-                <ArrowLeft className="h-5 w-5" />
+                <ArrowLeftIcon className="h-5 w-5" />
               </Button>
               <Image
                 src="/branding/logo.svg"
@@ -221,7 +222,7 @@ export default function OnboardingFlow() {
                     className="w-full bg-primary hover:bg-primary/90"
                   >
                     Continuer
-                    <ChevronRight className="ml-2 h-4 w-4" />
+                    <Icon className="ml-2 h-4 w-4" icon={ChevronRightIcon} />
                   </Button>
                 </div>
               )}

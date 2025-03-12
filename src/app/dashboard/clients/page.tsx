@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Building, Plus, Search } from "lucide-react"
+import { HomeIcon, PlusIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 import { HeadingLG, BodyMD } from "@/components/ui/typography"
 import Link from "next/link"
 
@@ -114,7 +115,7 @@ export default function ClientsPage() {
         </div>
         <Button asChild>
           <Link href="/dashboard/clients/add">
-            <Plus className="mr-2 h-4 w-4" />
+            <Icon name="PlusIcon" className="mr-2" size="sm" />
             Ajouter un client
           </Link>
         </Button>
@@ -128,7 +129,7 @@ export default function ClientsPage() {
               Vous avez {mockClients.length} clients au total
             </CardDescription>
             <div className="mt-4 relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Icon name="MagnifyingGlassIcon" className="absolute left-2.5 top-2.5 text-muted-foreground" size="sm" />
               <Input
                 type="search"
                 placeholder="Rechercher par nom, contact ou email..."
@@ -156,7 +157,7 @@ export default function ClientsPage() {
                     <TableRow key={client.id}>
                       <TableCell className="font-medium">
                         <Link href={`/dashboard/clients/${client.id}`} className="flex items-center hover:underline">
-                          <Building className="mr-2 h-4 w-4 text-muted-foreground" />
+                          <Icon name="HomeIcon" className="mr-2 text-muted-foreground" size="sm" />
                           {client.name}
                         </Link>
                       </TableCell>

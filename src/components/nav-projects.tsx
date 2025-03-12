@@ -1,12 +1,11 @@
 "use client"
 
 import {
-  Folder,
-  MoreHorizontal,
-  ExternalLink,
-  Info,
-  type LucideIcon,
-} from "lucide-react"
+  DotsHorizontalIcon,
+  FileIcon,
+  ExternalLinkIcon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons"
 
 import {
   DropdownMenu,
@@ -25,13 +24,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>
+
 export function NavProjects({
   projects,
 }: {
   projects: {
     name: string
     url: string
-    icon: LucideIcon
+    icon: IconType
   }[]
 }) {
   const { isMobile } = useSidebar()
@@ -51,7 +52,7 @@ export function NavProjects({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover>
-                  <MoreHorizontal />
+                  <DotsHorizontalIcon />
                   <span className="sr-only">Plus</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
@@ -61,16 +62,16 @@ export function NavProjects({
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
-                  <Folder className="text-muted-foreground" />
+                  <FileIcon className="text-muted-foreground" />
                   <span>Voir l'intégration</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <ExternalLink className="text-muted-foreground" />
+                  <ExternalLinkIcon className="text-muted-foreground" />
                   <span>Documentation API</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Info className="text-muted-foreground" />
+                  <InfoCircledIcon className="text-muted-foreground" />
                   <span>Statut de l'API</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -80,7 +81,7 @@ export function NavProjects({
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
             <a href="/dashboard/integrations">
-              <MoreHorizontal />
+              <DotsHorizontalIcon />
               <span>Toutes les intégrations</span>
             </a>
           </SidebarMenuButton>

@@ -3,8 +3,10 @@
 import * as React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PaletteIcon, ComponentIcon, BoxIcon } from "lucide-react"
+import { SymbolIcon, ColorWheelIcon, BoxIcon, ComponentInstanceIcon } from "@radix-ui/react-icons"
 import { TypographyShowcase } from "./typography-showcase"
+import { RadixIconsShowcase } from "./radix-icons-showcase"
+import { IconComponentShowcase } from "./icon-component-showcase"
 
 export default function StyleGuidePage() {
   return (
@@ -16,11 +18,12 @@ export default function StyleGuidePage() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="theme" className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 w-full">
+            <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 w-full">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="typography">Typography</TabsTrigger>
               <TabsTrigger value="colors">Colors</TabsTrigger>
               <TabsTrigger value="spacing">Spacing</TabsTrigger>
+              <TabsTrigger value="icons">Icons</TabsTrigger>
               <TabsTrigger value="components">Components</TabsTrigger>
             </TabsList>
 
@@ -28,7 +31,7 @@ export default function StyleGuidePage() {
               <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <PaletteIcon className="h-5 w-5 text-primary" />
+                    <ColorWheelIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Theme Overview</CardTitle>
                   </div>
                 </CardHeader>
@@ -64,7 +67,7 @@ export default function StyleGuidePage() {
               <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <PaletteIcon className="h-5 w-5 text-primary" />
+                    <ColorWheelIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Color Palette</CardTitle>
                   </div>
                 </CardHeader>
@@ -166,11 +169,16 @@ export default function StyleGuidePage() {
               </Card>
             </TabsContent>
 
+            <TabsContent value="icons" className="mt-6 space-y-6">
+              <IconComponentShowcase />
+              <RadixIconsShowcase />
+            </TabsContent>
+
             <TabsContent value="components" className="mt-6 space-y-6">
               <Card variant="default" elevation="medium">
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <ComponentIcon className="h-5 w-5 text-primary" />
+                    <ComponentInstanceIcon className="h-5 w-5 text-primary" />
                     <CardTitle>Components</CardTitle>
                   </div>
                 </CardHeader>

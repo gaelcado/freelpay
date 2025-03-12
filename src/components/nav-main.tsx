@@ -1,6 +1,8 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import * as React from "react"
+import { ChevronRightIcon } from "@radix-ui/react-icons"
+import { Icon } from "@/components/ui/icon"
 
 import {
   Collapsible,
@@ -19,13 +21,19 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
+// Import all Radix icons we need
+import * as RadixIcons from "@radix-ui/react-icons"
+
+// Define the type for our icon names
+type RadixIconName = keyof typeof RadixIcons
+
 export function NavMain({
   items,
 }: {
   items: {
     title: string
     url: string
-    icon: LucideIcon
+    icon: RadixIconName | React.ComponentType<React.SVGProps<SVGSVGElement>>
     isActive?: boolean
     items?: {
       title: string
@@ -42,7 +50,12 @@ export function NavMain({
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
-                  <item.icon />
+                  {typeof item.icon === 'string' ? (
+                    <Icon name={item.icon as RadixIconName} />
+                  ) : (
+                    // If it's a component, render it directly
+                    React.createElement(item.icon as React.ComponentType)
+                  )}
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>
@@ -50,7 +63,7 @@ export function NavMain({
                 <>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRight />
+                      <ChevronRightIcon />
                       <span className="sr-only">Toggle</span>
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
