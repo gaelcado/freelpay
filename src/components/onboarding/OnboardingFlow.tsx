@@ -85,7 +85,7 @@ export default function OnboardingFlow() {
       {/* Background image with overlay */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/branding/bg-last.png"
+          src="/branding/bg-last.webp"
           alt="Background"
           fill
           className="object-cover"

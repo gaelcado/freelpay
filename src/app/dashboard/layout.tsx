@@ -55,7 +55,7 @@ export default function DashboardLayout({
         <div 
           className="bg-transparent absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-fixed opacity-100"
           style={{
-            backgroundImage: "url('/branding/bg-last.png')",
+            backgroundImage: "url('/branding/bg-last.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

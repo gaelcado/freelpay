@@ -90,7 +90,7 @@ export default function HomePage() {
       {/* Right column */}
       <div className="relative hidden lg:block bg-gradient-to-br from-card/30 to-background/50">
         <Image 
-          src="/branding/bg-last.png" 
+          src="/branding/bg-last.webp" 
           alt="Background" 
           fill
           priority
@@ -115,7 +115,7 @@ export default function HomePage() {
             className="relative w-full max-w-[500px]"
           >
             <Image
-              src="/branding/visual card.png"
+              src="/branding/visual card.webp"
               alt="Payment card"
               width={1000}
               height={1000}
