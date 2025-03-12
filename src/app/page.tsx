@@ -88,7 +88,7 @@ export default function HomePage() {
       </div>
 
       {/* Right column */}
-      <div className="relative hidden lg:block bg-gradient-to-br from-card/30 to-background/50">
+      <div className="relative hidden lg:block p-4">
         <Image 
           src="/branding/bg-last.webp" 
           alt="Background" 

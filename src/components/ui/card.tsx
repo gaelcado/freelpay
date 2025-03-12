@@ -7,8 +7,17 @@ const Card = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & {
     variant?: "default" | "outline" | "primary" | "secondary" | "success" | "warning" | "danger"
     elevation?: "flat" | "low" | "medium" | "high"
+    isHoverable?: boolean
+    isClickable?: boolean
   }
->(({ className, variant = "default", elevation = "medium", ...props }, ref) => {
+>(({ 
+  className, 
+  variant = "default", 
+  elevation = "medium", 
+  isHoverable = false,
+  isClickable = false,
+  ...props 
+}, ref) => {
   // Classes de base pour les variantes standard
   const variantClasses = {
     default: "bg-card text-card-foreground",
@@ -28,6 +37,12 @@ const Card = React.forwardRef<
     high: "shadow-lg"
   }
 
+  // Classes pour les états interactifs
+  const interactiveClasses = cn(
+    isHoverable && "transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md",
+    isClickable && "cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+  )
+
   return (
     <div
       ref={ref}
@@ -35,6 +50,7 @@ const Card = React.forwardRef<
         "rounded-lg border overflow-hidden",
         variantClasses[variant],
         elevationClasses[elevation],
+        interactiveClasses,
         className
       )}
       {...props}
@@ -46,14 +62,15 @@ Card.displayName = "Card"
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    spacing?: "default" | "compact" | "loose"
+    spacing?: "default" | "compact" | "loose" | "none"
     withSeparator?: boolean
   }
 >(({ className, spacing = "default", withSeparator = false, ...props }, ref) => {
   const spacingClasses = {
     default: "px-6 py-4",
-    compact: "p-3 pb-2.5",
-    loose: "p-6 pb-5"
+    compact: "p-4",
+    loose: "p-6",
+    none: "p-0"
   }
 
   return (
@@ -87,7 +104,7 @@ const CardTitle = React.forwardRef<
       ref={ref}
       className={cn(
         sizeClasses[size],
-        "leading-none tracking-tight",
+        "leading-none tracking-tight text-foreground/90",
         className
       )}
       {...props}
@@ -116,8 +133,8 @@ const CardContent = React.forwardRef<
 >(({ className, spacing = "default", ...props }, ref) => {
   const spacingClasses = {
     default: "px-6 py-4",
-    compact: "p-3 pb-2.5",
-    loose: "p-6 pb-5",
+    compact: "p-4",
+    loose: "p-6",
     none: "p-0"
   }
 
@@ -130,14 +147,15 @@ CardContent.displayName = "CardContent"
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    spacing?: "default" | "compact" | "loose"
+    spacing?: "default" | "compact" | "loose" | "none"
     withSeparator?: boolean
   }
 >(({ className, spacing = "default", withSeparator = false, ...props }, ref) => {
   const spacingClasses = {
     default: "px-6 py-4",
-    compact: "p-3 pt-2.5",
-    loose: "p-6 pt-5"
+    compact: "p-4",
+    loose: "p-6",
+    none: "p-0"
   }
 
   return (

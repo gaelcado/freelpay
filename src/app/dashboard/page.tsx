@@ -78,31 +78,31 @@ function StatCard({
   const iconColors = {
     default: "text-muted-foreground",
     primary: "text-primary",
-    secondary: "text-primary",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    secondary: "text-secondary",
+    success: "text-emerald-600 dark:text-emerald-400",
+    warning: "text-amber-600 dark:text-amber-400",
   }
 
   return (
     <Card
-      className={cn(
-        "h-full relative rounded-xl border border-border shadow-sm transition-transform hover:-translate-y-[1px]",
-        className
-      )}
+      variant={variant}
+      elevation="low"
+      isHoverable
+      className={cn("h-full", className)}
     >
-      <CardHeader spacing="default" className="flex items-center justify-between space-y-0 pb-3">
-        <CardTitle size="sm" className="font-medium text-foreground/90 text-base">
+      <CardHeader spacing="compact" className="flex items-center justify-between space-y-0">
+        <CardTitle size="sm">
           {title}
         </CardTitle>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted/60">
           <Icon className={cn("h-5 w-5", iconColors[variant])} />
         </div>
       </CardHeader>
-      <CardContent spacing="default" className="flex flex-col justify-between">
+      <CardContent spacing="compact" className="flex flex-col justify-between pt-0">
         <div className="flex items-center gap-2">
-          <Stat className="text-foreground text-3xl">{value}</Stat>
+          <Stat className="text-foreground">{value}</Stat>
           {trend && (
-            <UIBadge variant={trend.positive ? "default" : "destructive"} className="h-6 text-sm">
+            <UIBadge variant={trend.positive ? "default" : "destructive"} className="h-6 text-xs">
               {trend.positive ? (
                 <ArrowUpIcon className="h-3.5 w-3.5 mr-1" />
               ) : (
@@ -112,7 +112,7 @@ function StatCard({
             </UIBadge>
           )}
         </div>
-        <BodySM className="text-muted-foreground mt-2 tracking-wide">{subtext}</BodySM>
+        <BodySM color="muted" className="mt-1">{subtext}</BodySM>
       </CardContent>
     </Card>
   )
@@ -134,29 +134,39 @@ function QuickActionCard({
   onClick?: () => void
   className?: string
 }) {
-  const variantClasses = {
-    primary: "border-primary/30 text-primary bg-primary/10",
-    success: "border-emerald-500/30 text-emerald-600 bg-emerald-500/10",
-    secondary: "border-secondary/30 text-secondary bg-secondary/10",
-    purple: "border-purple-500/30 text-purple-600 bg-purple-500/10",
+  const cardVariant = 
+    variant === "primary" ? "primary" : 
+    variant === "secondary" ? "secondary" : 
+    variant === "success" ? "success" : 
+    "default";
+  
+  const iconColors = {
+    primary: "text-primary",
+    secondary: "text-secondary",
+    success: "text-emerald-600 dark:text-emerald-400",
+    purple: "text-purple-600 dark:text-purple-400",
   }
 
   return (
-    <button
+    <Card
+      variant={cardVariant}
+      elevation="low"
+      isHoverable
+      isClickable
+      className={cn("h-full", className)}
       onClick={onClick}
-      className={cn(
-        "relative flex items-center gap-4 p-4 sm:p-5 rounded-xl border border-border shadow-sm transition-all duration-200 hover:shadow-md focus:outline-none",
-        variantClasses[variant],
-        className
-      )}
+      role="button"
+      tabIndex={0}
     >
-      <div className="w-11 h-11 rounded-full flex items-center justify-center border border-transparent">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="text-left">
-        <BodySM className="font-medium">{title}</BodySM>
-      </div>
-    </button>
+      <CardContent spacing="compact" className="flex items-center gap-4 p-4">
+        <div className="w-11 h-11 rounded-full flex items-center justify-center bg-background/60">
+          <Icon className={cn("h-5 w-5", iconColors[variant])} />
+        </div>
+        <div className="text-left">
+          <BodySM weight="medium">{title}</BodySM>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -165,15 +175,16 @@ function QuickActionCard({
 // ------------------------------------------------------------
 function LoadingCard() {
   return (
-    <Card className="border border-border shadow-sm">
-      <CardHeader spacing="default" className="flex flex-row items-center justify-between space-y-0">
+    <Card elevation="low" className="h-full">
+      <CardHeader spacing="compact" className="flex flex-row items-center justify-between space-y-0">
         <Skeleton className="h-4 w-24" />
-        <Skeleton className="h-4 w-4" />
+        <Skeleton className="h-8 w-8 rounded-full" />
       </CardHeader>
-      <CardContent spacing="default">
-        <div className="space-y-2">
-          <Skeleton className="h-6 w-20" />
+      <CardContent spacing="compact">
+        <div className="space-y-3">
+          <Skeleton className="h-8 w-28" />
           <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-3/4" />
         </div>
       </CardContent>
     </Card>
@@ -185,9 +196,9 @@ function LoadingCard() {
 // ------------------------------------------------------------
 function StatusBadge({ status }: { status: "pending" | "paid" | "overdue" }) {
   const variants = {
-    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/30 dark:text-amber-400",
-    paid: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/30 dark:text-emerald-400",
-    overdue: "bg-red-100 text-red-700 dark:bg-red-500/30 dark:text-red-400",
+    pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/30 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20",
+    paid: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20",
+    overdue: "bg-red-100 text-red-700 dark:bg-red-500/30 dark:text-red-400 border border-red-200 dark:border-red-500/20",
   }
 
   const labels = {
@@ -196,14 +207,15 @@ function StatusBadge({ status }: { status: "pending" | "paid" | "overdue" }) {
     overdue: "En Retard",
   }
 
+  const icons = {
+    pending: <ClockIcon className="h-3.5 w-3.5 mr-1.5" />,
+    paid: <CheckCircledIcon className="h-3.5 w-3.5 mr-1.5" />,
+    overdue: <ExclamationTriangleIcon className="h-3.5 w-3.5 mr-1.5" />,
+  }
+
   return (
-    <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium", variants[status])}>
-      <span 
-        className={cn(
-          "w-2 h-2 rounded-full mr-1.5",
-          status === "pending" ? "bg-amber-500" : status === "paid" ? "bg-emerald-500" : "bg-red-500"
-        )} 
-      />
+    <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium", variants[status])}>
+      {icons[status]}
       <span className="hidden xs:inline">{labels[status]}</span>
       <span className="xs:hidden">
         {status === "pending" ? "EA" : status === "paid" ? "P" : "ER"}
@@ -217,26 +229,26 @@ function StatusBadge({ status }: { status: "pending" | "paid" | "overdue" }) {
 // ------------------------------------------------------------
 export default function Page() {
   return (
-    <main role="main">
-      <div className="grid gap-3">
+    <main role="main" className="container mx-auto px-4 py-6 max-w-7xl">
+      <div className="grid gap-4 md:gap-6">
         {/* Top Row: Welcome Banner, CTA, and Key Metrics */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
           {/* Welcome Banner */}
           <div className="lg:col-span-6">
-            <Card className="bg-card shadow-sm h-full">
-              <CardContent className="flex flex-col justify-between h-full space-y-4">
+            <Card elevation="low" isHoverable className="h-full">
+              <CardContent spacing="default" className="flex flex-col justify-between h-full space-y-4 p-6">
                 <div>
-                  <HeadingLG className="tracking-tight font-semibold">Bienvenue, Freelance</HeadingLG>
-                  <BodySM className="text-muted-foreground tracking-normal max-w-md mt-1">
+                  <HeadingLG weight="semibold" className="tracking-tight">Bienvenue, Freelance</HeadingLG>
+                  <BodySM color="muted" className="mt-1 max-w-md">
                     Voici un aperçu de votre financement de factures et de vos performances récentes
                   </BodySM>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 bg-muted">
-                    <BodyXS className="text-muted-foreground font-medium">Total Financé</BodyXS>
+                  <div className="rounded-lg p-4 bg-muted/60">
+                    <BodyXS color="muted" weight="medium">Total Financé</BodyXS>
                     <div className="flex items-baseline gap-2 mt-1">
-                      <HeadingSM weight="bold" className="text-foreground">
+                      <HeadingSM weight="bold">
                         24 500 €
                       </HeadingSM>
                       <UIBadge variant="default" className="h-5">
@@ -245,13 +257,13 @@ export default function Page() {
                       </UIBadge>
                     </div>
                   </div>
-                  <div className="rounded-lg p-3 bg-muted">
-                    <BodyXS className="text-muted-foreground font-medium">En Attente</BodyXS>
+                  <div className="rounded-lg p-4 bg-muted/60">
+                    <BodyXS color="muted" weight="medium">En Attente</BodyXS>
                     <div className="flex items-baseline gap-2 mt-1">
-                      <HeadingSM weight="bold" className="text-foreground">
+                      <HeadingSM weight="bold">
                         8 200 €
                       </HeadingSM>
-                      <BodyXS className="text-muted-foreground tracking-wide">(3)</BodyXS>
+                      <BodyXS color="muted" className="tracking-wide">(3)</BodyXS>
                     </div>
                   </div>
                 </div>
@@ -280,17 +292,17 @@ export default function Page() {
 
           {/* New Invoice CTA */}
           <div className="lg:col-span-3">
-            <Card className="bg-card shadow-sm h-full">
-              <CardContent className="flex flex-col justify-between h-full space-y-4">
+            <Card variant="primary" elevation="low" isHoverable className="h-full">
+              <CardContent spacing="default" className="flex flex-col justify-between h-full space-y-4 p-6">
                 <div>
-                  <HeadingMD className="tracking-tight font-semibold">Créer une Facture</HeadingMD>
-                  <BodySM className="text-muted-foreground mt-1">
+                  <HeadingMD weight="semibold" className="tracking-tight">Créer une Facture</HeadingMD>
+                  <BodySM color="muted" className="mt-1">
                     Ajoutez rapidement une nouvelle facture
                   </BodySM>
                 </div>
                 <div className="flex items-center justify-center my-4">
-                  <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center">
-                    <FileTextIcon className="h-10 w-10" />
+                  <div className="w-20 h-20 rounded-full bg-background/60 flex items-center justify-center">
+                    <FileTextIcon className="h-10 w-10 text-primary" />
                   </div>
                 </div>
                 <Button
@@ -305,7 +317,7 @@ export default function Page() {
           </div>
 
           {/* Key Metrics */}
-          <div className="lg:col-span-3 grid grid-cols-1 gap-3">
+          <div className="lg:col-span-3 grid grid-cols-1 gap-4 md:gap-6">
             <StatCard
               title="Taux Actuel"
               value="2.9%"
@@ -313,7 +325,6 @@ export default function Page() {
               icon={LightningBoltIcon}
               variant="primary"
               trend={{ value: 12, positive: true }}
-              className="bg-card"
             />
             <StatCard
               title="Limite Utilisée"
@@ -321,64 +332,42 @@ export default function Page() {
               subtext="18 750 € / 25 000 €"
               icon={BackpackIcon}
               variant="primary"
-              className="bg-card"
             />
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <Card className="bg-card shadow-sm h-full">
-            <CardContent className="flex items-center gap-4 p-2">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
-                <DashboardIcon className="h-5 w-5 text-emerald-600" />
-              </div>
-              <div className="text-left">
-                <BodySM className="font-medium">Demander Financement</BodySM>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card shadow-sm h-full">
-            <CardContent className="flex items-center gap-4 p-2">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
-                <PersonIcon className="h-5 w-5 text-primary" />
-              </div>
-              <div className="text-left">
-                <BodySM className="font-medium">Ajouter Client</BodySM>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card shadow-sm h-full">
-            <CardContent className="flex items-center gap-4 p-2">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
-                <BarChartIcon className="h-5 w-5 text-secondary" />
-              </div>
-              <div className="text-left">
-                <BodySM className="font-medium">Voir Statistiques</BodySM>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card shadow-sm h-full">
-            <CardContent className="flex items-center gap-4 p-2">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
-                <FileTextIcon className="h-5 w-5 text-purple-600" />
-              </div>
-              <div className="text-left">
-                <BodySM className="font-medium">Gérer Documents</BodySM>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
+          <QuickActionCard
+            title="Demander Financement"
+            icon={DashboardIcon}
+            variant="success"
+          />
+          <QuickActionCard
+            title="Ajouter Client"
+            icon={PersonIcon}
+            variant="primary"
+          />
+          <QuickActionCard
+            title="Voir Statistiques"
+            icon={BarChartIcon}
+            variant="secondary"
+          />
+          <QuickActionCard
+            title="Gérer Documents"
+            icon={FileTextIcon}
+            variant="purple"
+          />
         </div>
 
         {/* Second Row of Key Metrics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           <StatCard
             title="Factures en Attente"
             value="3"
             subtext="Valeur totale: 8 200 €"
             icon={ClockIcon}
             variant="warning"
-            className="bg-card"
           />
           <StatCard
             title="Revenus Mensuels"
@@ -387,81 +376,104 @@ export default function Page() {
             icon={UploadIcon}
             variant="success"
             trend={{ value: 16, positive: true }}
-            className="bg-card"
           />
-          <div className="col-span-2 lg:hidden" />
+          <StatCard
+            title="Délai de Paiement"
+            value="14 jours"
+            subtext="Moyenne sur 6 mois"
+            icon={CalendarIcon}
+            variant="secondary"
+          />
+          <StatCard
+            title="Taux d'Acceptation"
+            value="92%"
+            subtext="Demandes approuvées"
+            icon={CheckCircledIcon}
+            variant="success"
+          />
         </div>
 
         {/* Main Dashboard Content: Chart + Upcoming Payments */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
           {/* Calendar Section */}
-          <Card className="bg-card shadow-sm lg:col-span-2">
-            <CardContent spacing="default" className="flex-grow">
-              <CalendarView events={calendarEvents} className="h-full" hideMonthControls />
+          <Card className="lg:col-span-5" elevation="low" isHoverable>
+            <CardHeader spacing="compact" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm">Calendrier</CardTitle>
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir plus">
+                <ExternalLinkIcon className="h-4 w-4" />
+              </Button>
+            </CardHeader>
+            <CardContent spacing="compact" className="flex-grow p-0">
+              <CalendarView events={calendarEvents} className="h-[300px] md:h-[350px]" hideMonthControls />
             </CardContent>
           </Card>
 
           {/* Upcoming Payments */}
-          <Card className="bg-card shadow-sm lg:col-span-1">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Paiements à Venir
-              </CardTitle>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
+          <Card className="lg:col-span-3" elevation="low" isHoverable>
+            <CardHeader spacing="compact" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm">Paiements à Venir</CardTitle>
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir plus">
                 <ExternalLinkIcon className="h-4 w-4" />
               </Button>
             </CardHeader>
-            <CardContent spacing="default" className="overflow-x-auto">
-              <div className="space-y-3">
-                <div className="space-y-1.5">
+            <CardContent spacing="compact" className="overflow-x-auto">
+              <div className="space-y-4">
+                <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <BodySM className="font-medium">Agence Web</BodySM>
-                    <BodySM className="font-semibold">3 200 €</BodySM>
+                    <BodySM weight="medium">Agence Web</BodySM>
+                    <BodySM weight="semibold">3 200 €</BodySM>
                   </div>
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span className="text-xs">Échéance dans 2 jours</span>
-                    <span className="text-xs">15 Mars 2023</span>
+                  <div className="flex justify-between items-center">
+                    <BodyXS color="muted">Échéance dans 2 jours</BodyXS>
+                    <BodyXS color="muted">15 Mars 2023</BodyXS>
                   </div>
                   <Progress value={80} className="h-1.5" />
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <BodySM className="font-medium">Studio Design</BodySM>
-                    <BodySM className="font-semibold">1 800 €</BodySM>
+                    <BodySM weight="medium">Studio Design</BodySM>
+                    <BodySM weight="semibold">1 800 €</BodySM>
                   </div>
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span className="text-xs">Échéance dans 5 jours</span>
-                    <span className="text-xs">18 Mars 2023</span>
+                  <div className="flex justify-between items-center">
+                    <BodyXS color="muted">Échéance dans 5 jours</BodyXS>
+                    <BodyXS color="muted">18 Mars 2023</BodyXS>
                   </div>
                   <Progress value={50} className="h-1.5" />
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <BodySM className="font-medium">Tech Solutions</BodySM>
-                    <BodySM className="font-semibold">4 500 €</BodySM>
+                    <BodySM weight="medium">Tech Solutions</BodySM>
+                    <BodySM weight="semibold">4 500 €</BodySM>
                   </div>
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span className="text-xs">Échéance dans 10 jours</span>
-                    <span className="text-xs">23 Mars 2023</span>
+                  <div className="flex justify-between items-center">
+                    <BodyXS color="muted">Échéance dans 10 jours</BodyXS>
+                    <BodyXS color="muted">23 Mars 2023</BodyXS>
                   </div>
                   <Progress value={25} className="h-1.5" />
                 </div>
               </div>
             </CardContent>
+            <CardFooter spacing="compact" withSeparator className="justify-center">
+              <Button variant="ghost" size="sm" className="w-full">
+                Voir tous les paiements
+              </Button>
+            </CardFooter>
           </Card>
 
           {/* Revenue Chart */}
-          <Card className="lg:col-span-1 bg-card shadow-sm">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Tendance des Revenus
-              </CardTitle>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
-                <ExternalLinkIcon className="h-4 w-4" />
-              </Button>
+          <Card className="lg:col-span-4" elevation="low" isHoverable>
+            <CardHeader spacing="compact" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm">Tendance des Revenus</CardTitle>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="h-8">
+                  Mensuel
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir plus">
+                  <ExternalLinkIcon className="h-4 w-4" />
+                </Button>
+              </div>
             </CardHeader>
-            <CardContent spacing="default" className="h-[250px] md:h-[280px] px-0 pb-0 overflow-visible">
+            <CardContent spacing="compact" className="h-[250px] md:h-[350px] px-0 pb-0 overflow-visible">
               <Suspense fallback={<LoadingCard />}> 
                 <RevenueChart data={revenueData} showLegend />
               </Suspense>
@@ -470,25 +482,28 @@ export default function Page() {
         </div>
 
         {/* Recent Invoices + Notifications */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
           {/* Recent Invoices */}
-          <Card className="lg:col-span-3 bg-card shadow-sm">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Factures Récentes
-              </CardTitle>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
-                <ExternalLinkIcon className="h-4 w-4" />
-              </Button>
+          <Card className="lg:col-span-8" elevation="low" isHoverable>
+            <CardHeader spacing="compact" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm">Factures Récentes</CardTitle>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="h-8">
+                  Filtrer
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir plus">
+                  <ExternalLinkIcon className="h-4 w-4" />
+                </Button>
+              </div>
             </CardHeader>
-            <CardContent spacing="default" className="overflow-x-auto">
+            <CardContent spacing="compact" className="overflow-x-auto p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="text-sm font-medium">Client</TableHead>
-                    <TableHead className="text-sm font-medium">Montant</TableHead>
-                    <TableHead className="text-sm font-medium">Statut</TableHead>
-                    <TableHead className="text-right text-sm font-medium">Actions</TableHead>
+                    <TableHead className="text-xs font-medium">Client</TableHead>
+                    <TableHead className="text-xs font-medium">Montant</TableHead>
+                    <TableHead className="text-xs font-medium">Statut</TableHead>
+                    <TableHead className="text-right text-xs font-medium">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -500,38 +515,47 @@ export default function Page() {
                         <StatusBadge status={invoice.status} />
                       </TableCell>
                       <TableCell className="py-3 text-right">
-                        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="View invoice">
-                          <EyeOpenIcon className="h-4 w-4" />
-                        </Button>
+                        <div className="flex items-center justify-end gap-1">
+                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir facture">
+                            <EyeOpenIcon className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Télécharger facture">
+                            <DownloadIcon className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </CardContent>
+            <CardFooter spacing="compact" withSeparator className="justify-center">
+              <Button variant="ghost" size="sm" className="w-full">
+                Voir toutes les factures
+              </Button>
+            </CardFooter>
           </Card>
 
           {/* Notifications */}
-          <Card className="bg-card shadow-sm">
-            <CardHeader spacing="default" withSeparator className="flex flex-row items-center justify-between">
-              <CardTitle size="sm" className="font-semibold text-foreground/90 text-base">
-                Notifications
-              </CardTitle>
-              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open external link">
+          <Card className="lg:col-span-4" elevation="low" isHoverable>
+            <CardHeader spacing="compact" withSeparator className="flex flex-row items-center justify-between">
+              <CardTitle size="sm">Notifications</CardTitle>
+              <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Voir plus">
                 <ExternalLinkIcon className="h-4 w-4" />
               </Button>
             </CardHeader>
-            <CardContent spacing="default" className="flex-grow overflow-auto">
-              <div className="space-y-3">
+            <CardContent spacing="compact" className="flex-grow overflow-auto">
+              <div className="space-y-4">
                 {recentNotifications.map((notification) => {
                   let notifIcon = <ClockIcon className="h-4 w-4" />;
-                  let notifBgClass = "bg-blue-500/10 text-blue-500";
+                  let notifBgClass = "bg-blue-500/10 text-blue-500 border border-blue-500/20";
+                  
                   if (notification.title.includes("Paiement") || notification.title.includes("Approuvé")) {
                     notifIcon = <CheckCircledIcon className="h-4 w-4" />;
-                    notifBgClass = "bg-emerald-500/10 text-emerald-500";
+                    notifBgClass = "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
                   } else if (notification.title.includes("Approbation")) {
                     notifIcon = <ExclamationTriangleIcon className="h-4 w-4" />;
-                    notifBgClass = "bg-amber-500/10 text-amber-500";
+                    notifBgClass = "bg-amber-500/10 text-amber-500 border border-amber-500/20";
                   }
 
                   return (
@@ -543,11 +567,11 @@ export default function Page() {
                         {notifIcon}
                       </div>
                       <div className="space-y-1">
-                        <BodySM className="font-medium">{notification.title}</BodySM>
-                        <BodyXS className="text-muted-foreground">
+                        <BodySM weight="medium">{notification.title}</BodySM>
+                        <BodyXS color="muted">
                           {notification.description}
                         </BodyXS>
-                        <BodyXS className="text-muted-foreground/70">
+                        <BodyXS color="muted" className="opacity-70">
                           {notification.date}
                         </BodyXS>
                       </div>
@@ -556,6 +580,11 @@ export default function Page() {
                 })}
               </div>
             </CardContent>
+            <CardFooter spacing="compact" withSeparator className="justify-center">
+              <Button variant="ghost" size="sm" className="w-full">
+                Voir toutes les notifications
+              </Button>
+            </CardFooter>
           </Card>
         </div>
       </div>

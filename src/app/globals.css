@@ -39,10 +39,10 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 0.3rem);
-  --radius-md: calc(var(--radius) - 0.15rem);
-  --radius-lg: calc(var(--radius) + 0.5rem);
-  --radius-xl: calc(var(--radius) + 0.75rem);
+  --radius-sm: calc(var(--radius) - 0.5rem);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-lg: calc(var(--radius) + 0.25rem);
+  --radius-xl: calc(var(--radius) + 0.5rem);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-progress: progress 2s ease-in-out infinite;
@@ -190,7 +190,7 @@
   --primary-foreground: #FFFFFF;
   
   /* Secondary actions */
-  --secondary: #18191b; /* deep gray for secondary elements */
+  --secondary: #2a2c30; /* deep gray for secondary elements */
   --secondary-foreground: #E4E6EB;
   
   /* Accent - keeping your existing accent */
@@ -202,7 +202,7 @@
   --destructive-foreground: #FFFFFF;
   
   /* Utility colors */
-  --muted: #18191b; /* refined dark muted tone */
+  --muted: #2a2c30; /* refined dark muted tone */
   --muted-foreground: #A1A1AA;
   --border: rgba(80, 80, 90, 0.5); /* balanced semi-transparent border */
   --input: #3B3C40; /* dark input background */

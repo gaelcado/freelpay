@@ -15,7 +15,7 @@ export function CtaCard() {
           <img src="/branding/6.webp" alt="Background" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <img src="/branding/logo.svg" alt="Brand Logo" className="h-24" />
+          <img src="/branding/logo.svg" alt="Brand Logo" className="w-16 h-16" />
         </div>
       </div>
       
