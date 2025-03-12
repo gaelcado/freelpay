@@ -11,6 +11,7 @@ import {
   GearIcon,
   QuestionMarkCircledIcon,
   MagicWandIcon,
+  ColorWheelIcon,
 } from "@radix-ui/react-icons"
 import { Icon } from "@/components/ui/icon"
 
@@ -106,6 +107,11 @@ const data = {
       title: "Support",
       url: "/dashboard/support",
       icon: "QuestionMarkCircledIcon" as RadixIconName,
+    },
+    {
+      title: "Styleguide",
+      url: "/dashboard/styleguide",
+      icon: "ColorWheelIcon" as RadixIconName,
     },
   ],
 }

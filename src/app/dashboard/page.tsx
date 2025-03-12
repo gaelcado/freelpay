@@ -223,35 +223,35 @@ export default function Page() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           {/* Welcome Banner */}
           <div className="lg:col-span-6">
-            <Card className="bg-primary text-primary-foreground shadow-md h-full">
+            <Card className="bg-card shadow-sm h-full">
               <CardContent className="flex flex-col justify-between h-full space-y-4">
                 <div>
                   <HeadingLG className="tracking-tight font-semibold">Bienvenue, Freelance</HeadingLG>
-                  <BodySM className="text-primary-foreground/90 tracking-normal max-w-md mt-1">
+                  <BodySM className="text-muted-foreground tracking-normal max-w-md mt-1">
                     Voici un aperçu de votre financement de factures et de vos performances récentes
                   </BodySM>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 bg-primary/10">
-                    <BodyXS className="text-primary-foreground/70 font-medium">Total Financé</BodyXS>
+                  <div className="rounded-lg p-3 bg-muted">
+                    <BodyXS className="text-muted-foreground font-medium">Total Financé</BodyXS>
                     <div className="flex items-baseline gap-2 mt-1">
-                      <HeadingSM weight="bold" className="text-primary-foreground">
+                      <HeadingSM weight="bold" className="text-foreground">
                         24 500 €
                       </HeadingSM>
-                      <UIBadge variant="default" className="h-5 bg-emerald-500/20 text-emerald-100 border-emerald-300/30">
+                      <UIBadge variant="default" className="h-5">
                         <ArrowUpIcon className="h-3 w-3 mr-0.5" />
                         15%
                       </UIBadge>
                     </div>
                   </div>
-                  <div className="rounded-lg p-3 bg-primary/10">
-                    <BodyXS className="text-primary-foreground/70 font-medium">En Attente</BodyXS>
+                  <div className="rounded-lg p-3 bg-muted">
+                    <BodyXS className="text-muted-foreground font-medium">En Attente</BodyXS>
                     <div className="flex items-baseline gap-2 mt-1">
-                      <HeadingSM weight="bold" className="text-primary-foreground">
+                      <HeadingSM weight="bold" className="text-foreground">
                         8 200 €
                       </HeadingSM>
-                      <BodyXS className="text-primary-foreground/70 tracking-wide">(3)</BodyXS>
+                      <BodyXS className="text-muted-foreground tracking-wide">(3)</BodyXS>
                     </div>
                   </div>
                 </div>
@@ -260,7 +260,7 @@ export default function Page() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-1.5 border-primary-foreground/40 text-primary-foreground hover:bg-primary/20 hover:border-primary-foreground/60"
+                    className="gap-1.5"
                   >
                     <CalendarIcon className="h-3.5 w-3.5" />
                     <span className="text-sm">Voir Calendrier</span>
@@ -268,7 +268,7 @@ export default function Page() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-1.5 border-primary-foreground/40 text-primary-foreground hover:bg-primary/20 hover:border-primary-foreground/60"
+                    className="gap-1.5"
                   >
                     <DownloadIcon className="h-3.5 w-3.5" />
                     <span className="text-sm">Exporter</span>
@@ -280,22 +280,22 @@ export default function Page() {
 
           {/* New Invoice CTA */}
           <div className="lg:col-span-3">
-            <Card className="bg-primary text-primary-foreground shadow-md h-full">
+            <Card className="bg-card shadow-sm h-full">
               <CardContent className="flex flex-col justify-between h-full space-y-4">
                 <div>
                   <HeadingMD className="tracking-tight font-semibold">Créer une Facture</HeadingMD>
-                  <BodySM className="text-primary-foreground/90 mt-1">
+                  <BodySM className="text-muted-foreground mt-1">
                     Ajoutez rapidement une nouvelle facture
                   </BodySM>
                 </div>
                 <div className="flex items-center justify-center my-4">
-                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center">
                     <FileTextIcon className="h-10 w-10" />
                   </div>
                 </div>
                 <Button
                   size="sm"
-                  className="w-full gap-1.5 bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+                  className="w-full gap-1.5"
                 >
                   <PlusCircledIcon className="h-3.5 w-3.5" />
                   <span className="text-sm font-medium">Nouvelle Facture</span>
@@ -328,30 +328,46 @@ export default function Page() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <QuickActionCard
-            title="Demander Financement"
-            icon={DashboardIcon}
-            variant="success"
-            className="h-full"
-          />
-          <QuickActionCard
-            title="Ajouter Client"
-            icon={PersonIcon}
-            variant="primary"
-            className="h-full"
-          />
-          <QuickActionCard
-            title="Voir Statistiques"
-            icon={BarChartIcon}
-            variant="secondary"
-            className="h-full"
-          />
-          <QuickActionCard
-            title="Gérer Documents"
-            icon={FileTextIcon}
-            variant="purple"
-            className="h-full"
-          />
+          <Card className="bg-card shadow-sm h-full">
+            <CardContent className="flex items-center gap-4 p-2">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
+                <DashboardIcon className="h-5 w-5 text-emerald-600" />
+              </div>
+              <div className="text-left">
+                <BodySM className="font-medium">Demander Financement</BodySM>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-card shadow-sm h-full">
+            <CardContent className="flex items-center gap-4 p-2">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
+                <PersonIcon className="h-5 w-5 text-primary" />
+              </div>
+              <div className="text-left">
+                <BodySM className="font-medium">Ajouter Client</BodySM>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-card shadow-sm h-full">
+            <CardContent className="flex items-center gap-4 p-2">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
+                <BarChartIcon className="h-5 w-5 text-secondary" />
+              </div>
+              <div className="text-left">
+                <BodySM className="font-medium">Voir Statistiques</BodySM>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-card shadow-sm h-full">
+            <CardContent className="flex items-center gap-4 p-2">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center bg-muted">
+                <FileTextIcon className="h-5 w-5 text-purple-600" />
+              </div>
+              <div className="text-left">
+                <BodySM className="font-medium">Gérer Documents</BodySM>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Second Row of Key Metrics */}

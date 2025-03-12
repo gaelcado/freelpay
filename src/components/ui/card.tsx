@@ -115,9 +115,9 @@ const CardContent = React.forwardRef<
   }
 >(({ className, spacing = "default", ...props }, ref) => {
   const spacingClasses = {
-    default: "p-3",
-    compact: "p-3",
-    loose: "p-6",
+    default: "px-6 py-4",
+    compact: "p-3 pb-2.5",
+    loose: "p-6 pb-5",
     none: "p-0"
   }
 

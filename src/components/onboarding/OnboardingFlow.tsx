@@ -222,7 +222,7 @@ export default function OnboardingFlow() {
                     className="w-full bg-primary hover:bg-primary/90"
                   >
                     Continuer
-                    <Icon className="ml-2 h-4 w-4" icon={ChevronRightIcon} />
+                    <Icon className="ml-2 h-4 w-4" name="ChevronRightIcon" />
                   </Button>
                 </div>
               )}

@@ -41,8 +41,7 @@ export function RadixIconsShowcase() {
                   key={name} 
                   className="flex flex-col items-center justify-center p-4 border rounded-md hover:bg-muted transition-colors"
                 >
-                  {/* @ts-ignore - Icon is a valid component */}
-                  <Icon className="h-8 w-8 mb-2" />
+                  <Icon className="h-8 w-8 mb-2" name={name} />
                   <p className="text-xs text-center font-mono truncate w-full" title={name}>
                     {name}
                   </p>
