@@ -126,9 +126,9 @@
   --popover: #FFFFFF;
   
   /* Text colors */
-  --foreground: #333333; /* crisp dark text */
-  --card-foreground: #333333;
-  --popover-foreground: #333333;
+  --foreground: #18191b; /* crisp dark text */
+  --card-foreground: #18191b;
+  --popover-foreground: #18191b;
   
   /* Primary actions */
   --primary: #116EFE; /* modern cool blue */
@@ -136,7 +136,7 @@
   
   /* Secondary actions */
   --secondary: #F0F2F5; /* soft light gray */
-  --secondary-foreground: #333333;
+  --secondary-foreground: #18191b;
   
   /* Accent - keeping your existing accent */
   --accent: #116EFE; /* preserved accent color */
@@ -165,7 +165,7 @@
   
   /* Sidebar colors */
   --sidebar: #F7F9FC; /* light and airy sidebar */
-  --sidebar-foreground: #333333;
+  --sidebar-foreground: #18191b;
   --sidebar-primary: #116EFE;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #116EFE; /* preserved accent */
@@ -176,7 +176,7 @@
 
 .dark {
   /* Core backgrounds */
-  --background: #18191A; /* deep, modern dark tone */
+  --background: #18191b; /* deep, modern dark tone */
   --card: #242526; /* subtle contrast for cards */
   --popover: #242526;
   
@@ -219,7 +219,7 @@
   --radius: 1rem;
   
   /* Sidebar colors */
-  --sidebar: #242526;
+  --sidebar: #18191b;
   --sidebar-foreground: #E4E6EB;
   --sidebar-primary: #3A8DFF;
   --sidebar-primary-foreground: #FFFFFF;

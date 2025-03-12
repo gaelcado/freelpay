@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SymbolIcon, ColorWheelIcon, BoxIcon, ComponentInstanceIcon } from "@radix-ui/react-icons"
+import { ColorWheelIcon, BoxIcon, ComponentInstanceIcon } from "@radix-ui/react-icons"
 import { TypographyShowcase } from "./typography-showcase"
 import { RadixIconsShowcase } from "./radix-icons-showcase"
 import { IconComponentShowcase } from "./icon-component-showcase"

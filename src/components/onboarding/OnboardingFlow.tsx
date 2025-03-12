@@ -37,12 +37,28 @@ const STEPS = [
   },
 ]
 
+interface OnboardingFlowProps {
+  children: React.ReactNode[];
+  currentStep: number;
+  onNext: (stepData: Record<string, string>) => void;
+}
+
+// Added to fix TypeScript issues for CompletionStep
+type CompletionStepProps = {
+  onNext: (data: Record<string, string>) => void;
+  currentStep: number;
+  formData: any;
+  updateFormData?: (data: any) => void;
+};
+
 export default function OnboardingFlow() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [formData, setFormData] = useState({})
   const router = useRouter()
 
   const CurrentStepComponent = STEPS[currentStepIndex].component
+  const NonCompleteStepComponent = CurrentStepComponent as React.ComponentType<{ formData: any; updateFormData: (data: any) => void }>
+  const CompleteStepComponent = CurrentStepComponent as React.ComponentType<CompletionStepProps>
 
   const updateFormData = (data: any) => {
     setFormData((prev) => ({ ...prev, ...data }))
@@ -50,6 +66,11 @@ export default function OnboardingFlow() {
       setCurrentStepIndex((prev) => prev + 1)
     }
   }
+
+  const finalOnNext = (data: Record<string, string>) => {
+    setFormData((prev) => ({ ...prev, ...data }));
+    router.push("/dashboard");
+  };
 
   const goBack = () => {
     if (currentStepIndex > 0) {
@@ -64,7 +85,7 @@ export default function OnboardingFlow() {
       {/* Background image with overlay */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/branding/6.png"
+          src="/branding/bg-last.png"
           alt="Background"
           fill
           className="object-cover"
@@ -208,10 +229,19 @@ export default function OnboardingFlow() {
 
               {/* Step content */}
               <div className="p-6 lg:p-8">
-                <CurrentStepComponent
-                  formData={formData}
-                  updateFormData={updateFormData}
-                />
+                {STEPS[currentStepIndex].id === "complete" ? (
+                  <CompleteStepComponent
+                    formData={formData}
+                    updateFormData={updateFormData}
+                    onNext={finalOnNext}
+                    currentStep={currentStepIndex}
+                  />
+                ) : (
+                  <NonCompleteStepComponent
+                    formData={formData}
+                    updateFormData={updateFormData}
+                  />
+                )}
               </div>
 
               {/* Navigation buttons - only show if component doesn't handle its own navigation */}

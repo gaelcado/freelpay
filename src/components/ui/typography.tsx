@@ -308,8 +308,13 @@ export function ButtonText(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="button" as="span" {...props} />;
 }
 
-export function NavText(props: Omit<TypographyProps, "variant">) {
-  return <Typography variant="nav" as="span" {...props} />;
+// NavText component for navigation texts, using our shadcn typography token for nav text
+export function NavText({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span className={`text-sm font-medium leading-[1.35] tracking-tight text-foreground/90 ${className}`}>
+      {children}
+    </span>
+  );
 }
 
 // Truncated text component with improved line clamping

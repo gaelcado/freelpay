@@ -15,14 +15,23 @@ interface RevenueChartProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: number | string
 }
 
-// Custom tooltip component for better styling
-const CustomTooltip = ({ active, payload, label }: any) => {
+type CustomTooltipProps = {
+  active?: boolean;
+  payload?: {
+    value: number;
+    name?: string;
+    color?: string;
+  }[];
+  label?: string;
+};
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-background/95 dark:bg-background/90 backdrop-blur-sm border border-border/30 p-2.5 rounded-lg shadow-sm">
         <BodySM className="font-medium mb-0.5">{label}</BodySM>
         <div className="space-y-0.5">
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <div key={`item-${index}`} className="flex items-center gap-1.5">
               <div 
                 className="w-1.5 h-1.5 rounded-full" 

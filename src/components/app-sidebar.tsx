@@ -2,17 +2,8 @@
 
 import * as React from "react"
 import {
-  HomeIcon,
-  FileTextIcon,
-  CardStackIcon,
-  PersonIcon,
-  CheckboxIcon,
-  BackpackIcon,
-  GearIcon,
-  QuestionMarkCircledIcon,
   MagicWandIcon,
-  ColorWheelIcon,
-} from "@radix-ui/react-icons"
+} from '@radix-ui/react-icons'
 import { Icon } from "@/components/ui/icon"
 
 import { NavMain } from "@/components/nav-main"

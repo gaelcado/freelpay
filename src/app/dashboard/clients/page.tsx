@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { HomeIcon, PlusIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { Icon } from "@/components/ui/icon"
 import { HeadingLG, BodyMD } from "@/components/ui/typography"
 import Link from "next/link"

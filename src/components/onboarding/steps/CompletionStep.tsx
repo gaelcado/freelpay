@@ -19,12 +19,14 @@ import {
   BodySM 
 } from "@/components/ui/typography"
 
-type CompletionStepProps = {
+interface CompletionStepProps {
+  onNext: (data: Record<string, string>) => void;
+  currentStep: number;
   formData: any
   updateFormData?: (data: any) => void
 }
 
-export default function CompletionStep({ formData }: CompletionStepProps) {
+export default function CompletionStep({ formData, onNext, currentStep }: CompletionStepProps) {
   // Calculate financing details
   const invoiceAmount = parseFloat(formData.invoiceAmount || "0")
   const discountRate = formData.financingRate || 0.03 // 3% default

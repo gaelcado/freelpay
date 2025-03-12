@@ -33,7 +33,7 @@ export function LoginForm({
   const router = useRouter()
   const { toast } = useToast()
 
-  const handleSubmit = async (e: React.FormEvent, isLogin: boolean) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, isLogin: boolean) => {
     e.preventDefault()
     setIsLoading(true)
 

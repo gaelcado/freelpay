@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -149,12 +149,14 @@ const FINANCING_PURPOSE = [
   { value: "autre", label: "Autre" },
 ]
 
-type RegistrationStepProps = {
+interface RegistrationStepProps {
   formData: any
   updateFormData: (data: any) => void
+  onNext: (data: Record<string, string>) => void
+  currentStep: number
 }
 
-export default function RegistrationStep({ formData, updateFormData }: RegistrationStepProps) {
+export default function RegistrationStep({ formData, updateFormData, onNext, currentStep }: RegistrationStepProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   
@@ -200,6 +202,10 @@ export default function RegistrationStep({ formData, updateFormData }: Registrat
       },
     })
   }
+
+  const goToNext = useCallback((stepData?: Record<string, string>) => {
+    // ... existing code ...
+  }, [currentStep])
 
   return (
     <div className="space-y-6">

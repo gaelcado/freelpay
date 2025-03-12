@@ -21,6 +21,11 @@ type InvoiceUploadStepProps = {
   updateFormData: (data: any) => void
 }
 
+interface UploadData {
+  files: File[];
+  // Add other expected fields
+}
+
 export default function InvoiceUploadStep({ formData, updateFormData }: InvoiceUploadStepProps) {
   const [file, setFile] = useState<File | null>(null)
   const [uploading, setUploading] = useState(false)
@@ -32,7 +37,7 @@ export default function InvoiceUploadStep({ formData, updateFormData }: InvoiceU
     if (acceptedFiles.length > 0) {
       setFile(acceptedFiles[0])
       setError(null)
-      handleUpload(acceptedFiles[0])
+      handleUpload({ files: acceptedFiles })
     }
   }, [])
 
@@ -56,7 +61,7 @@ export default function InvoiceUploadStep({ formData, updateFormData }: InvoiceU
     }
   })
 
-  const handleUpload = (file: File) => {
+  const handleUpload = async (data: UploadData) => {
     setUploading(true)
     setUploadProgress(0)
     
@@ -72,7 +77,7 @@ export default function InvoiceUploadStep({ formData, updateFormData }: InvoiceU
           setTimeout(() => {
             // Update form data with extracted info
             updateFormData({
-              invoiceFile: file.name,
+              invoiceFile: data.files[0].name,
               invoiceAmount: "5000",
               dueDate: "10 mai 2025",
               clientDetails: {

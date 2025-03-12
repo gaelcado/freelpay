@@ -8,7 +8,7 @@ import {
   ExitIcon,
   PersonIcon,
   GearIcon,
-  HomeIcon,
+  HomeIcon
 } from "@radix-ui/react-icons"
 
 import {
