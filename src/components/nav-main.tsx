@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronRightIcon } from "@radix-ui/react-icons"
-import { Icon } from "@/components/ui/icon"
-
+import * as React from "react";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
+import { Icon } from "@/components/ui/icon";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -19,27 +18,23 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // Import all Radix icons we need
-import * as RadixIcons from "@radix-ui/react-icons"
+import * as RadixIcons from "@radix-ui/react-icons";
 
 // Define the type for our icon names
-type RadixIconName = keyof typeof RadixIcons
-
+type RadixIconName = keyof typeof RadixIcons;
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: RadixIconName | React.ComponentType<React.SVGProps<SVGSVGElement>>
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+    title: string;
+    url: string;
+    icon: RadixIconName | React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    isActive?: boolean;
+    items?: { title: string; url: string }[];
+  }[];
 }) {
   return (
     <SidebarGroup>
@@ -50,7 +45,7 @@ export function NavMain({
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
-                  {typeof item.icon === 'string' ? (
+                  {typeof item.icon === "string" ? (
                     <Icon name={item.icon as RadixIconName} />
                   ) : (
                     // If it's a component, render it directly
@@ -87,5 +82,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

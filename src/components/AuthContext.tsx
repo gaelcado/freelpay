@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase, isSupabaseMocked } from '@/lib/supabase';
-import { Session } from '@supabase/supabase-js';
+import { createContext, useContext, useEffect, useState } from "react";
+import { supabase, isSupabaseMocked } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
 
 // Définir le type pour le contexte
 interface AuthContextType {
@@ -32,11 +32,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [showBanner, setShowBanner] = useState(true);
   const isMockMode = isSupabaseMocked();
-
   useEffect(() => {
     // En mode mock, on peut simuler une authentification
     if (isMockMode) {
-      console.log('Mode développement: Supabase est en mode mock');
+      console.log("Mode développement: Supabase est en mode mock");
       // Optionnel: simuler un délai de chargement
       const timer = setTimeout(() => {
         setLoading(false);
@@ -45,35 +44,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Vérifier si un token existe dans le localStorage
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setIsAuthenticated(true);
     }
 
     // Configurer l'écouteur de changement de session Supabase
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, currentSession) => {
-        setSession(currentSession);
-        setIsAuthenticated(!!currentSession);
-        setLoading(false);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      setSession(currentSession);
+      setIsAuthenticated(!!currentSession);
+      setLoading(false);
 
-        // Mettre à jour le token dans localStorage
-        if (currentSession?.access_token) {
-          localStorage.setItem('token', currentSession.access_token);
-        } else if (event === 'SIGNED_OUT') {
-          localStorage.removeItem('token');
-        }
+      // Mettre à jour le token dans localStorage
+      if (currentSession?.access_token) {
+        localStorage.setItem("token", currentSession.access_token);
+      } else if (event === "SIGNED_OUT") {
+        localStorage.removeItem("token");
       }
-    );
+    });
 
     // Vérifier la session actuelle au chargement
     const checkSession = async () => {
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      const {
+        data: { session: currentSession },
+      } = await supabase.auth.getSession();
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
       setLoading(false);
     };
-    
     checkSession();
 
     // Nettoyer l'écouteur lors du démontage
@@ -81,22 +81,62 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       subscription.unsubscribe();
     };
   }, [isMockMode]);
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, session, loading, isMockMode }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        session,
+        loading,
+        isMockMode,
+      }}
+      data-oid="zp-6.ty"
+    >
       {isMockMode && showBanner && (
-        <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-black p-2 flex items-center justify-center text-sm z-50">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        <div
+          className="fixed top-0 left-0 right-0 bg-yellow-500 text-black p-2 flex items-center justify-center text-sm z-50"
+          data-oid="9ugfuoc"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            data-oid="q8b-kw:"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              data-oid="xgdc3cn"
+            />
           </svg>
-          <span>Mode développement: Backend désactivé - Fonctionnalités limitées</span>
-          <button 
+          <span data-oid="3fg01f.">
+            Mode développement: Backend désactivé - Fonctionnalités limitées
+          </span>
+          <button
             onClick={() => setShowBanner(false)}
             className="ml-4 p-1 hover:bg-yellow-600 rounded-full"
             aria-label="Fermer"
+            data-oid="67e4eat"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              data-oid="f8k55rz"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+                data-oid="t7v4jo2"
+              />
             </svg>
           </button>
         </div>
@@ -104,4 +144,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-} 
+}

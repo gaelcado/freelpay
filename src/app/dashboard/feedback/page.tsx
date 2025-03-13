@@ -1,19 +1,26 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Send, Star, ThumbsUp, MessageSquare } from "lucide-react"
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Send, Star, ThumbsUp, MessageSquare } from "lucide-react";
 export default function FeedbackPage() {
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">Feedback</h1>
         <p className="text-muted-foreground">
-          We value your input! Help us improve Freelpay by sharing your thoughts and suggestions.
+          We value your input! Help us improve Freelpay by sharing your thoughts
+          and suggestions.
         </p>
       </div>
 
@@ -41,7 +48,10 @@ export default function FeedbackPage() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Brief summary of your feedback" />
+                <Input
+                  id="subject"
+                  placeholder="Brief summary of your feedback"
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="feedback-message">Your Feedback</Label>
@@ -81,7 +91,8 @@ export default function FeedbackPage() {
             <CardHeader>
               <CardTitle>Why Your Feedback Matters</CardTitle>
               <CardDescription>
-                We use your feedback to prioritize improvements and new features.
+                We use your feedback to prioritize improvements and new
+                features.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -93,7 +104,8 @@ export default function FeedbackPage() {
                   <div>
                     <h3 className="font-medium">Shape the Product</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your feedback directly influences our product roadmap and feature development.
+                      Your feedback directly influences our product roadmap and
+                      feature development.
                     </p>
                   </div>
                 </div>
@@ -104,7 +116,8 @@ export default function FeedbackPage() {
                   <div>
                     <h3 className="font-medium">Open Dialogue</h3>
                     <p className="text-sm text-muted-foreground">
-                      We review all feedback and often reach out to discuss ideas further.
+                      We review all feedback and often reach out to discuss
+                      ideas further.
                     </p>
                   </div>
                 </div>
@@ -143,5 +156,5 @@ export default function FeedbackPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

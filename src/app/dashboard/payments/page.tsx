@@ -1,14 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { ArrowDownLeft, ArrowUpRight, Search, Wallet } from "lucide-react"
-import { HeadingLG, BodyMD, HeadingMD } from "@/components/ui/typography"
-import Link from "next/link"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { ArrowDownLeft, ArrowUpRight, Search, Wallet } from "lucide-react";
+import { HeadingLG, BodyMD, HeadingMD } from "@/components/ui/typography";
+import Link from "next/link";
 
 // Mock data for transactions
 const mockTransactions = [
@@ -48,61 +62,58 @@ const mockTransactions = [
     status: "completed",
     relatedTo: null,
   },
-]
+];
 
 export default function PaymentsPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  
-  const filteredTransactions = mockTransactions.filter(transaction => 
-    transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    transaction.id.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredTransactions = mockTransactions.filter(
+    (transaction) =>
+      transaction.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      transaction.id.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-chart-3 text-white"
+        return "bg-chart-3 text-white";
       case "pending":
-        return "bg-chart-5 text-white"
+        return "bg-chart-5 text-white";
       case "failed":
-        return "bg-destructive text-white"
+        return "bg-destructive text-white";
       default:
-        return "bg-secondary text-secondary-foreground"
+        return "bg-secondary text-secondary-foreground";
     }
-  }
-  
+  };
   const formatStatus = (status: string) => {
     switch (status) {
       case "completed":
-        return "Complété"
+        return "Complété";
       case "pending":
-        return "En attente"
+        return "En attente";
       case "failed":
-        return "Échoué"
+        return "Échoué";
       default:
-        return status
+        return status;
     }
-  }
-  
+  };
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat('fr-FR').format(date)
-  }
-  
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("fr-FR").format(date);
+  };
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount)
-  }
-  
+    return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    }).format(amount);
+  };
   const totalCredit = mockTransactions
-    .filter(t => t.type === "credit" && t.status === "completed")
-    .reduce((sum, t) => sum + t.amount, 0)
-    
+    .filter((t) => t.type === "credit" && t.status === "completed")
+    .reduce((sum, t) => sum + t.amount, 0);
   const totalDebit = mockTransactions
-    .filter(t => t.type === "debit" && t.status === "completed")
-    .reduce((sum, t) => sum + t.amount, 0)
-    
-  const balance = totalCredit - totalDebit
-  
+    .filter((t) => t.type === "debit" && t.status === "completed")
+    .reduce((sum, t) => sum + t.amount, 0);
+  const balance = totalCredit - totalDebit;
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -119,7 +130,7 @@ export default function PaymentsPage() {
           </Link>
         </Button>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
@@ -128,12 +139,14 @@ export default function PaymentsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <HeadingMD className={balance >= 0 ? "text-chart-3" : "text-destructive"}>
+            <HeadingMD
+              className={balance >= 0 ? "text-chart-3" : "text-destructive"}
+            >
               {formatCurrency(balance)}
             </HeadingMD>
           </CardContent>
         </Card>
-        
+
         <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -146,7 +159,7 @@ export default function PaymentsPage() {
             </HeadingMD>
           </CardContent>
         </Card>
-        
+
         <Card variant="default" elevation="medium">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -160,7 +173,7 @@ export default function PaymentsPage() {
           </CardContent>
         </Card>
       </div>
-      
+
       <Card>
         <CardHeader>
           <CardTitle>Historique des transactions</CardTitle>
@@ -169,6 +182,7 @@ export default function PaymentsPage() {
           </CardDescription>
           <div className="mt-4 relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+
             <Input
               type="search"
               placeholder="Rechercher par description ou ID..."
@@ -206,7 +220,13 @@ export default function PaymentsPage() {
                         ) : (
                           <ArrowUpRight className="mr-2 h-4 w-4 text-destructive" />
                         )}
-                        <span className={transaction.type === "credit" ? "text-chart-3" : "text-destructive"}>
+                        <span
+                          className={
+                            transaction.type === "credit"
+                              ? "text-chart-3"
+                              : "text-destructive"
+                          }
+                        >
                           {transaction.type === "credit" ? "+" : "-"}
                           {formatCurrency(transaction.amount)}
                         </span>
@@ -219,8 +239,8 @@ export default function PaymentsPage() {
                     </TableCell>
                     <TableCell>
                       {transaction.relatedTo ? (
-                        <Link 
-                          href={`/dashboard/${transaction.relatedTo.startsWith('FIN') ? 'financing' : 'invoices'}/${transaction.relatedTo}`} 
+                        <Link
+                          href={`/dashboard/${transaction.relatedTo.startsWith("FIN") ? "financing" : "invoices"}/${transaction.relatedTo}`}
                           className="hover:underline"
                         >
                           {transaction.relatedTo}
@@ -233,7 +253,10 @@ export default function PaymentsPage() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-6 text-muted-foreground"
+                  >
                     Aucune transaction trouvée
                   </TableCell>
                 </TableRow>
@@ -251,5 +274,5 @@ export default function PaymentsPage() {
         </CardFooter>
       </Card>
     </div>
-  )
-} 
+  );
+}

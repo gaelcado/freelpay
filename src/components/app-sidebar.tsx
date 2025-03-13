@@ -1,15 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  MagicWandIcon,
-} from '@radix-ui/react-icons'
-import { Icon } from "@/components/ui/icon"
-import { CtaCard } from "@/components/ui/cta-card"
-
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import * as React from "react";
+import { MagicWandIcon } from "@radix-ui/react-icons";
+import { Icon } from "@/components/ui/icon";
+import { CtaCard } from "@/components/ui/cta-card";
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -18,14 +15,13 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // Import all Radix icons we need
-import * as RadixIcons from "@radix-ui/react-icons"
+import * as RadixIcons from "@radix-ui/react-icons";
 
 // Define the type for our icon names
-type RadixIconName = keyof typeof RadixIcons
-
+type RadixIconName = keyof typeof RadixIcons;
 const data = {
   user: {
     name: "John Doe",
@@ -94,6 +90,7 @@ const data = {
       icon: "GearIcon" as RadixIconName,
     },
   ],
+
   navSecondary: [
     {
       title: "Support",
@@ -106,8 +103,7 @@ const data = {
       icon: "ColorWheelIcon" as RadixIconName,
     },
   ],
-}
-
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
@@ -115,7 +111,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-            <NavUser user={data.user} />
+              <NavUser user={data.user} />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -130,6 +126,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </div>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
-

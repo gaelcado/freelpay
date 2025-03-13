@@ -1,14 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Icon } from "@/components/ui/icon"
-import { HeadingLG, BodyMD } from "@/components/ui/typography"
-import Link from "next/link"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Icon } from "@/components/ui/icon";
+import { HeadingLG, BodyMD } from "@/components/ui/typography";
+import Link from "next/link";
 
 // Mock data for clients
 const mockClients = [
@@ -57,52 +71,48 @@ const mockClients = [
     type: "sme",
     status: "active",
   },
-]
+];
 
 export default function ClientsPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  
-  const filteredClients = mockClients.filter(client => 
-    client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    client.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    client.email.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredClients = mockClients.filter(
+    (client) =>
+      client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.contact.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.email.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
   const getTypeLabel = (type: string) => {
     switch (type) {
       case "enterprise":
-        return "Grande entreprise"
+        return "Grande entreprise";
       case "sme":
-        return "PME"
+        return "PME";
       case "public":
-        return "Secteur public"
+        return "Secteur public";
       default:
-        return type
+        return type;
     }
-  }
-  
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "bg-chart-3 text-white"
+        return "bg-chart-3 text-white";
       case "inactive":
-        return "bg-muted text-muted-foreground"
+        return "bg-muted text-muted-foreground";
       default:
-        return "bg-secondary text-secondary-foreground"
+        return "bg-secondary text-secondary-foreground";
     }
-  }
-  
+  };
   const formatStatus = (status: string) => {
     switch (status) {
       case "active":
-        return "Actif"
+        return "Actif";
       case "inactive":
-        return "Inactif"
+        return "Inactif";
       default:
-        return status
+        return status;
     }
-  }
-  
+  };
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -119,7 +129,7 @@ export default function ClientsPage() {
           </Link>
         </Button>
       </div>
-      
+
       <div className="mt-6">
         <Card variant="default" elevation="medium">
           <CardHeader>
@@ -128,7 +138,12 @@ export default function ClientsPage() {
               Vous avez {mockClients.length} clients au total
             </CardDescription>
             <div className="mt-4 relative">
-              <Icon name="MagnifyingGlassIcon" className="absolute left-2.5 top-2.5 text-muted-foreground" size="sm" />
+              <Icon
+                name="MagnifyingGlassIcon"
+                className="absolute left-2.5 top-2.5 text-muted-foreground"
+                size="sm"
+              />
+
               <Input
                 type="search"
                 placeholder="Rechercher par nom, contact ou email..."
@@ -155,14 +170,25 @@ export default function ClientsPage() {
                   filteredClients.map((client) => (
                     <TableRow key={client.id}>
                       <TableCell className="font-medium">
-                        <Link href={`/dashboard/clients/${client.id}`} className="flex items-center hover:underline">
-                          <Icon name="HomeIcon" className="mr-2 text-muted-foreground" size="sm" />
+                        <Link
+                          href={`/dashboard/clients/${client.id}`}
+                          className="flex items-center hover:underline"
+                        >
+                          <Icon
+                            name="HomeIcon"
+                            className="mr-2 text-muted-foreground"
+                            size="sm"
+                          />
+
                           {client.name}
                         </Link>
                       </TableCell>
                       <TableCell>{client.contact}</TableCell>
                       <TableCell>
-                        <a href={`mailto:${client.email}`} className="hover:underline">
+                        <a
+                          href={`mailto:${client.email}`}
+                          className="hover:underline"
+                        >
                           {client.email}
                         </a>
                       </TableCell>
@@ -177,7 +203,10 @@ export default function ClientsPage() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                    <TableCell
+                      colSpan={6}
+                      className="text-center py-6 text-muted-foreground"
+                    >
                       Aucun client trouvé
                     </TableCell>
                   </TableRow>
@@ -196,5 +225,5 @@ export default function ClientsPage() {
         </Card>
       </div>
     </div>
-  )
-} 
+  );
+}

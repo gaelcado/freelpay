@@ -1,8 +1,7 @@
-import { GalleryVerticalEnd } from "lucide-react"
-import Image from "next/image"
-import { NavText } from "@/components/ui/typography"
-import { LoginForm } from "@/components/login-form"
-
+import { GalleryVerticalEnd } from "lucide-react";
+import Image from "next/image";
+import { NavText } from "@/components/ui/typography";
+import { LoginForm } from "@/components/login-form";
 export default function LoginPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -21,7 +20,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
+      <div className="bg-muted relative overflow-hidden lg:block m-6 rounded-xl">
         <Image
           src="/branding/login2.png"
           alt="Image d'arrière-plan de connexion"
@@ -31,5 +30,5 @@ export default function LoginPage() {
         />
       </div>
     </div>
-  )
+  );
 }

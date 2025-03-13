@@ -1,21 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as RadixIcons from "@radix-ui/react-icons"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Icon } from "@/components/ui/icon"
-
+import * as React from "react";
+import * as RadixIcons from "@radix-ui/react-icons";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Icon } from "@/components/ui/icon";
 export function IconComponentShowcase() {
-  const [searchTerm, setSearchTerm] = React.useState("")
-  
-  // Get all icons from RadixIcons
-  const iconNames = Object.keys(RadixIcons)
-    .filter(name => 
-      name.endsWith('Icon') && name.toLowerCase().includes(searchTerm.toLowerCase())
-    ) as Array<keyof typeof RadixIcons>
+  const [searchTerm, setSearchTerm] = React.useState("");
 
+  // Get all icons from RadixIcons
+  const iconNames = Object.keys(RadixIcons).filter(
+    (name) =>
+      name.endsWith("Icon") &&
+      name.toLowerCase().includes(searchTerm.toLowerCase()),
+  ) as Array<keyof typeof RadixIcons>;
   return (
     <Card variant="default" elevation="medium">
       <CardHeader>
@@ -35,7 +34,7 @@ export function IconComponentShowcase() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="mb-4"
           />
-          
+
           <div className="grid grid-cols-1 gap-4">
             <Card>
               <CardHeader>
@@ -66,7 +65,7 @@ export function IconComponentShowcase() {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardHeader>
                 <CardTitle className="text-sm">Icon Colors</CardTitle>
@@ -75,34 +74,42 @@ export function IconComponentShowcase() {
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col items-center">
                     <Icon name="HomeIcon" className="text-primary" />
+
                     <span className="text-xs mt-1">primary</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Icon name="HomeIcon" className="text-secondary" />
+
                     <span className="text-xs mt-1">secondary</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Icon name="HomeIcon" className="text-muted-foreground" />
+
                     <span className="text-xs mt-1">muted</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <Icon name="HomeIcon" className="text-destructive" />
+
                     <span className="text-xs mt-1">destructive</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-          
+
           <ScrollArea className="h-[500px] pr-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {iconNames.map((name) => (
-                <div 
-                  key={name} 
+                <div
+                  key={name}
                   className="flex flex-col items-center justify-center p-4 border rounded-md hover:bg-muted transition-colors"
                 >
                   <Icon name={name} size="lg" className="mb-2" />
-                  <p className="text-xs text-center font-mono truncate w-full" title={name}>
+
+                  <p
+                    className="text-xs text-center font-mono truncate w-full"
+                    title={name}
+                  >
                     {name}
                   </p>
                 </div>
@@ -112,5 +119,5 @@ export function IconComponentShowcase() {
         </div>
       </CardContent>
     </Card>
-  )
-} 
+  );
+}

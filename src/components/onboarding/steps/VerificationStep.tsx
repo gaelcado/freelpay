@@ -1,11 +1,18 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Building2, Calendar, User, Mail, Phone, FileText, CreditCard } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Building2,
+  Calendar,
+  User,
+  Mail,
+  Phone,
+  FileText,
+  CreditCard,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,16 +20,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { 
-  Card, 
-  CardContent 
-} from "@/components/ui/card"
-import { 
-  HeadingSM,
-  BodyMD
-} from "@/components/ui/typography"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { HeadingSM, BodyMD } from "@/components/ui/typography";
 
 // Define the form schema
 const verificationFormSchema = z.object({
@@ -33,7 +34,6 @@ const verificationFormSchema = z.object({
   dueDate: z.string().min(1, {
     message: "La date d'échéance est requise",
   }),
-  
   // Client details
   clientName: z.string().min(1, {
     message: "Le nom du client est requis",
@@ -44,7 +44,6 @@ const verificationFormSchema = z.object({
   clientAddress: z.string().min(1, {
     message: "L'adresse du client est requise",
   }),
-  
   // User details
   firstName: z.string().min(1, {
     message: "Le prénom est requis",
@@ -58,16 +57,16 @@ const verificationFormSchema = z.object({
   phone: z.string().min(1, {
     message: "Le téléphone est requis",
   }),
-})
-
-type VerificationFormValues = z.infer<typeof verificationFormSchema>
-
+});
+type VerificationFormValues = z.infer<typeof verificationFormSchema>;
 type VerificationStepProps = {
-  formData: any
-  updateFormData: (data: any) => void
-}
-
-export default function VerificationStep({ formData, updateFormData }: VerificationStepProps) {
+  formData: any;
+  updateFormData: (data: any) => void;
+};
+export default function VerificationStep({
+  formData,
+  updateFormData,
+}: VerificationStepProps) {
   // Initialize form with existing data
   const form = useForm<VerificationFormValues>({
     resolver: zodResolver(verificationFormSchema),
@@ -82,7 +81,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
       email: formData.userDetails?.email || "",
       phone: formData.userDetails?.phone || "",
     },
-  })
+  });
 
   // Handle form submission
   function onSubmit(data: VerificationFormValues) {
@@ -101,17 +100,17 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
         email: data.email,
         phone: data.phone,
       },
-    })
+    });
   }
-
   return (
     <div className="space-y-4">
       <div className="space-y-2">
         <BodyMD className="text-muted-foreground">
-          Nous avons extrait ces informations de votre facture. Veuillez les vérifier et les compléter si nécessaire.
+          Nous avons extrait ces informations de votre facture. Veuillez les
+          vérifier et les compléter si nécessaire.
         </BodyMD>
       </div>
-      
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Invoice Information Section */}
@@ -120,7 +119,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
               <FileText className="h-5 w-5 text-primary" />
               <HeadingSM>Informations de la facture</HeadingSM>
             </div>
-            
+
             <Card className="overflow-hidden border-border/50">
               <CardContent className="p-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
@@ -135,10 +134,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                           </FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Input 
-                                {...field} 
-                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
+
                               <CreditCard className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             </div>
                           </FormControl>
@@ -147,7 +147,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                       )}
                     />
                   </div>
-                  
+
                   <div className="p-4 space-y-3">
                     <FormField
                       control={form.control}
@@ -159,10 +159,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                           </FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Input 
-                                {...field} 
-                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
+
                               <Calendar className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             </div>
                           </FormControl>
@@ -175,14 +176,14 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
               </CardContent>
             </Card>
           </div>
-          
+
           {/* Client Information Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Building2 className="h-5 w-5 text-primary" />
               <HeadingSM>Informations du client</HeadingSM>
             </div>
-            
+
             <Card className="overflow-hidden border-border/50">
               <CardContent className="p-0">
                 <div className="grid grid-cols-1 divide-y divide-border">
@@ -197,10 +198,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                           </FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Input 
-                                {...field} 
-                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
+
                               <Building2 className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                             </div>
                           </FormControl>
@@ -209,7 +211,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                       )}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
                     <div className="p-4 space-y-3">
                       <FormField
@@ -221,9 +223,9 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                               SIRET du client
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                {...field} 
-                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
                             </FormControl>
                             <FormMessage />
@@ -231,7 +233,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                         )}
                       />
                     </div>
-                    
+
                     <div className="p-4 space-y-3">
                       <FormField
                         control={form.control}
@@ -242,9 +244,9 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                               Adresse du client
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                {...field} 
-                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
                             </FormControl>
                             <FormMessage />
@@ -257,14 +259,14 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
               </CardContent>
             </Card>
           </div>
-          
+
           {/* User Information Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <User className="h-5 w-5 text-primary" />
               <HeadingSM>Vos informations</HeadingSM>
             </div>
-            
+
             <Card className="overflow-hidden border-border/50">
               <CardContent className="p-0">
                 <div className="grid grid-cols-1 divide-y divide-border">
@@ -280,10 +282,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                             </FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <Input 
-                                  {...field} 
-                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                                <Input
+                                  {...field}
+                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                                 />
+
                                 <User className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                               </div>
                             </FormControl>
@@ -292,7 +295,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                         )}
                       />
                     </div>
-                    
+
                     <div className="p-4 space-y-3">
                       <FormField
                         control={form.control}
@@ -303,9 +306,9 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                               Nom
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                {...field} 
-                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                              <Input
+                                {...field}
+                                className="bg-background/50 border-border/50 focus-visible:ring-primary/30"
                               />
                             </FormControl>
                             <FormMessage />
@@ -314,7 +317,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
                     <div className="p-4 space-y-3">
                       <FormField
@@ -327,10 +330,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                             </FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <Input 
-                                  {...field} 
-                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                                <Input
+                                  {...field}
+                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                                 />
+
                                 <Mail className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                               </div>
                             </FormControl>
@@ -339,7 +343,7 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                         )}
                       />
                     </div>
-                    
+
                     <div className="p-4 space-y-3">
                       <FormField
                         control={form.control}
@@ -351,10 +355,11 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
                             </FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <Input 
-                                  {...field} 
-                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30" 
+                                <Input
+                                  {...field}
+                                  className="pl-8 bg-background/50 border-border/50 focus-visible:ring-primary/30"
                                 />
+
                                 <Phone className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                               </div>
                             </FormControl>
@@ -368,12 +373,15 @@ export default function VerificationStep({ formData, updateFormData }: Verificat
               </CardContent>
             </Card>
           </div>
-          
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
+
+          <Button
+            type="submit"
+            className="w-full bg-primary hover:bg-primary/90"
+          >
             Vérifier les informations
           </Button>
         </form>
       </Form>
     </div>
-  )
-} 
+  );
+}

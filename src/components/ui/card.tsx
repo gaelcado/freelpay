@@ -1,118 +1,132 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-
+import * as React from "react";
+import { cn } from "@/lib/utils";
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    variant?: "default" | "outline" | "primary" | "secondary" | "success" | "warning" | "danger"
-    elevation?: "flat" | "low" | "medium" | "high"
-    isHoverable?: boolean
-    isClickable?: boolean
+    variant?:
+      | "default"
+      | "outline"
+      | "primary"
+      | "secondary"
+      | "success"
+      | "warning"
+      | "danger";
+    elevation?: "flat" | "low" | "medium" | "high";
+    isHoverable?: boolean;
+    isClickable?: boolean;
   }
->(({ 
-  className, 
-  variant = "default", 
-  elevation = "medium", 
-  isHoverable = false,
-  isClickable = false,
-  ...props 
-}, ref) => {
-  // Classes de base pour les variantes standard
-  const variantClasses = {
-    default: "bg-card text-card-foreground",
-    outline: "border bg-transparent",
-    primary: "bg-primary/10 border-primary/30 text-primary-foreground",
-    secondary: "bg-secondary/10 border-secondary/30 text-secondary-foreground",
-    success: "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300",
-    warning: "bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300",
-    danger: "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300"
-  }
+>(
+  (
+    {
+      className,
+      variant = "default",
+      elevation = "medium",
+      isHoverable = false,
+      isClickable = false,
+      ...props
+    },
+    ref,
+  ) => {
+    // Classes de base pour les variantes standard
+    const variantClasses = {
+      default: "bg-card text-card-foreground",
+      outline: "border bg-transparent",
+      primary: "bg-primary/10 border-primary/30 text-primary-foreground",
+      secondary:
+        "bg-secondary/10 border-secondary/30 text-secondary-foreground",
+      success:
+        "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300",
+      warning:
+        "bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300",
+      danger: "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300",
+    };
 
-  // Classes d'élévation (ombres)
-  const elevationClasses = {
-    flat: "shadow-none",
-    low: "shadow-sm",
-    medium: "shadow-md",
-    high: "shadow-lg"
-  }
+    // Classes d'élévation (ombres)
+    const elevationClasses = {
+      flat: "shadow-none",
+      low: "shadow-sm",
+      medium: "shadow-md",
+      high: "shadow-lg",
+    };
 
-  // Classes pour les états interactifs
-  const interactiveClasses = cn(
-    isHoverable && "transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md",
-    isClickable && "cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-  )
-
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "rounded-lg border overflow-hidden",
-        variantClasses[variant],
-        elevationClasses[elevation],
-        interactiveClasses,
-        className
-      )}
-      {...props}
-    />
-  )
-})
-Card.displayName = "Card"
-
+    // Classes pour les états interactifs
+    const interactiveClasses = cn(
+      isHoverable &&
+        "transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md",
+      isClickable &&
+        "cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+    );
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "rounded-lg border overflow-hidden",
+          variantClasses[variant],
+          elevationClasses[elevation],
+          interactiveClasses,
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+Card.displayName = "Card";
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    spacing?: "default" | "compact" | "loose" | "none"
-    withSeparator?: boolean
+    spacing?: "default" | "compact" | "loose" | "none";
+    withSeparator?: boolean;
   }
->(({ className, spacing = "default", withSeparator = false, ...props }, ref) => {
-  const spacingClasses = {
-    default: "px-6 py-4",
-    compact: "p-4",
-    loose: "p-6",
-    none: "p-0"
-  }
-
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        spacingClasses[spacing], 
-        withSeparator && "border-b border-border/40", 
-        className
-      )}
-      {...props}
-    />
-  )
-})
-CardHeader.displayName = "CardHeader"
-
+>(
+  (
+    { className, spacing = "default", withSeparator = false, ...props },
+    ref,
+  ) => {
+    const spacingClasses = {
+      default: "px-6 py-4",
+      compact: "p-4",
+      loose: "p-6",
+      none: "p-0",
+    };
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          spacingClasses[spacing],
+          withSeparator && "border-b border-border/40",
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+CardHeader.displayName = "CardHeader";
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement> & {
-    size?: "sm" | "md" | "lg"
+    size?: "sm" | "md" | "lg";
   }
 >(({ className, size = "md", ...props }, ref) => {
   const sizeClasses = {
     sm: "text-sm font-semibold",
     md: "text-lg font-semibold",
-    lg: "text-xl font-semibold"
-  }
-
+    lg: "text-xl font-semibold",
+  };
   return (
     <h3
       ref={ref}
       className={cn(
         sizeClasses[size],
         "leading-none tracking-tight text-foreground/90",
-        className
+        className,
       )}
       {...props}
     />
-  )
-})
-CardTitle.displayName = "CardTitle"
-
+  );
+});
+CardTitle.displayName = "CardTitle";
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -122,55 +136,66 @@ const CardDescription = React.forwardRef<
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-))
-CardDescription.displayName = "CardDescription"
-
+));
+CardDescription.displayName = "CardDescription";
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    spacing?: "default" | "compact" | "loose" | "none"
+    spacing?: "default" | "compact" | "loose" | "none";
   }
 >(({ className, spacing = "default", ...props }, ref) => {
   const spacingClasses = {
     default: "px-6 py-4",
     compact: "p-4",
     loose: "p-6",
-    none: "p-0"
-  }
-
-  return (
-    <div ref={ref} className={cn(spacingClasses[spacing], className)} {...props} />
-  )
-})
-CardContent.displayName = "CardContent"
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    spacing?: "default" | "compact" | "loose" | "none"
-    withSeparator?: boolean
-  }
->(({ className, spacing = "default", withSeparator = false, ...props }, ref) => {
-  const spacingClasses = {
-    default: "px-6 py-4",
-    compact: "p-4",
-    loose: "p-6",
-    none: "p-0"
-  }
-
+    none: "p-0",
+  };
   return (
     <div
       ref={ref}
-      className={cn(
-        spacingClasses[spacing], 
-        withSeparator && "border-t border-border/40", 
-        "flex items-center", 
-        className
-      )}
+      className={cn(spacingClasses[spacing], className)}
       {...props}
     />
-  )
-})
-CardFooter.displayName = "CardFooter"
-
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
+  );
+});
+CardContent.displayName = "CardContent";
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    spacing?: "default" | "compact" | "loose" | "none";
+    withSeparator?: boolean;
+  }
+>(
+  (
+    { className, spacing = "default", withSeparator = false, ...props },
+    ref,
+  ) => {
+    const spacingClasses = {
+      default: "px-6 py-4",
+      compact: "p-4",
+      loose: "p-6",
+      none: "p-0",
+    };
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          spacingClasses[spacing],
+          withSeparator && "border-t border-border/40",
+          "flex items-center",
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+CardFooter.displayName = "CardFooter";
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+};

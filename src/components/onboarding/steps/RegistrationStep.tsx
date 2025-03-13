@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import { useState, useCallback } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Eye, EyeOff, Info } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { useState, useCallback } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Eye, EyeOff, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,151 +14,258 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 // Define the form schema
-const registrationFormSchema = z.object({
-  email: z.string().email({
-    message: "Email invalide",
-  }),
-  phone: z.string().min(1, {
-    message: "Le numéro de téléphone est requis",
-  }),
-  password: z
-    .string()
-    .min(8, {
-      message: "Le mot de passe doit contenir au moins 8 caractères",
-    })
-    .regex(/[A-Z]/, {
-      message: "Le mot de passe doit contenir au moins une majuscule",
-    })
-    .regex(/[0-9]/, {
-      message: "Le mot de passe doit contenir au moins un chiffre",
-    })
-    .regex(/[^A-Za-z0-9]/, {
-      message: "Le mot de passe doit contenir au moins un caractère spécial",
+const registrationFormSchema = z
+  .object({
+    email: z.string().email({
+      message: "Email invalide",
     }),
-  confirmPassword: z.string(),
-  legalStatus: z.string({
-    required_error: "Le statut juridique est requis",
-  }),
-  siret: z.string().min(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }).max(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }),
-  businessAddress: z.string().min(1, {
-    message: "L'adresse professionnelle est requise",
-  }),
-  activity: z.string({
-    required_error: "L'activité principale est requise",
-  }),
-  monthlyInvoicing: z.string({
-    required_error: "Le volume mensuel de facturation est requis",
-  }),
-  paymentTerms: z.string({
-    required_error: "Les délais de paiement habituels sont requis",
-  }),
-  clientTypes: z.string({
-    required_error: "Le type de clients est requis",
-  }),
-  financingPurpose: z.string({
-    required_error: "L'objectif du financement est requis",
-  }),
-  termsAccepted: z.boolean().refine(val => val === true, {
-    message: "Vous devez accepter les conditions générales",
-  }),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Les mots de passe ne correspondent pas",
-  path: ["confirmPassword"],
-})
-
-type RegistrationFormValues = z.infer<typeof registrationFormSchema>
+    phone: z.string().min(1, {
+      message: "Le numéro de téléphone est requis",
+    }),
+    password: z
+      .string()
+      .min(8, {
+        message: "Le mot de passe doit contenir au moins 8 caractères",
+      })
+      .regex(/[A-Z]/, {
+        message: "Le mot de passe doit contenir au moins une majuscule",
+      })
+      .regex(/[0-9]/, {
+        message: "Le mot de passe doit contenir au moins un chiffre",
+      })
+      .regex(/[^A-Za-z0-9]/, {
+        message: "Le mot de passe doit contenir au moins un caractère spécial",
+      }),
+    confirmPassword: z.string(),
+    legalStatus: z.string({
+      required_error: "Le statut juridique est requis",
+    }),
+    siret: z
+      .string()
+      .min(14, {
+        message: "Le numéro SIRET doit contenir 14 chiffres",
+      })
+      .max(14, {
+        message: "Le numéro SIRET doit contenir 14 chiffres",
+      }),
+    businessAddress: z.string().min(1, {
+      message: "L'adresse professionnelle est requise",
+    }),
+    activity: z.string({
+      required_error: "L'activité principale est requise",
+    }),
+    monthlyInvoicing: z.string({
+      required_error: "Le volume mensuel de facturation est requis",
+    }),
+    paymentTerms: z.string({
+      required_error: "Les délais de paiement habituels sont requis",
+    }),
+    clientTypes: z.string({
+      required_error: "Le type de clients est requis",
+    }),
+    financingPurpose: z.string({
+      required_error: "L'objectif du financement est requis",
+    }),
+    termsAccepted: z.boolean().refine((val) => val === true, {
+      message: "Vous devez accepter les conditions générales",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Les mots de passe ne correspondent pas",
+    path: ["confirmPassword"],
+  });
+type RegistrationFormValues = z.infer<typeof registrationFormSchema>;
 
 // Legal status options
 const LEGAL_STATUS = [
-  { value: "freelance", label: "Freelance" },
-  { value: "auto-entrepreneur", label: "Auto-entrepreneur" },
-  { value: "eurl", label: "EURL" },
-  { value: "sasu", label: "SASU" },
-  { value: "sarl", label: "SARL" },
-  { value: "sas", label: "SAS" },
-  { value: "autre", label: "Autre" },
-]
+  {
+    value: "freelance",
+    label: "Freelance",
+  },
+  {
+    value: "auto-entrepreneur",
+    label: "Auto-entrepreneur",
+  },
+  {
+    value: "eurl",
+    label: "EURL",
+  },
+  {
+    value: "sasu",
+    label: "SASU",
+  },
+  {
+    value: "sarl",
+    label: "SARL",
+  },
+  {
+    value: "sas",
+    label: "SAS",
+  },
+  {
+    value: "autre",
+    label: "Autre",
+  },
+];
 
 // Activity options
 const ACTIVITIES = [
-  { value: "tech", label: "Développement informatique" },
-  { value: "design", label: "Design & Création" },
-  { value: "marketing", label: "Marketing & Communication" },
-  { value: "consulting", label: "Conseil & Stratégie" },
-  { value: "formation", label: "Formation & Coaching" },
-  { value: "traduction", label: "Traduction & Rédaction" },
-  { value: "autre", label: "Autre" },
-]
+  {
+    value: "tech",
+    label: "Développement informatique",
+  },
+  {
+    value: "design",
+    label: "Design & Création",
+  },
+  {
+    value: "marketing",
+    label: "Marketing & Communication",
+  },
+  {
+    value: "consulting",
+    label: "Conseil & Stratégie",
+  },
+  {
+    value: "formation",
+    label: "Formation & Coaching",
+  },
+  {
+    value: "traduction",
+    label: "Traduction & Rédaction",
+  },
+  {
+    value: "autre",
+    label: "Autre",
+  },
+];
 
 // Monthly invoicing options
 const MONTHLY_INVOICING = [
-  { value: "less-5k", label: "Moins de 5 000€" },
-  { value: "5k-10k", label: "5 000€ - 10 000€" },
-  { value: "10k-20k", label: "10 000€ - 20 000€" },
-  { value: "20k-50k", label: "20 000€ - 50 000€" },
-  { value: "more-50k", label: "Plus de 50 000€" },
-]
+  {
+    value: "less-5k",
+    label: "Moins de 5 000€",
+  },
+  {
+    value: "5k-10k",
+    label: "5 000€ - 10 000€",
+  },
+  {
+    value: "10k-20k",
+    label: "10 000€ - 20 000€",
+  },
+  {
+    value: "20k-50k",
+    label: "20 000€ - 50 000€",
+  },
+  {
+    value: "more-50k",
+    label: "Plus de 50 000€",
+  },
+];
 
 // Payment terms options
 const PAYMENT_TERMS = [
-  { value: "30-days", label: "30 jours" },
-  { value: "45-days", label: "45 jours" },
-  { value: "60-days", label: "60 jours" },
-  { value: "90-days", label: "90 jours" },
-  { value: "custom", label: "Autre" },
-]
+  {
+    value: "30-days",
+    label: "30 jours",
+  },
+  {
+    value: "45-days",
+    label: "45 jours",
+  },
+  {
+    value: "60-days",
+    label: "60 jours",
+  },
+  {
+    value: "90-days",
+    label: "90 jours",
+  },
+  {
+    value: "custom",
+    label: "Autre",
+  },
+];
 
 // Client types options
 const CLIENT_TYPES = [
-  { value: "pme", label: "PME" },
-  { value: "grand-compte", label: "Grandes entreprises" },
-  { value: "public", label: "Institutions publiques" },
-  { value: "mixed", label: "Mixte" },
-]
+  {
+    value: "pme",
+    label: "PME",
+  },
+  {
+    value: "grand-compte",
+    label: "Grandes entreprises",
+  },
+  {
+    value: "public",
+    label: "Institutions publiques",
+  },
+  {
+    value: "mixed",
+    label: "Mixte",
+  },
+];
 
 // Financing purpose options
 const FINANCING_PURPOSE = [
-  { value: "tresorerie", label: "Trésorerie" },
-  { value: "croissance", label: "Croissance" },
-  { value: "equipement", label: "Équipement" },
-  { value: "recrutement", label: "Recrutement" },
-  { value: "autre", label: "Autre" },
-]
+  {
+    value: "tresorerie",
+    label: "Trésorerie",
+  },
+  {
+    value: "croissance",
+    label: "Croissance",
+  },
+  {
+    value: "equipement",
+    label: "Équipement",
+  },
+  {
+    value: "recrutement",
+    label: "Recrutement",
+  },
+  {
+    value: "autre",
+    label: "Autre",
+  },
+];
 
 interface RegistrationStepProps {
-  formData: any
-  updateFormData: (data: any) => void
-  onNext: (data: Record<string, string>) => void
-  currentStep: number
+  formData: any;
+  updateFormData: (data: any) => void;
+  onNext: (data: Record<string, string>) => void;
+  currentStep: number;
 }
+export default function RegistrationStep({
+  formData,
+  updateFormData,
+  onNext,
+  currentStep,
+}: RegistrationStepProps) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-export default function RegistrationStep({ formData, updateFormData, onNext, currentStep }: RegistrationStepProps) {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  
   // Initialize form with existing data
   const form = useForm<RegistrationFormValues>({
     resolver: zodResolver(registrationFormSchema),
@@ -178,7 +284,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
       financingPurpose: "",
       termsAccepted: false,
     },
-  })
+  });
 
   // Handle form submission
   function onSubmit(data: RegistrationFormValues) {
@@ -200,20 +306,21 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
         clientTypes: data.clientTypes,
         financingPurpose: data.financingPurpose,
       },
-    })
+    });
   }
-
-  const goToNext = useCallback((stepData?: Record<string, string>) => {
-    // ... existing code ...
-  }, [currentStep])
-
+  const goToNext = useCallback(
+    (stepData?: Record<string, string>) => {
+      // ... existing code ...
+    },
+    [currentStep],
+  );
   return (
     <div className="space-y-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Informations de connexion</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -228,7 +335,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="phone"
@@ -243,7 +350,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 )}
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -253,11 +360,12 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                     <FormLabel>Mot de passe</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input 
-                          type={showPassword ? "text" : "password"} 
-                          placeholder="••••••••" 
-                          {...field} 
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          {...field}
                         />
+
                         <Button
                           type="button"
                           variant="ghost"
@@ -265,18 +373,23 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                           className="absolute right-0 top-0 h-full px-3"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
                         </Button>
                       </div>
                     </FormControl>
                     <FormDescription>
-                      8 caractères min., 1 majuscule, 1 chiffre, 1 caractère spécial
+                      8 caractères min., 1 majuscule, 1 chiffre, 1 caractère
+                      spécial
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="confirmPassword"
@@ -285,19 +398,26 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                     <FormLabel>Confirmer le mot de passe</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input 
-                          type={showConfirmPassword ? "text" : "password"} 
-                          placeholder="••••••••" 
-                          {...field} 
+                        <Input
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          {...field}
                         />
+
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
                           className="absolute right-0 top-0 h-full px-3"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
                         >
-                          {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showConfirmPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
                         </Button>
                       </div>
                     </FormControl>
@@ -307,12 +427,14 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
               />
             </div>
           </div>
-          
+
           <Separator />
-          
+
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Informations professionnelles</h3>
-            
+            <h3 className="text-lg font-medium">
+              Informations professionnelles
+            </h3>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -320,7 +442,10 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Statut juridique</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un statut" />
@@ -338,7 +463,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="siret"
@@ -353,7 +478,8 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                           </TooltipTrigger>
                           <TooltipContent>
                             <p className="w-80">
-                              Le numéro SIRET est un identifiant à 14 chiffres qui permet d'identifier votre entreprise.
+                              Le numéro SIRET est un identifiant à 14 chiffres
+                              qui permet d'identifier votre entreprise.
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -367,7 +493,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 )}
               />
             </div>
-            
+
             <FormField
               control={form.control}
               name="businessAddress"
@@ -375,20 +501,26 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 <FormItem>
                   <FormLabel>Adresse professionnelle</FormLabel>
                   <FormControl>
-                    <Input placeholder="123 rue de Paris, 75001 Paris" {...field} />
+                    <Input
+                      placeholder="123 rue de Paris, 75001 Paris"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="activity"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Activité principale</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Sélectionnez une activité" />
@@ -407,12 +539,14 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
               )}
             />
           </div>
-          
+
           <Separator />
-          
+
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-medium">Questionnaire de qualification</h3>
+              <h3 className="text-lg font-medium">
+                Questionnaire de qualification
+              </h3>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -420,13 +554,14 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="w-80">
-                      Ces informations nous permettent de mieux comprendre votre activité et de vous proposer des solutions adaptées.
+                      Ces informations nous permettent de mieux comprendre votre
+                      activité et de vous proposer des solutions adaptées.
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -434,7 +569,10 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Volume mensuel de facturation</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un volume" />
@@ -452,14 +590,17 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="paymentTerms"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Délais de paiement habituels</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un délai" />
@@ -478,7 +619,7 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 )}
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -486,7 +627,10 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Type de clients</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un type" />
@@ -504,14 +648,17 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="financingPurpose"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Objectif du financement</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez un objectif" />
@@ -531,9 +678,9 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
               />
             </div>
           </div>
-          
+
           <Separator />
-          
+
           <FormField
             control={form.control}
             name="termsAccepted"
@@ -547,19 +694,26 @@ export default function RegistrationStep({ formData, updateFormData, onNext, cur
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
-                    J'accepte les <a href="#" className="text-primary underline">conditions générales</a> et la <a href="#" className="text-primary underline">politique de confidentialité</a>
+                    J'accepte les{" "}
+                    <a href="#" className="text-primary underline">
+                      conditions générales
+                    </a>{" "}
+                    et la{" "}
+                    <a href="#" className="text-primary underline">
+                      politique de confidentialité
+                    </a>
                   </FormLabel>
                   <FormMessage />
                 </div>
               </FormItem>
             )}
           />
-          
+
           <Button type="submit" className="w-full">
             Créer mon compte
           </Button>
         </form>
       </Form>
     </div>
-  )
-} 
+  );
+}

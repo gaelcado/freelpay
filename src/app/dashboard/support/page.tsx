@@ -1,12 +1,18 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { LifeBuoy, Mail, MessageSquare, Phone } from "lucide-react"
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { LifeBuoy, Mail, MessageSquare, Phone } from "lucide-react";
 export default function SupportPage() {
   return (
     <div className="grid gap-6">
@@ -22,7 +28,8 @@ export default function SupportPage() {
           <CardHeader>
             <CardTitle>Contact Support</CardTitle>
             <CardDescription>
-              Fill out the form below and our team will get back to you within 24 hours.
+              Fill out the form below and our team will get back to you within
+              24 hours.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -97,7 +104,9 @@ export default function SupportPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">View Support Hours</Button>
+            <Button variant="outline" className="w-full">
+              View Support Hours
+            </Button>
           </CardFooter>
         </Card>
       </div>
@@ -126,10 +135,12 @@ export default function SupportPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">Visit Help Center</Button>
+            <Button variant="outline" className="w-full">
+              Visit Help Center
+            </Button>
           </CardFooter>
         </Card>
       </div>
     </div>
-  )
+  );
 }

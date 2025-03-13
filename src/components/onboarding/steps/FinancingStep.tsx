@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { CalendarIcon, FileText, Upload } from "lucide-react"
-import { format } from "date-fns"
-import { fr } from "date-fns/locale"
-
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { CalendarIcon, FileText, Upload } from "lucide-react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -18,24 +17,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 // Define the form schema
 const financingFormSchema = z.object({
@@ -43,11 +49,14 @@ const financingFormSchema = z.object({
   clientName: z.string().min(1, {
     message: "Le nom du client est requis",
   }),
-  clientSiret: z.string().min(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }).max(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }),
+  clientSiret: z
+    .string()
+    .min(14, {
+      message: "Le numéro SIRET doit contenir 14 chiffres",
+    })
+    .max(14, {
+      message: "Le numéro SIRET doit contenir 14 chiffres",
+    }),
   clientAddress: z.string().min(1, {
     message: "L'adresse du client est requise",
   }),
@@ -72,26 +81,42 @@ const financingFormSchema = z.object({
   financingAmount: z.string().min(1, {
     message: "Le montant à financer est requis",
   }),
-})
-
-type FinancingFormValues = z.infer<typeof financingFormSchema>
+});
+type FinancingFormValues = z.infer<typeof financingFormSchema>;
 
 // Payment terms options
 const PAYMENT_TERMS = [
-  { value: "30-days", label: "30 jours" },
-  { value: "45-days", label: "45 jours" },
-  { value: "60-days", label: "60 jours" },
-  { value: "90-days", label: "90 jours" },
-  { value: "custom", label: "Autre" },
-]
+  {
+    value: "30-days",
+    label: "30 jours",
+  },
+  {
+    value: "45-days",
+    label: "45 jours",
+  },
+  {
+    value: "60-days",
+    label: "60 jours",
+  },
+  {
+    value: "90-days",
+    label: "90 jours",
+  },
+  {
+    value: "custom",
+    label: "Autre",
+  },
+];
 
 type FinancingStepProps = {
-  formData: any
-  updateFormData: (data: any) => void
-}
-
-export default function FinancingStep({ formData, updateFormData }: FinancingStepProps) {
-  const [showFinancingDetails, setShowFinancingDetails] = useState(false)
+  formData: any;
+  updateFormData: (data: any) => void;
+};
+export default function FinancingStep({
+  formData,
+  updateFormData,
+}: FinancingStepProps) {
+  const [showFinancingDetails, setShowFinancingDetails] = useState(false);
   const [financingResult, setFinancingResult] = useState({
     approved: true,
     financedAmount: 0,
@@ -99,8 +124,8 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
     fees: 0,
     totalAmount: 0,
     estimatedPaymentDate: new Date(),
-  })
-  
+  });
+
   // Initialize form with existing data
   const form = useForm<FinancingFormValues>({
     resolver: zodResolver(financingFormSchema),
@@ -110,13 +135,15 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
       clientAddress: formData.clientDetails?.address || "",
       invoiceAmount: formData.invoiceAmount || "",
       invoiceDate: new Date(),
-      dueDate: formData.dueDate ? new Date(formData.dueDate) : new Date(new Date().setDate(new Date().getDate() + 30)),
+      dueDate: formData.dueDate
+        ? new Date(formData.dueDate)
+        : new Date(new Date().setDate(new Date().getDate() + 30)),
       invoiceNumber: "",
       serviceDescription: "",
       paymentTerms: formData.paymentTerms || "30-days",
       financingAmount: formData.financingAmount || formData.invoiceAmount || "",
     },
-  })
+  });
 
   // Handle form submission
   function onSubmit(data: FinancingFormValues) {
@@ -132,19 +159,18 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
       dueDate: data.dueDate,
       paymentTerms: data.paymentTerms,
       financingAmount: data.financingAmount,
-    })
+    });
 
     // Calculate financing details
-    const amount = parseFloat(data.financingAmount)
-    const discountRate = 0.03 // 3% discount rate
-    const fees = 25 // Fixed fee
-    
-    const financedAmount = amount * (1 - discountRate) - fees
-    
+    const amount = parseFloat(data.financingAmount);
+    const discountRate = 0.03; // 3% discount rate
+    const fees = 25; // Fixed fee
+
+    const financedAmount = amount * (1 - discountRate) - fees;
+
     // Set payment date to tomorrow
-    const paymentDate = new Date()
-    paymentDate.setDate(paymentDate.getDate() + 1)
-    
+    const paymentDate = new Date();
+    paymentDate.setDate(paymentDate.getDate() + 1);
     setFinancingResult({
       approved: true,
       financedAmount,
@@ -152,25 +178,29 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
       fees,
       totalAmount: amount,
       estimatedPaymentDate: paymentDate,
-    })
-    
-    setShowFinancingDetails(true)
+    });
+    setShowFinancingDetails(true);
   }
-
   return (
     <div className="space-y-8">
       {!showFinancingDetails ? (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Téléchargement de la facture</h3>
+              <h3 className="text-lg font-medium">
+                Téléchargement de la facture
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Téléchargez votre facture ou saisissez manuellement les informations.
+                Téléchargez votre facture ou saisissez manuellement les
+                informations.
               </p>
-              
+
               <div className="border border-dashed rounded-lg p-6 flex flex-col items-center justify-center">
                 <FileText className="h-10 w-10 text-muted-foreground mb-4" />
-                <h4 className="text-base font-medium mb-2">Téléchargez votre facture</h4>
+
+                <h4 className="text-base font-medium mb-2">
+                  Téléchargez votre facture
+                </h4>
                 <p className="text-sm text-muted-foreground text-center mb-4">
                   Formats acceptés: PDF, PNG, JPG (max 5MB)
                 </p>
@@ -180,12 +210,14 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                 </Button>
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Informations sur le client</h3>
-              
+              <h3 className="text-lg font-medium">
+                Informations sur le client
+              </h3>
+
               <FormField
                 control={form.control}
                 name="clientName"
@@ -199,7 +231,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                   </FormItem>
                 )}
               />
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -214,7 +246,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="clientAddress"
@@ -222,7 +254,10 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                     <FormItem>
                       <FormLabel>Adresse du client</FormLabel>
                       <FormControl>
-                        <Input placeholder="123 rue de Paris, 75001 Paris" {...field} />
+                        <Input
+                          placeholder="123 rue de Paris, 75001 Paris"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -230,12 +265,12 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                 />
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Détails de la facture</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -250,7 +285,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="invoiceNumber"
@@ -265,7 +300,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                   )}
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -280,11 +315,13 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                               variant={"outline"}
                               className={cn(
                                 "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP", { locale: fr })
+                                format(field.value, "PPP", {
+                                  locale: fr,
+                                })
                               ) : (
                                 <span>Sélectionnez une date</span>
                               )}
@@ -298,7 +335,13 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date > new Date() || date < new Date(new Date().setMonth(new Date().getMonth() - 3))
+                              date > new Date() ||
+                              date <
+                                new Date(
+                                  new Date().setMonth(
+                                    new Date().getMonth() - 3,
+                                  ),
+                                )
                             }
                             initialFocus
                           />
@@ -308,7 +351,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="dueDate"
@@ -322,11 +365,13 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                               variant={"outline"}
                               className={cn(
                                 "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP", { locale: fr })
+                                format(field.value, "PPP", {
+                                  locale: fr,
+                                })
                               ) : (
                                 <span>Sélectionnez une date</span>
                               )}
@@ -340,7 +385,13 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 6))
+                              date < new Date() ||
+                              date >
+                                new Date(
+                                  new Date().setMonth(
+                                    new Date().getMonth() + 6,
+                                  ),
+                                )
                             }
                             initialFocus
                           />
@@ -351,7 +402,7 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                   )}
                 />
               </div>
-              
+
               <FormField
                 control={form.control}
                 name="serviceDescription"
@@ -359,24 +410,27 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                   <FormItem>
                     <FormLabel>Description des services</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Décrivez les services ou produits fournis" 
+                      <Textarea
+                        placeholder="Décrivez les services ou produits fournis"
                         className="min-h-[100px]"
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="paymentTerms"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Conditions de paiement</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Sélectionnez les conditions de paiement" />
@@ -395,12 +449,12 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                 )}
               />
             </div>
-            
+
             <Separator />
-            
+
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Montant à financer</h3>
-              
+
               <FormField
                 control={form.control}
                 name="financingAmount"
@@ -411,14 +465,15 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
                       <Input placeholder="5000" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Vous pouvez financer tout ou partie du montant de la facture.
+                      Vous pouvez financer tout ou partie du montant de la
+                      facture.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            
+
             <Button type="submit" className="w-full">
               Demander le financement
             </Button>
@@ -428,55 +483,83 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
         <div className="space-y-6">
           <Card className="border-primary">
             <CardHeader className="bg-primary/10">
-              <CardTitle className="text-primary">Demande de financement approuvée</CardTitle>
+              <CardTitle className="text-primary">
+                Demande de financement approuvée
+              </CardTitle>
               <CardDescription>
-                Votre demande de financement a été approuvée. Voici les détails du financement.
+                Votre demande de financement a été approuvée. Voici les détails
+                du financement.
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-6 space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Montant de la facture</span>
-                <span className="font-medium">{parseFloat(form.getValues().invoiceAmount).toLocaleString('fr-FR')} €</span>
+                <span className="text-muted-foreground">
+                  Montant de la facture
+                </span>
+                <span className="font-medium">
+                  {parseFloat(form.getValues().invoiceAmount).toLocaleString(
+                    "fr-FR",
+                  )}{" "}
+                  €
+                </span>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Montant financé</span>
-                <span className="font-medium">{parseFloat(form.getValues().financingAmount).toLocaleString('fr-FR')} €</span>
+                <span className="font-medium">
+                  {parseFloat(form.getValues().financingAmount).toLocaleString(
+                    "fr-FR",
+                  )}{" "}
+                  €
+                </span>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Taux d'escompte</span>
-                <span className="font-medium">{financingResult.discountRate}%</span>
+                <span className="font-medium">
+                  {financingResult.discountRate}%
+                </span>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Frais de service</span>
                 <span className="font-medium">{financingResult.fees} €</span>
               </div>
-              
+
               <Separator />
-              
+
               <div className="flex justify-between items-center">
                 <span className="font-medium">Montant à recevoir</span>
-                <span className="text-xl font-bold text-primary">{financingResult.financedAmount.toLocaleString('fr-FR')} €</span>
+                <span className="text-xl font-bold text-primary">
+                  {financingResult.financedAmount.toLocaleString("fr-FR")} €
+                </span>
               </div>
-              
+
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Date estimée de paiement</span>
-                <span className="font-medium">{format(financingResult.estimatedPaymentDate, "PPP", { locale: fr })}</span>
+                <span className="text-muted-foreground">
+                  Date estimée de paiement
+                </span>
+                <span className="font-medium">
+                  {format(financingResult.estimatedPaymentDate, "PPP", {
+                    locale: fr,
+                  })}
+                </span>
               </div>
             </CardContent>
             <CardFooter className="bg-muted/30 flex flex-col items-start">
               <p className="text-sm">
-                <span className="font-medium">Note :</span> Les fonds seront virés sur votre compte bancaire dans les 24 heures ouvrées suivant la validation de votre demande.
+                <span className="font-medium">Note :</span> Les fonds seront
+                virés sur votre compte bancaire dans les 24 heures ouvrées
+                suivant la validation de votre demande.
               </p>
             </CardFooter>
           </Card>
-          
+
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Prochaines étapes</h3>
             <p className="text-sm text-muted-foreground">
-              Votre demande de financement a été approuvée. Voici les prochaines étapes :
+              Votre demande de financement a été approuvée. Voici les prochaines
+              étapes :
             </p>
             <ol className="list-decimal list-inside space-y-2 text-sm">
               <li>Nous générons un devis pour vous et votre client</li>
@@ -486,12 +569,16 @@ export default function FinancingStep({ formData, updateFormData }: FinancingSte
               <li>Votre client paie la facture à Freelpay à l'échéance</li>
             </ol>
           </div>
-          
-          <Button onClick={() => setShowFinancingDetails(false)} variant="outline" className="w-full">
+
+          <Button
+            onClick={() => setShowFinancingDetails(false)}
+            variant="outline"
+            className="w-full"
+          >
             Modifier la demande
           </Button>
         </div>
       )}
     </div>
-  )
-} 
+  );
+}

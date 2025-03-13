@@ -1,19 +1,18 @@
-"use client"
+"use client";
 
 import {
   DotsHorizontalIcon,
   FileIcon,
   ExternalLinkIcon,
   InfoCircledIcon,
-} from "@radix-ui/react-icons"
-
+} from "@radix-ui/react-icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,21 +21,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-
-type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>
-
+} from "@/components/ui/sidebar";
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 export function NavProjects({
   projects,
 }: {
-  projects: {
-    name: string
-    url: string
-    icon: IconType
-  }[]
+  projects: { name: string; url: string; icon: IconType }[];
 }) {
-  const { isMobile } = useSidebar()
-
+  const { isMobile } = useSidebar();
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Intégrations API</SidebarGroupLabel>
@@ -63,15 +55,18 @@ export function NavProjects({
               >
                 <DropdownMenuItem>
                   <FileIcon className="text-muted-foreground" />
+
                   <span>Voir l'intégration</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <ExternalLinkIcon className="text-muted-foreground" />
+
                   <span>Documentation API</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <InfoCircledIcon className="text-muted-foreground" />
+
                   <span>Statut de l'API</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -88,5 +83,5 @@ export function NavProjects({
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

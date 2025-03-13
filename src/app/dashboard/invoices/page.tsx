@@ -1,14 +1,30 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { FileTextIcon, PlusCircledIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import { HeadingLG, BodyMD } from "@/components/ui/typography"
-import Link from "next/link"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import {
+  FileTextIcon,
+  PlusCircledIcon,
+  MagnifyingGlassIcon,
+} from "@radix-ui/react-icons";
+import { HeadingLG, BodyMD } from "@/components/ui/typography";
+import Link from "next/link";
 
 // Mock data for invoices
 const mockInvoices = [
@@ -52,51 +68,49 @@ const mockInvoices = [
     dueDate: "2023-04-20",
     status: "paid",
   },
-]
+];
 
 export default function InvoicesPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  
-  const filteredInvoices = mockInvoices.filter(invoice => 
-    invoice.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    invoice.client.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredInvoices = mockInvoices.filter(
+    (invoice) =>
+      invoice.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      invoice.client.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
   const getStatusColor = (status: string) => {
     switch (status) {
       case "paid":
-        return "bg-chart-3 text-white"
+        return "bg-chart-3 text-white";
       case "pending":
-        return "bg-chart-5 text-white"
+        return "bg-chart-5 text-white";
       case "overdue":
-        return "bg-destructive text-white"
+        return "bg-destructive text-white";
       default:
-        return "bg-secondary text-secondary-foreground"
+        return "bg-secondary text-secondary-foreground";
     }
-  }
-  
+  };
   const formatStatus = (status: string) => {
     switch (status) {
       case "paid":
-        return "Payée"
+        return "Payée";
       case "pending":
-        return "En attente"
+        return "En attente";
       case "overdue":
-        return "En retard"
+        return "En retard";
       default:
-        return status
+        return status;
     }
-  }
-  
+  };
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat('fr-FR').format(date)
-  }
-  
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("fr-FR").format(date);
+  };
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount)
-  }
-  
+    return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    }).format(amount);
+  };
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -113,12 +127,13 @@ export default function InvoicesPage() {
           </Link>
         </Button>
       </div>
-      
+
       <div className="mt-6">
         <Card variant="default" elevation="medium">
           <CardHeader>
             <div className="mt-4 relative">
               <MagnifyingGlassIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+
               <Input
                 type="search"
                 placeholder="Rechercher par numéro ou client..."
@@ -145,8 +160,12 @@ export default function InvoicesPage() {
                   filteredInvoices.map((invoice) => (
                     <TableRow key={invoice.id}>
                       <TableCell className="font-medium">
-                        <Link href={`/dashboard/invoices/${invoice.id}`} className="flex items-center hover:underline">
+                        <Link
+                          href={`/dashboard/invoices/${invoice.id}`}
+                          className="flex items-center hover:underline"
+                        >
                           <FileTextIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+
                           {invoice.id}
                         </Link>
                       </TableCell>
@@ -163,7 +182,10 @@ export default function InvoicesPage() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                    <TableCell
+                      colSpan={6}
+                      className="text-center py-6 text-muted-foreground"
+                    >
                       Aucune facture trouvée
                     </TableCell>
                   </TableRow>
@@ -182,5 +204,5 @@ export default function InvoicesPage() {
         </Card>
       </div>
     </div>
-  )
-} 
+  );
+}

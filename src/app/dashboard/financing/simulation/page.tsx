@@ -1,59 +1,68 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { HeadingLG, BodyMD, HeadingMD } from "@/components/ui/typography"
-import { ArrowLeft, Calculator } from "lucide-react"
-import Link from "next/link"
-
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { HeadingLG, BodyMD, HeadingMD } from "@/components/ui/typography";
+import { ArrowLeft, Calculator } from "lucide-react";
+import Link from "next/link";
 export default function SimulationPage() {
-  const [invoiceAmount, setInvoiceAmount] = useState(5000)
-  const [paymentTerm, setPaymentTerm] = useState(30)
-  const [clientType, setClientType] = useState("enterprise")
-  const [showResults, setShowResults] = useState(false)
-  
+  const [invoiceAmount, setInvoiceAmount] = useState(5000);
+  const [paymentTerm, setPaymentTerm] = useState(30);
+  const [clientType, setClientType] = useState("enterprise");
+  const [showResults, setShowResults] = useState(false);
+
   // Simulated calculation based on inputs
   const calculateRate = () => {
     // Base rate depends on client type
-    let baseRate = clientType === "enterprise" ? 3.5 : 4.5
-    
+    let baseRate = clientType === "enterprise" ? 3.5 : 4.5;
+
     // Adjust based on payment term
     if (paymentTerm <= 30) {
-      baseRate -= 0.5
+      baseRate -= 0.5;
     } else if (paymentTerm >= 90) {
-      baseRate += 1.0
+      baseRate += 1.0;
     }
-    
+
     // Adjust based on invoice amount
     if (invoiceAmount >= 10000) {
-      baseRate -= 0.5
+      baseRate -= 0.5;
     } else if (invoiceAmount < 2000) {
-      baseRate += 0.5
+      baseRate += 0.5;
     }
-    
-    return Math.max(2.5, Math.min(6.0, baseRate)).toFixed(2)
-  }
-  
-  const rate = parseFloat(calculateRate())
-  const financedAmount = invoiceAmount * (1 - rate / 100)
-  const fee = invoiceAmount - financedAmount
-  
+    return Math.max(2.5, Math.min(6.0, baseRate)).toFixed(2);
+  };
+  const rate = parseFloat(calculateRate());
+  const financedAmount = invoiceAmount * (1 - rate / 100);
+  const fee = invoiceAmount - financedAmount;
   const handleSimulate = () => {
-    setShowResults(true)
-  }
-  
+    setShowResults(true);
+  };
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <HeadingLG>Simulation de financement</HeadingLG>
           <BodyMD className="text-muted-foreground">
-            Simulez le financement d'une facture pour estimer le montant et le taux
+            Simulez le financement d'une facture pour estimer le montant et le
+            taux
           </BodyMD>
         </div>
         <Button variant="outline" asChild>
@@ -63,7 +72,7 @@ export default function SimulationPage() {
           </Link>
         </Button>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -85,6 +94,7 @@ export default function SimulationPage() {
                   onValueChange={(value) => setInvoiceAmount(value[0])}
                   className="flex-1"
                 />
+
                 <Input
                   type="number"
                   min={1000}
@@ -95,7 +105,7 @@ export default function SimulationPage() {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="payment-term">Délai de paiement (jours)</Label>
               <div className="flex items-center gap-4">
@@ -108,6 +118,7 @@ export default function SimulationPage() {
                   onValueChange={(value) => setPaymentTerm(value[0])}
                   className="flex-1"
                 />
+
                 <Input
                   type="number"
                   min={15}
@@ -118,7 +129,7 @@ export default function SimulationPage() {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="client-type">Type de client</Label>
               <Select value={clientType} onValueChange={setClientType}>
@@ -132,14 +143,14 @@ export default function SimulationPage() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <Button onClick={handleSimulate} className="w-full">
               <Calculator className="mr-2 h-4 w-4" />
               Simuler le financement
             </Button>
           </CardContent>
         </Card>
-        
+
         <Card className={showResults ? "border-primary" : "opacity-70"}>
           <CardHeader>
             <CardTitle>Résultats de la simulation</CardTitle>
@@ -156,24 +167,33 @@ export default function SimulationPage() {
                   Taux appliqué sur le montant de la facture
                 </BodyMD>
               </div>
-              
+
               <div className="pt-4 border-t">
                 <div className="flex justify-between mb-2">
                   <span>Montant de la facture:</span>
                   <span className="font-medium">
-                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(invoiceAmount)}
+                    {new Intl.NumberFormat("fr-FR", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(invoiceAmount)}
                   </span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span>Frais de financement:</span>
                   <span className="font-medium">
-                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(fee)}
+                    {new Intl.NumberFormat("fr-FR", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(fee)}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold">
                   <span>Montant financé:</span>
                   <span className="text-primary">
-                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(financedAmount)}
+                    {new Intl.NumberFormat("fr-FR", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(financedAmount)}
                   </span>
                 </div>
               </div>
@@ -189,5 +209,5 @@ export default function SimulationPage() {
         </Card>
       </div>
     </div>
-  )
-} 
+  );
+}

@@ -3,7 +3,6 @@
 import * as React from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/sidebar-provider";
-
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
@@ -12,9 +11,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <SidebarProvider>
-        {children}
-      </SidebarProvider>
+      <SidebarProvider>{children}</SidebarProvider>
     </ThemeProvider>
   );
 }

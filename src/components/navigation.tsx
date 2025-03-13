@@ -1,20 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons"
-
+import * as React from "react";
+import { ChevronRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -26,40 +25,34 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
-import { useSidebar } from "@/components/sidebar-provider"
-
-type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>
-
+} from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/sidebar-provider";
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 type NavItemBase = {
-  title: string
-  url: string
-  icon: IconType
-}
-
+  title: string;
+  url: string;
+  icon: IconType;
+};
 type NavItemWithSubItems = NavItemBase & {
-  isActive?: boolean
+  isActive?: boolean;
   items?: {
-    title: string
-    url: string
-  }[]
-}
-
+    title: string;
+    url: string;
+  }[];
+};
 type NavItemWithActions = NavItemBase & {
   actions?: {
-    title: string
-    icon: IconType
-    onClick?: () => void
-  }[]
-}
-
+    title: string;
+    icon: IconType;
+    onClick?: () => void;
+  }[];
+};
 interface NavigationProps {
-  items: NavItemWithSubItems[]
-  title?: string
-  size?: "sm" | "default" | "lg"
-  className?: string
+  items: NavItemWithSubItems[];
+  title?: string;
+  size?: "sm" | "default" | "lg";
+  className?: string;
 }
-
 export function Navigation({
   items,
   title,
@@ -110,23 +103,21 @@ export function Navigation({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }
-
 interface ProjectsNavigationProps {
-  projects: NavItemWithActions[]
-  title?: string
-  className?: string
+  projects: NavItemWithActions[];
+  title?: string;
+  className?: string;
 }
-
 export function ProjectsNavigation({
   projects,
   title = "Projects",
   className,
   ...props
-}: ProjectsNavigationProps & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
-  const { isMobile } = useSidebar()
-
+}: ProjectsNavigationProps &
+  React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const { isMobile } = useSidebar();
   return (
     <SidebarGroup className={className} {...props}>
       {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
@@ -157,9 +148,12 @@ export function ProjectsNavigation({
                       <React.Fragment key={action.title}>
                         <DropdownMenuItem onClick={action.onClick}>
                           <action.icon className="text-muted-foreground" />
+
                           <span>{action.title}</span>
                         </DropdownMenuItem>
-                        {index < item.actions!.length - 1 && <DropdownMenuSeparator />}
+                        {index < item.actions!.length - 1 && (
+                          <DropdownMenuSeparator />
+                        )}
                       </React.Fragment>
                     ))}
                   </DropdownMenuContent>
@@ -170,18 +164,16 @@ export function ProjectsNavigation({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }
-
 interface UserNavigationProps {
   user: {
-    name: string
-    email: string
-    avatar?: string
-  }
-  className?: string
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+  className?: string;
 }
-
 export function UserNavigation({ user, className }: UserNavigationProps) {
   return (
     <SidebarMenu key="user-navigation" className={className}>
@@ -197,5 +189,5 @@ export function UserNavigation({ user, className }: UserNavigationProps) {
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

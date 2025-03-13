@@ -1,14 +1,11 @@
 "use client";
 
-import * as React from "react"
-import { Cross2Icon } from "@radix-ui/react-icons"
-import * as ToastPrimitives from "@radix-ui/react-toast"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
-
-const ToastProvider = ToastPrimitives.Provider
-
+import * as React from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import * as ToastPrimitives from "@radix-ui/react-toast";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+const ToastProvider = ToastPrimitives.Provider;
 const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Viewport>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
@@ -17,13 +14,13 @@ const ToastViewport = React.forwardRef<
     ref={ref}
     className={cn(
       "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
-      className
+      className,
     )}
     {...props}
+    data-oid="33oihnk"
   />
-))
-ToastViewport.displayName = ToastPrimitives.Viewport.displayName
-
+));
+ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 const toastVariants = cva(
   "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
   {
@@ -37,9 +34,8 @@ const toastVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
-)
-
+  },
+);
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
@@ -48,13 +44,18 @@ const Toast = React.forwardRef<
   return (
     <ToastPrimitives.Root
       ref={ref}
-      className={cn(toastVariants({ variant }), className)}
+      className={cn(
+        toastVariants({
+          variant,
+        }),
+        className,
+      )}
       {...props}
+      data-oid="ux4j1ei"
     />
-  )
-})
-Toast.displayName = ToastPrimitives.Root.displayName
-
+  );
+});
+Toast.displayName = ToastPrimitives.Root.displayName;
 const ToastAction = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Action>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
@@ -63,13 +64,13 @@ const ToastAction = React.forwardRef<
     ref={ref}
     className={cn(
       "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors hover:bg-secondary focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
-      className
+      className,
     )}
     {...props}
+    data-oid="w2s1hg1"
   />
-))
-ToastAction.displayName = ToastPrimitives.Action.displayName
-
+));
+ToastAction.displayName = ToastPrimitives.Action.displayName;
 const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
@@ -78,16 +79,16 @@ const ToastClose = React.forwardRef<
     ref={ref}
     className={cn(
       "absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
-      className
+      className,
     )}
     toast-close=""
     {...props}
+    data-oid="6y.kfjz"
   >
-    <Cross2Icon className="h-4 w-4" />
+    <Cross2Icon className="h-4 w-4" data-oid="ga3md0y" />
   </ToastPrimitives.Close>
-))
-ToastClose.displayName = ToastPrimitives.Close.displayName
-
+));
+ToastClose.displayName = ToastPrimitives.Close.displayName;
 const ToastTitle = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Title>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
@@ -96,10 +97,10 @@ const ToastTitle = React.forwardRef<
     ref={ref}
     className={cn("text-sm font-semibold [&+div]:text-xs", className)}
     {...props}
+    data-oid="a33j01h"
   />
-))
-ToastTitle.displayName = ToastPrimitives.Title.displayName
-
+));
+ToastTitle.displayName = ToastPrimitives.Title.displayName;
 const ToastDescription = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Description>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
@@ -108,112 +109,107 @@ const ToastDescription = React.forwardRef<
     ref={ref}
     className={cn("text-sm opacity-90", className)}
     {...props}
+    data-oid="n:8e21:"
   />
-))
-ToastDescription.displayName = ToastPrimitives.Description.displayName
-
-type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
-
-type ToastActionElement = React.ReactElement<typeof ToastAction>
-
+));
+ToastDescription.displayName = ToastPrimitives.Description.displayName;
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
+type ToastActionElement = React.ReactElement<typeof ToastAction>;
 export type Toast = {
-  id: string
-  title?: React.ReactNode
-  description?: React.ReactNode
-  action?: ToastActionElement
-  variant?: "default" | "destructive"
-}
-
-const TOAST_LIMIT = 5
-const TOAST_REMOVE_DELAY = 5000
-
+  id: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  action?: ToastActionElement;
+  variant?: "default" | "destructive";
+};
+const TOAST_LIMIT = 5;
+const TOAST_REMOVE_DELAY = 5000;
 type ToasterToast = Toast & {
-  id: string
-  title?: React.ReactNode
-  description?: React.ReactNode
-  action?: ToastActionElement
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
-
+  id: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  action?: ToastActionElement;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 const toastStore = {
   toasts: [] as ToasterToast[],
   listeners: new Set<() => void>(),
   subscribe(listener: () => void) {
-    this.listeners.add(listener)
-    return () => this.listeners.delete(listener)
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
   },
   notify(toast: Omit<Toast, "id">) {
-    const id = Math.random().toString(36).substring(2, 9)
+    const id = Math.random().toString(36).substring(2, 9);
     const newToast = {
       ...toast,
       id,
       open: true,
       onOpenChange: (open: boolean) => {
-        if (!open) this.dismiss(id)
+        if (!open) this.dismiss(id);
       },
-    }
-    this.toasts = [newToast, ...this.toasts].slice(0, TOAST_LIMIT)
-    this.listeners.forEach((listener) => listener())
-
+    };
+    this.toasts = [newToast, ...this.toasts].slice(0, TOAST_LIMIT);
+    this.listeners.forEach((listener) => listener());
     setTimeout(() => {
-      this.dismiss(id)
-    }, TOAST_REMOVE_DELAY)
-
-    return id
+      this.dismiss(id);
+    }, TOAST_REMOVE_DELAY);
+    return id;
   },
   dismiss(id: string) {
     this.toasts = this.toasts.map((toast) =>
-      toast.id === id ? { ...toast, open: false } : toast
-    )
-    this.listeners.forEach((listener) => listener())
-
+      toast.id === id
+        ? {
+            ...toast,
+            open: false,
+          }
+        : toast,
+    );
+    this.listeners.forEach((listener) => listener());
     setTimeout(() => {
-      this.toasts = this.toasts.filter((toast) => toast.id !== id)
-      this.listeners.forEach((listener) => listener())
-    }, 300)
+      this.toasts = this.toasts.filter((toast) => toast.id !== id);
+      this.listeners.forEach((listener) => listener());
+    }, 300);
   },
-}
-
+};
 export function useToast() {
-  const [toasts, setToasts] = React.useState<ToasterToast[]>([])
-
+  const [toasts, setToasts] = React.useState<ToasterToast[]>([]);
   React.useEffect(() => {
     const unsubscribe = toastStore.subscribe(() => {
-      setToasts([...toastStore.toasts])
-    })
+      setToasts([...toastStore.toasts]);
+    });
     return () => {
-      unsubscribe()
-    }
-  }, [])
-
+      unsubscribe();
+    };
+  }, []);
   return {
     toast: (props: Omit<Toast, "id">) => toastStore.notify(props),
     dismiss: (id: string) => toastStore.dismiss(id),
     toasts,
-  }
+  };
 }
-
 export function Toaster() {
-  const { toasts } = useToast()
-
+  const { toasts } = useToast();
   return (
-    <ToastProvider>
+    <ToastProvider data-oid="a9sv9_7">
       {toasts.map(({ id, title, description, action, ...props }) => (
-        <Toast key={id} {...props}>
-          <div className="grid gap-1">
-            {title && <ToastTitle>{title}</ToastTitle>}
-            {description && <ToastDescription>{description}</ToastDescription>}
+        <Toast key={id} {...props} data-oid="yhjtb3j">
+          <div className="grid gap-1" data-oid="zldi8sd">
+            {title && <ToastTitle data-oid="x33_3q-">{title}</ToastTitle>}
+            {description && (
+              <ToastDescription data-oid="sqdpx_6">
+                {description}
+              </ToastDescription>
+            )}
           </div>
           {action}
-          <ToastClose />
+          <ToastClose data-oid="b7ymv1k" />
         </Toast>
       ))}
-      <ToastViewport />
+      <ToastViewport data-oid="cdl:v8f" />
     </ToastProvider>
-  )
+  );
 }
-
 export {
   type ToastProps,
   type ToastActionElement,
@@ -224,4 +220,4 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
-} 
+};

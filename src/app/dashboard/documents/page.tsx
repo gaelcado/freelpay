@@ -1,14 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { FileCheck, FileText, Search, Upload } from "lucide-react"
-import { HeadingLG, BodyMD } from "@/components/ui/typography"
-import Link from "next/link"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { FileCheck, FileText, Search, Upload } from "lucide-react";
+import { HeadingLG, BodyMD } from "@/components/ui/typography";
+import Link from "next/link";
 
 // Mock data for documents
 const mockDocuments = [
@@ -52,72 +66,68 @@ const mockDocuments = [
     status: "final",
     relatedTo: "INV-004",
   },
-]
+];
 
 export default function DocumentsPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filter, setFilter] = useState("all")
-  
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("all");
   const filteredDocuments = mockDocuments
-    .filter(doc => 
-      doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.id.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (doc) =>
+        doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doc.id.toLowerCase().includes(searchTerm.toLowerCase()),
     )
-    .filter(doc => filter === "all" || doc.type === filter)
-  
+    .filter((doc) => filter === "all" || doc.type === filter);
   const getTypeLabel = (type: string) => {
     switch (type) {
       case "contract":
-        return "Contrat"
+        return "Contrat";
       case "invoice":
-        return "Facture"
+        return "Facture";
       default:
-        return type
+        return type;
     }
-  }
-  
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case "signed":
-        return "bg-chart-3 text-white"
+        return "bg-chart-3 text-white";
       case "pending":
-        return "bg-chart-5 text-white"
+        return "bg-chart-5 text-white";
       case "final":
-        return "bg-primary text-white"
+        return "bg-primary text-white";
       default:
-        return "bg-secondary text-secondary-foreground"
+        return "bg-secondary text-secondary-foreground";
     }
-  }
-  
+  };
   const formatStatus = (status: string) => {
     switch (status) {
       case "signed":
-        return "Signé"
+        return "Signé";
       case "pending":
-        return "En attente"
+        return "En attente";
       case "final":
-        return "Final"
+        return "Final";
       default:
-        return status
+        return status;
     }
-  }
-  
+  };
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat('fr-FR').format(date)
-  }
-  
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("fr-FR").format(date);
+  };
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "contract":
-        return <FileCheck className="mr-2 h-4 w-4 text-muted-foreground" />
+        return <FileCheck className="mr-2 h-4 w-4 text-muted-foreground" />;
+
       case "invoice":
-        return <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+        return <FileText className="mr-2 h-4 w-4 text-muted-foreground" />;
+
       default:
-        return <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+        return <FileText className="mr-2 h-4 w-4 text-muted-foreground" />;
     }
-  }
-  
+  };
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -134,17 +144,18 @@ export default function DocumentsPage() {
           </Link>
         </Button>
       </div>
-      
+
       <Card variant="default" elevation="medium">
         <CardHeader>
           <CardTitle>Liste des documents</CardTitle>
           <CardDescription>
             Vous avez {filteredDocuments.length} documents au total
           </CardDescription>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <div className="relative flex-grow">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+
               <Input
                 type="search"
                 placeholder="Rechercher par nom ou type..."
@@ -153,24 +164,24 @@ export default function DocumentsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            
+
             <div className="flex gap-2">
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant={filter === "all" ? "default" : "outline"}
                 onClick={() => setFilter("all")}
               >
                 Tous
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant={filter === "contract" ? "default" : "outline"}
                 onClick={() => setFilter("contract")}
               >
                 Contrats
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant={filter === "invoice" ? "default" : "outline"}
                 onClick={() => setFilter("invoice")}
               >
@@ -195,7 +206,10 @@ export default function DocumentsPage() {
                 filteredDocuments.map((doc) => (
                   <TableRow key={doc.id}>
                     <TableCell className="font-medium">
-                      <Link href={`/dashboard/documents/${doc.id}`} className="flex items-center hover:underline">
+                      <Link
+                        href={`/dashboard/documents/${doc.id}`}
+                        className="flex items-center hover:underline"
+                      >
                         {getTypeIcon(doc.type)}
                         {doc.name}
                       </Link>
@@ -208,8 +222,8 @@ export default function DocumentsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Link 
-                        href={`/dashboard/${doc.type === 'invoice' ? 'invoices' : 'financing'}/${doc.relatedTo}`} 
+                      <Link
+                        href={`/dashboard/${doc.type === "invoice" ? "invoices" : "financing"}/${doc.relatedTo}`}
                         className="hover:underline"
                       >
                         {doc.relatedTo}
@@ -219,7 +233,10 @@ export default function DocumentsPage() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
+                  <TableCell
+                    colSpan={5}
+                    className="text-center py-6 text-muted-foreground"
+                  >
                     Aucun document trouvé
                   </TableCell>
                 </TableRow>
@@ -237,5 +254,5 @@ export default function DocumentsPage() {
         </CardFooter>
       </Card>
     </div>
-  )
-} 
+  );
+}

@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { CalendarIcon, Upload } from "lucide-react"
-import { format } from "date-fns"
-import { fr } from "date-fns/locale"
-
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { CalendarIcon, Upload } from "lucide-react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -18,22 +17,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 // Define the form schema
 const simulationFormSchema = z.object({
@@ -61,52 +60,98 @@ const simulationFormSchema = z.object({
   phone: z.string().min(1, {
     message: "Le numéro de téléphone est requis",
   }),
-  siret: z.string().min(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }).max(14, {
-    message: "Le numéro SIRET doit contenir 14 chiffres",
-  }),
-})
-
-type SimulationFormValues = z.infer<typeof simulationFormSchema>
+  siret: z
+    .string()
+    .min(14, {
+      message: "Le numéro SIRET doit contenir 14 chiffres",
+    })
+    .max(14, {
+      message: "Le numéro SIRET doit contenir 14 chiffres",
+    }),
+});
+type SimulationFormValues = z.infer<typeof simulationFormSchema>;
 
 // Client types
 const CLIENT_TYPES = [
-  { value: "pme", label: "PME" },
-  { value: "grand-compte", label: "Grand compte" },
-  { value: "public", label: "Institution publique" },
-  { value: "association", label: "Association" },
-]
+  {
+    value: "pme",
+    label: "PME",
+  },
+  {
+    value: "grand-compte",
+    label: "Grand compte",
+  },
+  {
+    value: "public",
+    label: "Institution publique",
+  },
+  {
+    value: "association",
+    label: "Association",
+  },
+];
 
 // Sectors
 const SECTORS = [
-  { value: "tech", label: "Technologie" },
-  { value: "sante", label: "Santé" },
-  { value: "education", label: "Éducation" },
-  { value: "finance", label: "Finance" },
-  { value: "commerce", label: "Commerce" },
-  { value: "industrie", label: "Industrie" },
-  { value: "construction", label: "Construction" },
-  { value: "transport", label: "Transport" },
-  { value: "art", label: "Art et divertissement" },
-  { value: "autre", label: "Autre" },
-]
+  {
+    value: "tech",
+    label: "Technologie",
+  },
+  {
+    value: "sante",
+    label: "Santé",
+  },
+  {
+    value: "education",
+    label: "Éducation",
+  },
+  {
+    value: "finance",
+    label: "Finance",
+  },
+  {
+    value: "commerce",
+    label: "Commerce",
+  },
+  {
+    value: "industrie",
+    label: "Industrie",
+  },
+  {
+    value: "construction",
+    label: "Construction",
+  },
+  {
+    value: "transport",
+    label: "Transport",
+  },
+  {
+    value: "art",
+    label: "Art et divertissement",
+  },
+  {
+    value: "autre",
+    label: "Autre",
+  },
+];
 
 type SimulationStepProps = {
-  formData: any
-  updateFormData: (data: any) => void
-}
-
-export default function SimulationStep({ formData, updateFormData }: SimulationStepProps) {
-  const [showResults, setShowResults] = useState(false)
+  formData: any;
+  updateFormData: (data: any) => void;
+};
+export default function SimulationStep({
+  formData,
+  updateFormData,
+}: SimulationStepProps) {
+  const [showResults, setShowResults] = useState(false);
   const [simulationResult, setSimulationResult] = useState({
     eligible: true,
     financedAmount: 0,
     discountRate: 0,
     fees: 0,
     totalAmount: 0,
-  })
-  
+  });
+
   // Initialize form with existing data
   const form = useForm<SimulationFormValues>({
     resolver: zodResolver(simulationFormSchema),
@@ -121,7 +166,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
       phone: formData.contactInfo?.phone || "",
       siret: formData.contactInfo?.siret || "",
     },
-  })
+  });
 
   // Handle form submission
   function onSubmit(data: SimulationFormValues) {
@@ -138,34 +183,33 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
         phone: data.phone,
         siret: data.siret,
       },
-    })
+    });
 
     // Calculate simulation result
-    const amount = parseFloat(data.invoiceAmount)
-    const discountRate = 0.03 // 3% discount rate
-    const fees = 25 // Fixed fee
-    
-    const financedAmount = amount * (1 - discountRate) - fees
-    
+    const amount = parseFloat(data.invoiceAmount);
+    const discountRate = 0.03; // 3% discount rate
+    const fees = 25; // Fixed fee
+
+    const financedAmount = amount * (1 - discountRate) - fees;
     setSimulationResult({
       eligible: true,
       financedAmount,
       discountRate: discountRate * 100,
       fees,
       totalAmount: amount,
-    })
-    
-    setShowResults(true)
+    });
+    setShowResults(true);
   }
-
   return (
     <div className="space-y-8">
       {!showResults ? (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Informations sur la facture</h3>
-              
+              <h3 className="text-lg font-medium">
+                Informations sur la facture
+              </h3>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -180,7 +224,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="dueDate"
@@ -194,11 +238,13 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                               variant={"outline"}
                               className={cn(
                                 "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP", { locale: fr })
+                                format(field.value, "PPP", {
+                                  locale: fr,
+                                })
                               ) : (
                                 <span>Sélectionnez une date</span>
                               )}
@@ -212,7 +258,13 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 6))
+                              date < new Date() ||
+                              date >
+                                new Date(
+                                  new Date().setMonth(
+                                    new Date().getMonth() + 6,
+                                  ),
+                                )
                             }
                             initialFocus
                           />
@@ -223,7 +275,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                   )}
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -231,7 +283,10 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Type de client</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez un type de client" />
@@ -249,14 +304,17 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="sector"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Secteur d'activité</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez un secteur" />
@@ -275,7 +333,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                   )}
                 />
               </div>
-              
+
               <div className="pt-4">
                 <Button type="button" variant="outline" className="w-full">
                   <Upload className="mr-2 h-4 w-4" />
@@ -286,12 +344,12 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                 </FormDescription>
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Vos coordonnées</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -306,7 +364,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="lastName"
@@ -321,7 +379,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                   )}
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -330,13 +388,16 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="jean.dupont@example.com" {...field} />
+                        <Input
+                          placeholder="jean.dupont@example.com"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="phone"
@@ -351,7 +412,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                   )}
                 />
               </div>
-              
+
               <FormField
                 control={form.control}
                 name="siret"
@@ -366,7 +427,7 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
                 )}
               />
             </div>
-            
+
             <Button type="submit" className="w-full">
               Simuler le financement
             </Button>
@@ -375,59 +436,84 @@ export default function SimulationStep({ formData, updateFormData }: SimulationS
       ) : (
         <div className="space-y-6">
           <div className="rounded-lg border p-4 bg-muted/50">
-            <h3 className="text-lg font-medium mb-4">Résultat de la simulation</h3>
-            
+            <h3 className="text-lg font-medium mb-4">
+              Résultat de la simulation
+            </h3>
+
             {simulationResult.eligible ? (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Montant de la facture</span>
-                  <span className="font-medium">{parseFloat(formData.invoiceAmount).toLocaleString('fr-FR')} €</span>
+                  <span className="text-muted-foreground">
+                    Montant de la facture
+                  </span>
+                  <span className="font-medium">
+                    {parseFloat(formData.invoiceAmount).toLocaleString("fr-FR")}{" "}
+                    €
+                  </span>
                 </div>
-                
+
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Taux d'escompte</span>
-                  <span className="font-medium">{simulationResult.discountRate}%</span>
+                  <span className="font-medium">
+                    {simulationResult.discountRate}%
+                  </span>
                 </div>
-                
+
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Frais de service</span>
+                  <span className="text-muted-foreground">
+                    Frais de service
+                  </span>
                   <span className="font-medium">{simulationResult.fees} €</span>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Montant financé</span>
-                  <span className="text-xl font-bold text-primary">{simulationResult.financedAmount.toLocaleString('fr-FR')} €</span>
+                  <span className="text-xl font-bold text-primary">
+                    {simulationResult.financedAmount.toLocaleString("fr-FR")} €
+                  </span>
                 </div>
-                
+
                 <div className="bg-primary/10 p-4 rounded-lg">
                   <p className="text-sm">
-                    Vous pouvez recevoir <span className="font-bold">{simulationResult.financedAmount.toLocaleString('fr-FR')} €</span> immédiatement 
-                    sur votre compte bancaire en finançant cette facture avec Freelpay.
+                    Vous pouvez recevoir{" "}
+                    <span className="font-bold">
+                      {simulationResult.financedAmount.toLocaleString("fr-FR")}{" "}
+                      €
+                    </span>{" "}
+                    immédiatement sur votre compte bancaire en finançant cette
+                    facture avec Freelpay.
                   </p>
                 </div>
               </div>
             ) : (
               <div className="bg-destructive/10 p-4 rounded-lg">
                 <p className="text-sm">
-                  Désolé, cette facture n'est pas éligible au financement. Veuillez vérifier les informations saisies ou nous contacter pour plus d'informations.
+                  Désolé, cette facture n'est pas éligible au financement.
+                  Veuillez vérifier les informations saisies ou nous contacter
+                  pour plus d'informations.
                 </p>
               </div>
             )}
           </div>
-          
+
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Prêt à commencer ?</h3>
             <p className="text-sm text-muted-foreground">
-              Créez votre compte pour finaliser votre demande de financement et recevoir les fonds rapidement.
+              Créez votre compte pour finaliser votre demande de financement et
+              recevoir les fonds rapidement.
             </p>
-            <Button onClick={() => setShowResults(false)} variant="outline" className="w-full">
+            <Button
+              onClick={() => setShowResults(false)}
+              variant="outline"
+              className="w-full"
+            >
               Modifier la simulation
             </Button>
           </div>
         </div>
       )}
     </div>
-  )
-} 
+  );
+}

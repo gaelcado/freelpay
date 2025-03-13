@@ -1,12 +1,12 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { 
-  typescale, 
-  responsiveTypography, 
-  truncate, 
-  textAlign, 
-  textTransform, 
-  fontWeight 
+import {
+  typescale,
+  responsiveTypography,
+  truncate,
+  textAlign,
+  textTransform,
+  fontWeight,
 } from "@/lib/typography";
 
 // Define size types for each scale
@@ -16,22 +16,45 @@ type BodySize = keyof typeof typescale.body;
 type LabelSize = keyof typeof typescale.label;
 type MonoSize = keyof typeof typescale.mono;
 type SpecialVariant = keyof typeof typescale.special;
-type ResponsiveHeadingSize = keyof typeof responsiveTypography.responsiveHeading;
+type ResponsiveHeadingSize =
+  keyof typeof responsiveTypography.responsiveHeading;
 type ResponsiveBodySize = keyof typeof responsiveTypography.responsiveBody;
 
 // Define spacing options for margin control
 type SpacingOption = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
-
 type TypographyProps = {
-  variant: 
-    | "display-xl" | "display-lg" | "display-md" | "display-sm"
-    | "heading-xl" | "heading-lg" | "heading-md" | "heading-sm" | "heading-xs"
-    | "body-lg" | "body-md" | "body-sm" | "body-xs"
-    | "label-lg" | "label-md" | "label-sm"
-    | "mono-md" | "mono-sm" | "mono-xs"
-    | "stat" | "cardTitle" | "badge" | "button" | "nav"
-    | "responsive-heading-xl" | "responsive-heading-lg" | "responsive-heading-md" | "responsive-heading-sm"
-    | "responsive-body-lg" | "responsive-body-md" | "responsive-body-sm";
+  variant:
+    | "display-xl"
+    | "display-lg"
+    | "display-md"
+    | "display-sm"
+    | "heading-xl"
+    | "heading-lg"
+    | "heading-md"
+    | "heading-sm"
+    | "heading-xs"
+    | "body-lg"
+    | "body-md"
+    | "body-sm"
+    | "body-xs"
+    | "label-lg"
+    | "label-md"
+    | "label-sm"
+    | "mono-md"
+    | "mono-sm"
+    | "mono-xs"
+    | "stat"
+    | "cardTitle"
+    | "badge"
+    | "button"
+    | "nav"
+    | "responsive-heading-xl"
+    | "responsive-heading-lg"
+    | "responsive-heading-md"
+    | "responsive-heading-sm"
+    | "responsive-body-lg"
+    | "responsive-body-md"
+    | "responsive-body-sm";
   as?: React.ElementType;
   className?: string;
   children: React.ReactNode;
@@ -48,7 +71,6 @@ type TypographyProps = {
 
 // Add specific props for label elements
 type LabelElementProps = React.LabelHTMLAttributes<HTMLLabelElement>;
-
 export function Typography({
   variant,
   as: Component = "div",
@@ -67,7 +89,6 @@ export function Typography({
 }: TypographyProps) {
   // Parse the variant to get the scale and size
   let typographyClasses: string = "";
-
   try {
     if (variant.startsWith("responsive-")) {
       // Handle responsive variants
@@ -75,20 +96,20 @@ export function Typography({
       if (parts.length >= 3) {
         const type = parts[1];
         const size = parts[2];
-        
         if (type === "heading" && isResponsiveHeadingSize(size)) {
           typographyClasses = responsiveTypography.responsiveHeading[size];
         } else if (type === "body" && isResponsiveBodySize(size)) {
           typographyClasses = responsiveTypography.responsiveBody[size];
         } else {
-          console.warn(`Responsive typography variant "${variant}" not found, falling back to default`);
+          console.warn(
+            `Responsive typography variant "${variant}" not found, falling back to default`,
+          );
           typographyClasses = "text-base"; // Fallback to a safe default
         }
       }
     } else if (variant.includes("-")) {
       // Handle regular variants
       const [scaleStr, sizeStr] = variant.split("-");
-      
       if (scaleStr === "display" && isDisplaySize(sizeStr)) {
         typographyClasses = typescale.display[sizeStr];
       } else if (scaleStr === "heading" && isHeadingSize(sizeStr)) {
@@ -100,7 +121,9 @@ export function Typography({
       } else if (scaleStr === "mono" && isMonoSize(sizeStr)) {
         typographyClasses = typescale.mono[sizeStr];
       } else {
-        console.warn(`Typography variant "${variant}" not found, falling back to default`);
+        console.warn(
+          `Typography variant "${variant}" not found, falling back to default`,
+        );
         typographyClasses = "text-base"; // Fallback to a safe default
       }
     } else {
@@ -108,7 +131,9 @@ export function Typography({
       if (isSpecialVariant(variant)) {
         typographyClasses = typescale.special[variant];
       } else {
-        console.warn(`Special typography variant "${variant}" not found, falling back to default`);
+        console.warn(
+          `Special typography variant "${variant}" not found, falling back to default`,
+        );
         typographyClasses = "text-base"; // Fallback to a safe default
       }
     }
@@ -124,7 +149,7 @@ export function Typography({
     primary: "text-primary",
     success: "text-emerald-600 dark:text-emerald-400",
     warning: "text-amber-600 dark:text-amber-400",
-    danger: "text-red-600 dark:text-red-400"
+    danger: "text-red-600 dark:text-red-400",
   };
 
   // Margin classes
@@ -144,9 +169,8 @@ export function Typography({
     weight && fontWeight[weight],
     color && colorClasses[color],
     ...marginClasses,
-    className
+    className,
   );
-
   return (
     <Component className={textClasses} {...props}>
       {children}
@@ -158,37 +182,36 @@ export function Typography({
 function isDisplaySize(size: string): size is DisplaySize {
   return size === "xl" || size === "lg" || size === "md" || size === "sm";
 }
-
 function isHeadingSize(size: string): size is HeadingSize {
-  return size === "xl" || size === "lg" || size === "md" || size === "sm" || size === "xs";
+  return (
+    size === "xl" ||
+    size === "lg" ||
+    size === "md" ||
+    size === "sm" ||
+    size === "xs"
+  );
 }
-
 function isBodySize(size: string): size is BodySize {
   return size === "lg" || size === "md" || size === "sm" || size === "xs";
 }
-
 function isLabelSize(size: string): size is LabelSize {
   return size === "lg" || size === "md" || size === "sm";
 }
-
 function isMonoSize(size: string): size is MonoSize {
   return size === "md" || size === "sm" || size === "xs";
 }
-
 function isSpecialVariant(variant: string): variant is SpecialVariant {
   return (
-    variant === "stat" || 
-    variant === "cardTitle" || 
-    variant === "badge" || 
-    variant === "button" || 
+    variant === "stat" ||
+    variant === "cardTitle" ||
+    variant === "badge" ||
+    variant === "button" ||
     variant === "nav"
   );
 }
-
 function isResponsiveHeadingSize(size: string): size is ResponsiveHeadingSize {
   return size === "xl" || size === "lg" || size === "md" || size === "sm";
 }
-
 function isResponsiveBodySize(size: string): size is ResponsiveBodySize {
   return size === "lg" || size === "md" || size === "sm";
 }
@@ -197,51 +220,39 @@ function isResponsiveBodySize(size: string): size is ResponsiveBodySize {
 export function DisplayXL(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="display-xl" as="h1" {...props} />;
 }
-
 export function DisplayLG(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="display-lg" as="h1" {...props} />;
 }
-
 export function DisplayMD(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="display-md" as="h2" {...props} />;
 }
-
 export function DisplaySM(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="display-sm" as="h2" {...props} />;
 }
-
 export function HeadingXL(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="heading-xl" as="h2" {...props} />;
 }
-
 export function HeadingLG(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="heading-lg" as="h3" {...props} />;
 }
-
 export function HeadingMD(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="heading-md" as="h4" {...props} />;
 }
-
 export function HeadingSM(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="heading-sm" as="h5" {...props} />;
 }
-
 export function HeadingXS(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="heading-xs" as="h6" {...props} />;
 }
-
 export function BodyLG(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="body-lg" as="p" {...props} />;
 }
-
 export function BodyMD(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="body-md" as="p" {...props} />;
 }
-
 export function BodySM(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="body-sm" as="p" {...props} />;
 }
-
 export function BodyXS(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="body-xs" as="p" {...props} />;
 }
@@ -250,93 +261,78 @@ export function BodyXS(props: Omit<TypographyProps, "variant">) {
 export function ResponsiveHeadingXL(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-heading-xl" as="h1" {...props} />;
 }
-
 export function ResponsiveHeadingLG(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-heading-lg" as="h2" {...props} />;
 }
-
 export function ResponsiveHeadingMD(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-heading-md" as="h3" {...props} />;
 }
-
 export function ResponsiveHeadingSM(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-heading-sm" as="h4" {...props} />;
 }
-
 export function ResponsiveBodyLG(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-body-lg" as="p" {...props} />;
 }
-
 export function ResponsiveBodyMD(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-body-md" as="p" {...props} />;
 }
-
 export function ResponsiveBodySM(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="responsive-body-sm" as="p" {...props} />;
 }
 
 // Label component with proper typing for label-specific attributes
-type LabelProps = Omit<TypographyProps, "variant" | "as"> & 
-  LabelElementProps & 
-  { size?: "lg" | "md" | "sm" };
-
+type LabelProps = Omit<TypographyProps, "variant" | "as"> &
+  LabelElementProps & {
+    size?: "lg" | "md" | "sm";
+  };
 export function Label({ size = "md", ...rest }: LabelProps) {
   const variant = `label-${size}` as const;
-  return (
-    <Typography 
-      variant={variant} 
-      as="label" 
-      {...rest} 
-    />
-  );
+  return <Typography variant={variant} as="label" {...rest} />;
 }
 
 // Special typography components
 export function Stat(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="stat" as="div" {...props} />;
 }
-
 export function CardTitle(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="cardTitle" as="h3" {...props} />;
 }
-
 export function Badge(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="badge" as="span" {...props} />;
 }
-
 export function ButtonText(props: Omit<TypographyProps, "variant">) {
   return <Typography variant="button" as="span" {...props} />;
 }
 
 // NavText component for navigation texts, using our shadcn typography token for nav text
-export function NavText({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function NavText({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={`text-sm font-medium leading-[1.35] tracking-tight text-foreground/90 ${className}`}>
+    <span
+      className={`text-sm font-medium leading-[1.35] tracking-tight text-foreground/90 ${className}`}
+    >
       {children}
     </span>
   );
 }
 
 // Truncated text component with improved line clamping
-export function TruncatedText({ 
-  lines = 1, 
+export function TruncatedText({
+  lines = 1,
   variant = "body-md",
-  ...props 
-}: Omit<TypographyProps, "truncate" | "variant"> & { 
+  ...props
+}: Omit<TypographyProps, "truncate" | "variant"> & {
   lines?: 1 | 2 | 3;
   variant?: TypographyProps["variant"];
 }) {
-  const truncateClass = lines === 1 
-    ? "truncate" 
-    : lines === 2 
-      ? "line-clamp-2" 
-      : "line-clamp-3";
-  
+  const truncateClass =
+    lines === 1 ? "truncate" : lines === 2 ? "line-clamp-2" : "line-clamp-3";
   return (
-    <Typography 
-      variant={variant}
-      className={cn(truncateClass)}
-      {...props}
-    />
+    <Typography variant={variant} className={cn(truncateClass)} {...props} />
   );
-} 
+}
